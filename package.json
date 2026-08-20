@@ -1,0 +1,7 @@
+{
+  "name": "patrimonio-v2",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": { "dev": "vite", "build": "vite build", "preview": "vite preview" },
+  "devDependencies": { "vite": "latest" }
+}

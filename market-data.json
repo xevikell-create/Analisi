@@ -1,56 +1,6 @@
 {
   "provider": "twelvedata",
-  "updatedAt": "2026-08-21T13:07:32.573370+00:00",
-  "quotes": {
-    "First Solar": {
-      "symbol": "FSLR",
-      "price": 214.059998,
-      "currency": "USD",
-      "timestamp": "2026-08-20"
-    },
-    "Netflix": {
-      "symbol": "NFLX",
-      "price": 80.14,
-      "currency": "USD",
-      "timestamp": "2026-08-20"
-    },
-    "Meta Platforms": {
-      "symbol": "META",
-      "price": 545.83002,
-      "currency": "USD",
-      "timestamp": "2026-08-20"
-    },
-    "Apple": {
-      "symbol": "AAPL",
-      "price": 311.29999,
-      "currency": "USD",
-      "timestamp": "2026-08-20"
-    },
-    "Palantir Technologies": {
-      "symbol": "PLTR",
-      "price": 173.96001,
-      "currency": "USD",
-      "timestamp": "2026-08-20"
-    },
-    "Toyota": {
-      "symbol": "TM",
-      "price": 192.24001,
-      "currency": "USD",
-      "timestamp": "2026-08-20"
-    },
-    "AMD": {
-      "symbol": "AMD",
-      "price": 469.45499,
-      "currency": "USD",
-      "timestamp": "2026-08-20"
-    }
-  },
-  "errors": {
-    "BYD": "HTTP Error 404: Not Found",
-    "Nvidia": "HTTP Error 429: Too Many Requests",
-    "CaixaBank": "HTTP Error 429: Too Many Requests",
-    "Amazon": "HTTP Error 429: Too Many Requests",
-    "NextEra Energy": "HTTP Error 429: Too Many Requests",
-    "iShares Core MSCI World Acc": "HTTP Error 429: Too Many Requests"
-  }
+  "updatedAt": "2026-08-21T15:17:09.546955+00:00",
+  "quotes": {},
+  "error": "HTTP Error 429: Too Many Requests"
 }

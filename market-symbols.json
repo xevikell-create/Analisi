@@ -9,10 +9,10 @@
     "Toyota": "TM",
     "AMD": "AMD",
     "Nvidia": "NVDA",
-    "CaixaBank": "CABK:BMEX",
-    "Vanguard S&P 500 Dist ETF": "",
+    "CaixaBank": "CABK.MC",
+    "Vanguard S&P 500 Dist ETF": "VUSA.L",
     "Amazon": "AMZN",
     "NextEra Energy": "NEE",
-    "iShares Core MSCI World Acc": "SWDA"
+    "iShares Core MSCI World Acc": "SWDA.L"
   }
 }

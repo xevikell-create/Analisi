@@ -1,5 +1,6 @@
 {
   "provider": "twelvedata",
+ feature/patrimonio-v2-completa
   "updatedAt": "2026-08-21T20:01:24.008739+00:00",
   "quotes": {
     "First Solar": {
@@ -59,4 +60,9 @@
     "iShares Core MSCI World Acc": "HTTP Error 429: Too Many Requests"
   },
   "note": "Stock/ETF quotes refreshed by GitHub Actions. ETH/EUR is fetched live in the app from CoinGecko."
+
+  "updatedAt": "2026-08-21T19:54:03.372482+00:00",
+  "quotes": {},
+  "error": "HTTP Error 429: Too Many Requests"
+
 }

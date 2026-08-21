@@ -1,0 +1,26 @@
+{
+  "currency": "EUR",
+  "updatedAt": "2026-08-21",
+  "positions": [
+    {"name":"iShares Core MSCI World Acc","ticker":null,"quantity":23.089,"averageCost":125.60,"costCurrency":"EUR","type":"ETF","core":true},
+    {"name":"BYD","ticker":null,"quantity":207.85,"averageCost":12.81,"costCurrency":"EUR","type":"Stock"},
+    {"name":"Palantir Technologies","ticker":"PLTR","quantity":11.95,"averageCost":123.76,"costCurrency":"EUR","type":"Stock"},
+    {"name":"Netflix","ticker":"NFLX","quantity":25.97,"averageCost":75.11,"costCurrency":"EUR","type":"Stock"},
+    {"name":"First Solar","ticker":"FSLR","quantity":8.48,"averageCost":164.90,"costCurrency":"EUR","type":"Stock"},
+    {"name":"Apple","ticker":"AAPL","quantity":5.47,"averageCost":222.16,"costCurrency":"EUR","type":"Stock"},
+    {"name":"Toyota","ticker":"TM","quantity":83.34,"averageCost":18.01,"costCurrency":"EUR","type":"Stock"},
+    {"name":"Meta Platforms","ticker":"META","quantity":3.70,"averageCost":544.68,"costCurrency":"EUR","type":"Stock"},
+    {"name":"Nvidia","ticker":"NVDA","quantity":9.27,"averageCost":126.50,"costCurrency":"USD","type":"Stock"},
+    {"name":"AMD","ticker":"AMD","quantity":4.10,"averageCost":126.66,"costCurrency":"USD","type":"Stock"},
+    {"name":"CaixaBank","ticker":"CABK","quantity":97.75,"averageCost":5.09,"costCurrency":"EUR","type":"Stock"},
+    {"name":"Amazon","ticker":"AMZN","quantity":2.74,"averageCost":198.70,"costCurrency":"USD","type":"Stock"},
+    {"name":"NextEra Energy","ticker":"NEE","quantity":7.067,"averageCost":71.76,"costCurrency":"USD","type":"Stock"},
+    {"name":"Vanguard S&P 500 Dist ETF","ticker":null,"quantity":4.860,"averageCost":107.63,"costCurrency":"EUR","type":"ETF"}
+  ],
+  "crypto": [{"name":"Ethereum","ticker":"ETH","quantity":1.1,"costCurrency":"EUR","type":"Crypto"}],
+  "notes": [
+    "Ticker/ISIN for the iShares Core MSCI World Acc is intentionally left pending because the exact exchange listing must be confirmed before live pricing is mapped.",
+    "BYD ticker is intentionally left pending because the user's broker/listing was not specified.",
+    "Vanguard S&P 500 Dist ETF ticker is intentionally left pending because the user's exact share class/listing was not specified."
+  ]
+}

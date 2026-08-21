@@ -1,0 +1,18 @@
+{
+  "assets": {
+    "First Solar": "FSLR",
+    "BYD": "BYDDY",
+    "Netflix": "NFLX",
+    "Meta": "META",
+    "Apple": "AAPL",
+    "Palantir": "PLTR",
+    "Toyota": "TM",
+    "AMD": "AMD",
+    "Nvidia": "NVDA",
+    "CaixaBank": "CABK:BMEX",
+    "S&P 500 ETF": "SPY",
+    "Amazon": "AMZN",
+    "NextEra Energy": "NEE",
+    "MSCI World Acc": ""
+  }
+}

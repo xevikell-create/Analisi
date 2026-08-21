@@ -1,57 +1,72 @@
 {
   "provider": "twelvedata",
-  "updatedAt": "2026-08-21T17:57:51.312869+00:00",
+  "updatedAt": "2026-08-21T19:17:09.473251+00:00",
   "quotes": {
     "First Solar": {
       "symbol": "FSLR",
-      "price": 214.795,
+      "price": 215.62,
       "currency": "USD",
       "timestamp": "2026-08-21"
     },
     "Netflix": {
       "symbol": "NFLX",
-      "price": 79.74,
+      "price": 79.585,
       "currency": "USD",
       "timestamp": "2026-08-21"
     },
     "Meta Platforms": {
       "symbol": "META",
-      "price": 549.76,
+      "price": 549.515,
       "currency": "USD",
       "timestamp": "2026-08-21"
     },
     "Apple": {
       "symbol": "AAPL",
-      "price": 309.64,
+      "price": 308.8,
       "currency": "USD",
       "timestamp": "2026-08-21"
     },
     "Palantir Technologies": {
       "symbol": "PLTR",
-      "price": 179.4,
+      "price": 179.275,
       "currency": "USD",
       "timestamp": "2026-08-21"
     },
     "Toyota": {
       "symbol": "TM",
-      "price": 197.12,
+      "price": 197.52,
       "currency": "USD",
       "timestamp": "2026-08-21"
     },
     "AMD": {
       "symbol": "AMD",
-      "price": 471.525,
+      "price": 472.27,
+      "currency": "USD",
+      "timestamp": "2026-08-21"
+    },
+    "Nvidia": {
+      "symbol": "NVDA",
+      "price": 214.865,
+      "currency": "USD",
+      "timestamp": "2026-08-21"
+    },
+    "Amazon": {
+      "symbol": "AMZN",
+      "price": 259.14,
+      "currency": "USD",
+      "timestamp": "2026-08-21"
+    },
+    "NextEra Energy": {
+      "symbol": "NEE",
+      "price": 83.83,
       "currency": "USD",
       "timestamp": "2026-08-21"
     }
   },
   "errors": {
     "BYD": "HTTP Error 404: Not Found",
-    "Nvidia": "HTTP Error 429: Too Many Requests",
-    "CaixaBank": "HTTP Error 429: Too Many Requests",
-    "Amazon": "HTTP Error 429: Too Many Requests",
-    "NextEra Energy": "HTTP Error 429: Too Many Requests",
-    "iShares Core MSCI World Acc": "HTTP Error 429: Too Many Requests"
+    "CaixaBank": "HTTP Error 404: Not Found",
+    "iShares Core MSCI World Acc": "HTTP Error 404: Not Found"
   },
   "note": "Stock/ETF quotes refreshed by GitHub Actions. ETH/EUR is fetched live in the app from CoinGecko."
 }

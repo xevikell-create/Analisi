@@ -2,7 +2,7 @@
   "currency": "EUR",
   "updatedAt": "2026-08-21",
   "positions": [
-    {"name":"iShares Core MSCI World Acc","ticker":null,"quantity":23.089,"averageCost":125.60,"costCurrency":"EUR","type":"ETF","core":true},
+    {"name":"iShares Core MSCI World Acc","ticker":"SWDA","isin":"IE00B4L5Y983","quantity":23.089,"averageCost":125.60,"costCurrency":"EUR","type":"ETF","core":true},
     {"name":"BYD","ticker":null,"quantity":207.85,"averageCost":12.81,"costCurrency":"EUR","type":"Stock"},
     {"name":"Palantir Technologies","ticker":"PLTR","quantity":11.95,"averageCost":123.76,"costCurrency":"EUR","type":"Stock"},
     {"name":"Netflix","ticker":"NFLX","quantity":25.97,"averageCost":75.11,"costCurrency":"EUR","type":"Stock"},
@@ -19,8 +19,8 @@
   ],
   "crypto": [{"name":"Ethereum","ticker":"ETH","quantity":1.1,"costCurrency":"EUR","type":"Crypto"}],
   "notes": [
-    "Ticker/ISIN for the iShares Core MSCI World Acc is intentionally left pending because the exact exchange listing must be confirmed before live pricing is mapped.",
-    "BYD ticker is intentionally left pending because the user's broker/listing was not specified.",
-    "Vanguard S&P 500 Dist ETF ticker is intentionally left pending because the user's exact share class/listing was not specified."
+    "iShares Core MSCI World UCITS ETF USD Acc: ISIN IE00B4L5Y983, Bloomberg ticker SWDA LN.",
+    "BYD ticker remains pending because the user's broker/listing was not specified.",
+    "Vanguard S&P 500 Dist ETF ticker remains pending because the user's exact share class/listing was not specified."
   ]
 }

@@ -1,48 +1,35 @@
-/* Patrimonio V2 — revisión de valoración.
-   Calcula valor actual, coste y discrepancia del importe manual.
-   Nunca sobrescribe el dato manual: solo lo contrasta.
-*/
+/* Patrimonio V2 — valoración final y control de calidad */
 window.ValuationReviewV4={
-  build(data, quotes, fx){
+  money(n){return new Intl.NumberFormat('es-ES',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(Number(n)||0)},
+  pct(n){return Number.isFinite(n)?(n*100).toFixed(1)+'%':'—'},
+  async run(data){
+    const market=await (window.MarketV4?window.MarketV4.sync(data):Promise.resolve({quotes:{},usdEur:null,hkdEur:null}));
     const meta=Object.fromEntries((window.V4Portfolio?.positions||[]).map(p=>[p.name.toLowerCase(),p]));
-    const aliases={'MSCI World Acc':'iShares Core MSCI World Acc','S&P 500 ETF':'Vanguard S&P 500 Dist ETF'};
-    const rows=(data?.assets||[]).map(a=>{
-      const name=a[0], stored=Number(a[1])||0;
-      const m=meta[name.toLowerCase()]||meta[(aliases[name]||'').toLowerCase()]||{};
-      const q=quotes?.[name]||quotes?.[aliases[name]]||quotes?.[m.ticker]||null;
-      const qty=Number(m.quantity)||0, price=Number(q?.price);
-      const currency=String(q?.currency||m.currency||'EUR').toUpperCase();
-      const usdEur=Number(fx?.usdEur)||0, hkdEur=Number(fx?.hkdEur)||0;
-      let valueEUR=null;
-      if(Number.isFinite(price)){
-        const native=qty*price;
-        if(currency==='EUR') valueEUR=native;
-        else if(currency==='USD'&&usdEur>0) valueEUR=native*usdEur;
-        else if(currency==='HKD'&&hkdEur>0) valueEUR=native*hkdEur;
-      }
-      const diff=valueEUR==null?null:valueEUR-stored;
-      const diffPct=valueEUR==null||stored===0?null:diff/stored;
-      return {name,stored,quantity:qty,price:Number.isFinite(price)?price:null,currency,valueEUR,diff,diffPct,status:valueEUR==null?'PENDIENTE':stored===0?'SIN IMPORTE BASE':Math.abs(diffPct)>0.05?'REVISAR':'OK'};
+    const aliases={'MSCI World Acc':'iShares Core MSCI World Acc','S&P 500 ETF':'Vanguard S&P 500 Dist ETF','Meta':'Meta Platforms','Palantir':'Palantir Technologies'};
+    const rows=(data.assets||[]).map(a=>{
+      const name=a[0],stored=Number(a[1])||0,m=meta[name.toLowerCase()]||meta[(aliases[name]||'').toLowerCase()]||{};
+      const q=market.quotes?.[name]||market.quotes?.[aliases[name]]||market.quotes?.[m.ticker]||null;
+      const qty=Number(m.quantity)||0,avg=Number(m.averageCost)||0,price=Number(q?.price),cur=String(q?.currency||m.currency||'EUR').toUpperCase();
+      let valueEUR=null,costEUR=null;
+      if(Number.isFinite(price)&&qty>0){const native=qty*price;if(cur==='EUR'){valueEUR=native;costEUR=qty*avg}else if(cur==='USD'&&Number(market.usdEur)>0){valueEUR=native*market.usdEur;costEUR=qty*avg*market.usdEur}else if(cur==='HKD'&&Number(market.hkdEur)>0){valueEUR=native*market.hkdEur;costEUR=qty*avg*market.hkdEur}}
+      const diff=valueEUR==null?null:valueEUR-stored,diffPct=diff==null||stored===0?null:diff/stored,gain=valueEUR!=null&&costEUR!=null?valueEUR-costEUR:null,ret=gain!=null&&costEUR>0?gain/costEUR:null;
+      return{name,stored,quantity:qty,averageCost:avg,price:Number.isFinite(price)?price:null,currency:cur,valueEUR,costEUR,diff,diffPct,gain,ret,status:valueEUR==null?'PENDIENTE':stored===0?'SIN IMPORTE BASE':Math.abs(diffPct||0)>0.05?'REVISAR':'OK',source:q?.source||'—'};
     });
-    return rows;
+    const ethQty=Number(data.crypto?.eth)||0,ethPrice=Number(market.ethPrice)||Number(data.crypto?.ethPrice)||0,ethValue=ethQty*ethPrice;
+    const liquidity=Number(data.accounts?.remunerada||0)+Number(data.accounts?.efectivo||0),live=rows.reduce((s,r)=>s+(r.valueEUR??0),0),stored=rows.reduce((s,r)=>s+r.stored,0),total=live+ethValue+liquidity;
+    return{market,rows,eth:{quantity:ethQty,price:ethPrice,valueEUR:ethValue},liquidity,total,storedTotal:stored+liquidity,difference:total-(stored+liquidity),summary:{ok:rows.filter(r=>r.status==='OK').length,review:rows.filter(r=>r.status==='REVISAR').length,pending:rows.filter(r=>r.status==='PENDIENTE').length,baseMissing:rows.filter(r=>r.status==='SIN IMPORTE BASE').length}};
+  },
+  async render(data){
+    const result=await this.run(data);window.__V4_VALUATION_REVIEW__=result;
+    const host=document.getElementById('app');if(!host)return;
+    let box=document.getElementById('valuation-review');if(box)box.remove();
+    box=document.createElement('div');box.id='valuation-review';box.className='card section';
+    const badge=(s,t)=>`<span class="badge ${s}">${t}</span>`;
+    const safe=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+    const rows=result.rows.map(r=>`<div class="row"><span><b>${safe(r.name)}</b><br><span class="muted">${r.quantity? r.quantity+' × '+(r.price==null?'precio pendiente':r.price+' '+r.currency):'cantidad pendiente'}</span></span><span class="right"><b>${r.valueEUR==null?'—':this.money(r.valueEUR)}</b><br>${r.status==='OK'?badge('green','OK'):r.status==='REVISAR'?badge('amber','REVISAR '+this.pct(r.diffPct)):r.status==='SIN IMPORTE BASE'?badge('amber','SIN BASE'):badge('red','PENDIENTE')}</span></div>`).join('');
+    box.innerHTML=`<h3>🔎 Control de valoración</h3><p>${badge('green',result.summary.ok+' OK')} ${badge('amber',result.summary.review+' revisar')} ${badge('red',result.summary.pending+' pendientes')} ${badge('amber',result.summary.baseMissing+' sin base')}</p><div class="grid"><div><span class="muted">Patrimonio calculado</span><div class="kpi">${this.money(result.total)}</div></div><div><span class="muted">ETH</span><div class="kpi">${this.money(result.eth.valueEUR)}</div><span class="small">${result.eth.quantity} ETH · ${result.eth.price?this.money(result.eth.price)+'/ETH':'precio pendiente'}</span></div></div><p class="muted">Diferencia frente al valor almacenado: ${this.money(result.difference)}</p><details><summary>Ver posiciones</summary>${rows}</details>`;
+    host.appendChild(box);return result;
   }
 };
-(function installReview(){
-  async function render(){
-    try{
-      const data=V4Data();
-      if(!data||!document.getElementById('app')) return;
-      const market=await MarketV4.sync(data);
-      const rows=ValuationReviewV4.build(data,market.quotes,{usdEur:market.usdEur,hkdEur:market.hkdEur});
-      const old=document.getElementById('valuation-review'); if(old)old.remove();
-      const box=document.createElement('div'); box.id='valuation-review'; box.className='card section';
-      const money=n=>new Intl.NumberFormat('es-ES',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n||0);
-      const pct=n=>n==null?'—':(n*100).toFixed(1)+'%';
-      const diffText=r=>r.diff==null?'':` · ${r.diff>0?'+':''}${money(r.diff)}`;
-      box.innerHTML='<h3>🔎 Revisión de importes</h3><p class="muted">Valor actual calculado = cantidad × precio. Se compara con el importe manual sin modificarlo.</p>'+rows.map(r=>'<div class="row"><span><b>'+esc(r.name)+'</b><br><span class="muted">'+(r.quantity?r.quantity:'Cantidad pendiente')+' × '+(r.price==null?'precio pendiente':r.price+' '+r.currency)+'</span></span><span class="right"><b>'+ (r.valueEUR==null?'—':money(r.valueEUR)) +'</b><br><span class="badge '+(r.status==='OK'?'green':r.status==='REVISAR'?'amber':'red')+'">'+r.status+(r.diffPct==null?'':' · '+pct(r.diffPct))+diffText(r)+'</span></span></div>').join('');
-      document.getElementById('app').appendChild(box);
-    }catch(e){console.warn('valuation review',e)}
-  }
-  document.addEventListener('DOMContentLoaded',()=>setTimeout(render,1500));
-  window.addEventListener('v4:refresh',render);
-})();
+document.addEventListener('DOMContentLoaded',()=>setTimeout(()=>{if(window.data)window.ValuationReviewV4.render(window.data)},1800));
+window.addEventListener('v4:refresh',()=>{if(window.data)window.ValuationReviewV4.render(window.data)});

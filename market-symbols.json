@@ -1,7 +1,7 @@
 {
   "assets": {
     "First Solar": "FSLR",
-    "BYD": "BYDDY",
+    "BYD": "1211.HK",
     "Netflix": "NFLX",
     "Meta Platforms": "META",
     "Apple": "AAPL",
@@ -13,6 +13,6 @@
     "Vanguard S&P 500 Dist ETF": "SPY",
     "Amazon": "AMZN",
     "NextEra Energy": "NEE",
-    "iShares Core MSCI World Acc": ""
+    "iShares Core MSCI World Acc": "SWDA"
   }
 }

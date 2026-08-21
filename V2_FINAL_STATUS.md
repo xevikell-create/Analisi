@@ -1,3 +1,1 @@
-# V2 final status
-
-Core patrimonial, cartera, liquidez, ETH, objetivo, decisiones, radar e historial integrados en la rama feature/patrimonio-v2-completa.
+Patrimonio V2 final technical review: market valuation, FX, ETH display and GitHub Pages deployment pipeline stabilized. Remaining portfolio-data quantity/cost figures should be treated as user data, not silently altered.

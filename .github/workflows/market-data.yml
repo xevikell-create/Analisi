@@ -1,0 +1,62 @@
+name: Refresh market data
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/15 * * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  market:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fetch market quotes
+        env:
+          TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+        run: |
+          python - <<'PY'
+          import json, os, urllib.parse, urllib.request
+          from datetime import datetime, timezone
+
+          with open('market-symbols.json', encoding='utf-8') as f:
+              registry = json.load(f)['assets']
+          symbols = {name: symbol for name, symbol in registry.items() if symbol}
+          out = {'provider': 'twelvedata', 'updatedAt': datetime.now(timezone.utc).isoformat(), 'quotes': {}}
+          key = os.environ.get('TWELVE_DATA_API_KEY', '')
+          if key and symbols:
+              params = urllib.parse.urlencode({'symbol': ','.join(symbols.values()), 'apikey': key, 'interval': '1min'})
+              try:
+                  with urllib.request.urlopen('https://api.twelvedata.com/quote?' + params, timeout=30) as r:
+                      payload = json.load(r)
+                  for name, symbol in symbols.items():
+                      q = payload.get(symbol, {}) if isinstance(payload, dict) else {}
+                      if isinstance(q, dict) and q.get('close'):
+                          out['quotes'][name] = {
+                              'symbol': symbol,
+                              'price': float(q['close']),
+                              'currency': q.get('currency'),
+                              'change': float(q.get('change') or 0),
+                              'percentChange': float(q.get('percent_change') or 0),
+                              'timestamp': q.get('timestamp'),
+                          }
+              except Exception as e:
+                  out['error'] = str(e)
+          else:
+              out['error'] = 'Missing TWELVE_DATA_API_KEY secret'
+
+          with open('market-data.json', 'w', encoding='utf-8') as f:
+              json.dump(out, f, ensure_ascii=False, indent=2)
+          PY
+
+      - name: Commit updated market data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add market-data.json
+          git diff --cached --quiet || git commit -m "chore(v4): refresh market data"
+          git push

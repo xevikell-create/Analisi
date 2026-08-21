@@ -3,16 +3,16 @@
     "First Solar": "FSLR",
     "BYD": "BYDDY",
     "Netflix": "NFLX",
-    "Meta": "META",
+    "Meta Platforms": "META",
     "Apple": "AAPL",
-    "Palantir": "PLTR",
+    "Palantir Technologies": "PLTR",
     "Toyota": "TM",
     "AMD": "AMD",
     "Nvidia": "NVDA",
     "CaixaBank": "CABK:BMEX",
-    "S&P 500 ETF": "SPY",
+    "Vanguard S&P 500 Dist ETF": "SPY",
     "Amazon": "AMZN",
     "NextEra Energy": "NEE",
-    "MSCI World Acc": ""
+    "iShares Core MSCI World Acc": ""
   }
 }

@@ -1,16 +1,23 @@
 window.DecisionEngineV4={
-  rank({positions=[],crypto=[],quotes={},cash=0,weeklyContribution=300}={}){
+  rank({positions=[],crypto=[],quotes={},cash=0,weeklyContribution=300,usdPerEur=1}={}){
     const rows=positions.map(p=>{
       const symbol=p.ticker||p.name;
-      const q=Number(quotes[symbol]);
+      const raw=quotes[symbol]??quotes[p.name];
+      const q=typeof raw==='object'?Number(raw?.price):Number(raw);
+      const currency=String(p.currency||raw?.currency||'EUR').toUpperCase();
+      const priceEUR=Number.isFinite(q)?(currency==='USD'?q/Math.max(Number(usdPerEur)||1,0.000001):q):null;
       const quantity=Number(p.quantity)||0;
-      const value=Number.isFinite(q)?quantity*q:null;
-      const cost=quantity*(Number(p.averageCost)||0);
+      const value=Number.isFinite(priceEUR)?quantity*priceEUR:null;
+      const cost=quantity*(Number(p.averageCost)||0)*(currency==='USD'?1/Math.max(Number(usdPerEur)||1,0.000001):1);
       const gain=value==null?null:value-cost;
-      return {...p,symbol,value,cost,gain};
+      return {...p,symbol,value,cost,gain,price:priceEUR};
     });
+    const eth=Array.isArray(crypto)?crypto.find(c=>(c.ticker||c.name||'').toUpperCase()==='ETH'):null;
+    const ethQty=Number(eth?.quantity)||0;
+    const ethPrice=Number(eth?.price)||Number(quotes.ETH)||0;
+    const ethValue=ethQty*ethPrice;
     const priced=rows.filter(r=>r.value!=null);
-    const totalInvested=priced.reduce((s,r)=>s+r.value,0);
+    const totalInvested=priced.reduce((s,r)=>s+r.value,0)+ethValue;
     const core=priced.find(r=>r.core);
     const scores=priced.map(r=>{
       let score=50;
@@ -34,6 +41,7 @@ window.DecisionEngineV4={
       totalMarketValue:totalInvested,
       cash:Number(cash)||0,
       pricedPositions:priced.length,
+      crypto:{ethQuantity:ethQty,ethPrice,ethValue},
       candidates:scores
     };
   }

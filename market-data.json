@@ -1,57 +1,6 @@
 {
   "provider": "twelvedata",
-  "updatedAt": "2026-08-21T19:13:39.049222+00:00",
-  "quotes": {
-    "First Solar": {
-      "symbol": "FSLR",
-      "price": 215.525,
-      "currency": "USD",
-      "timestamp": "2026-08-21"
-    },
-    "Netflix": {
-      "symbol": "NFLX",
-      "price": 79.655,
-      "currency": "USD",
-      "timestamp": "2026-08-21"
-    },
-    "Meta Platforms": {
-      "symbol": "META",
-      "price": 549.5,
-      "currency": "USD",
-      "timestamp": "2026-08-21"
-    },
-    "Apple": {
-      "symbol": "AAPL",
-      "price": 308.53,
-      "currency": "USD",
-      "timestamp": "2026-08-21"
-    },
-    "Palantir Technologies": {
-      "symbol": "PLTR",
-      "price": 179.08,
-      "currency": "USD",
-      "timestamp": "2026-08-21"
-    },
-    "Toyota": {
-      "symbol": "TM",
-      "price": 197.55,
-      "currency": "USD",
-      "timestamp": "2026-08-21"
-    },
-    "AMD": {
-      "symbol": "AMD",
-      "price": 472.295,
-      "currency": "USD",
-      "timestamp": "2026-08-21"
-    }
-  },
-  "errors": {
-    "BYD": "HTTP Error 404: Not Found",
-    "Nvidia": "HTTP Error 429: Too Many Requests",
-    "CaixaBank": "HTTP Error 429: Too Many Requests",
-    "Amazon": "HTTP Error 429: Too Many Requests",
-    "NextEra Energy": "HTTP Error 429: Too Many Requests",
-    "iShares Core MSCI World Acc": "HTTP Error 429: Too Many Requests"
-  },
-  "note": "Stock/ETF quotes refreshed by GitHub Actions. ETH/EUR is fetched live in the app from CoinGecko."
+  "updatedAt": "2026-08-21T19:54:03.372482+00:00",
+  "quotes": {},
+  "error": "HTTP Error 429: Too Many Requests"
 }

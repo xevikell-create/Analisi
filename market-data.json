@@ -1,6 +1,67 @@
 {
   "provider": "twelvedata",
-  "updatedAt": "2026-08-21T15:17:09.546955+00:00",
-  "quotes": {},
-  "error": "HTTP Error 429: Too Many Requests"
+  "updatedAt": "2026-08-21T15:19:04.680914+00:00",
+  "quotes": {
+    "First Solar": {
+      "symbol": "FSLR",
+      "price": 218.24,
+      "currency": "USD",
+      "timestamp": "2026-08-21"
+    },
+    "Netflix": {
+      "symbol": "NFLX",
+      "price": 80.32,
+      "currency": "USD",
+      "timestamp": "2026-08-21"
+    },
+    "Meta Platforms": {
+      "symbol": "META",
+      "price": 550.01,
+      "currency": "USD",
+      "timestamp": "2026-08-21"
+    },
+    "Apple": {
+      "symbol": "AAPL",
+      "price": 310.0,
+      "currency": "USD",
+      "timestamp": "2026-08-21"
+    },
+    "Palantir Technologies": {
+      "symbol": "PLTR",
+      "price": 177.585,
+      "currency": "USD",
+      "timestamp": "2026-08-21"
+    },
+    "Toyota": {
+      "symbol": "TM",
+      "price": 197.46,
+      "currency": "USD",
+      "timestamp": "2026-08-21"
+    },
+    "AMD": {
+      "symbol": "AMD",
+      "price": 466.99,
+      "currency": "USD",
+      "timestamp": "2026-08-21"
+    },
+    "Amazon": {
+      "symbol": "AMZN",
+      "price": 259.24,
+      "currency": "USD",
+      "timestamp": "2026-08-21"
+    },
+    "NextEra Energy": {
+      "symbol": "NEE",
+      "price": 84.51,
+      "currency": "USD",
+      "timestamp": "2026-08-21"
+    }
+  },
+  "errors": {
+    "BYD": "HTTP Error 404: Not Found",
+    "Nvidia": "HTTP Error 429: Too Many Requests",
+    "CaixaBank": "HTTP Error 404: Not Found",
+    "iShares Core MSCI World Acc": "HTTP Error 404: Not Found"
+  },
+  "note": "Stock/ETF quotes refreshed by GitHub Actions. ETH/EUR is fetched live in the app from CoinGecko."
 }

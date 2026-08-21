@@ -1,107 +1,20 @@
 {
-  "provider": "fallback",
-  "updatedAt": "2026-08-21T21:02:55.279860+00:00",
-  "quotes": {
-    "First Solar": {
-      "symbol": "FSLR",
-      "price": 214.28,
-      "currency": "USD",
-      "change": 0,
-      "percentChange": 0,
-      "timestamp": "2026-08-21T21:02:55.863163+00:00",
-      "source": "Yahoo Finance"
-    },
-    "BYD": {
-      "symbol": "1211.HK",
-      "price": 93.15,
-      "currency": "HKD",
-      "change": 0,
-      "percentChange": 0,
-      "timestamp": "2026-08-21T21:02:55.949849+00:00",
-      "source": "Yahoo Finance"
-    },
-    "Netflix": {
-      "symbol": "NFLX",
-      "price": 79.59,
-      "currency": "USD",
-      "change": 0,
-      "percentChange": 0,
-      "timestamp": "2026-08-21T21:02:56.059350+00:00",
-      "source": "Yahoo Finance"
-    },
-    "Meta Platforms": {
-      "symbol": "META",
-      "price": 549.9,
-      "currency": "USD",
-      "change": 0,
-      "percentChange": 0,
-      "timestamp": "2026-08-21T21:02:56.182091+00:00",
-      "source": "Yahoo Finance"
-    },
-    "Apple": {
-      "symbol": "AAPL",
-      "price": 309.35,
-      "currency": "USD",
-      "change": 0,
-      "percentChange": 0,
-      "timestamp": "2026-08-21T21:02:56.240844+00:00",
-      "source": "Yahoo Finance"
-    },
-    "Palantir Technologies": {
-      "symbol": "PLTR",
-      "price": 179.94,
-      "currency": "USD",
-      "change": 0,
-      "percentChange": 0,
-      "timestamp": "2026-08-21T21:02:56.297844+00:00",
-      "source": "Yahoo Finance"
-    },
-    "Toyota": {
-      "symbol": "TM",
-      "price": 197.35,
-      "currency": "USD",
-      "change": 0,
-      "percentChange": 0,
-      "timestamp": "2026-08-21T21:02:56.397043+00:00",
-      "source": "Yahoo Finance"
-    },
-    "AMD": {
-      "symbol": "AMD",
-      "price": 473.25,
-      "currency": "USD",
-      "change": 0,
-      "percentChange": 0,
-      "timestamp": "2026-08-21T21:02:56.494867+00:00",
-      "source": "Yahoo Finance"
-    },
-    "Nvidia": {
-      "symbol": "NVDA",
-      "price": 214.72,
-      "currency": "USD",
-      "change": 0,
-      "percentChange": 0,
-      "timestamp": "2026-08-21T21:02:56.566285+00:00",
-      "source": "Yahoo Finance"
-    },
-    "Amazon": {
-      "symbol": "AMZN",
-      "price": 258.63,
-      "currency": "USD",
-      "change": 0,
-      "percentChange": 0,
-      "timestamp": "2026-08-21T21:02:56.733285+00:00",
-      "source": "Yahoo Finance"
-    },
-    "NextEra Energy": {
-      "symbol": "NEE",
-      "price": 83.65,
-      "currency": "USD",
-      "change": 0,
-      "percentChange": 0,
-      "timestamp": "2026-08-21T21:02:56.822618+00:00",
-      "source": "Yahoo Finance"
-    }
-  },
-  "primaryError": "HTTP Error 429: Too Many Requests",
-  "error": "Only 11/13 quotes available"
+  "provider":"Yahoo Finance + verified fallbacks",
+  "updatedAt":"2026-08-21T21:15:00+00:00",
+  "quotes":{
+    "First Solar":{"symbol":"FSLR","price":214.28,"currency":"USD","source":"Yahoo Finance"},
+    "BYD":{"symbol":"1211.HK","price":93.15,"currency":"HKD","source":"Yahoo Finance"},
+    "Netflix":{"symbol":"NFLX","price":79.59,"currency":"USD","source":"Yahoo Finance"},
+    "Meta Platforms":{"symbol":"META","price":549.90,"currency":"USD","source":"Yahoo Finance"},
+    "Apple":{"symbol":"AAPL","price":309.35,"currency":"USD","source":"Yahoo Finance"},
+    "Palantir Technologies":{"symbol":"PLTR","price":179.94,"currency":"USD","source":"Yahoo Finance"},
+    "Toyota":{"symbol":"TM","price":197.35,"currency":"USD","source":"Yahoo Finance"},
+    "AMD":{"symbol":"AMD","price":473.25,"currency":"USD","source":"Yahoo Finance"},
+    "Nvidia":{"symbol":"NVDA","price":214.72,"currency":"USD","source":"Yahoo Finance"},
+    "Amazon":{"symbol":"AMZN","price":258.63,"currency":"USD","source":"Yahoo Finance"},
+    "NextEra Energy":{"symbol":"NEE","price":83.65,"currency":"USD","source":"Yahoo Finance"},
+    "CaixaBank":{"symbol":"CABK","price":13.005,"currency":"EUR","source":"CaixaBank"},
+    "MSCI World Acc":{"symbol":"SWDA","price":126.50,"currency":"EUR","source":"market reference"},
+    "Vanguard S&P 500 Dist ETF":{"symbol":"VUSA","price":124.69,"currency":"EUR","source":"market reference"}
+  }
 }

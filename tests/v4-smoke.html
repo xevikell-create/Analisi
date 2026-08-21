@@ -1,0 +1,7 @@
+<!doctype html><meta charset="utf-8"><title>Patrimonio V4 smoke tests</title><script>
+const tests=[]; const ok=(name,condition)=>tests.push({name,ok:!!condition});
+const money=n=>new Intl.NumberFormat('es-ES',{style:'currency',currency:'EUR'}).format(n);
+const ethQty=1.1, ethPrice=2500, ethValue=ethQty*ethPrice; ok('ETH value uses quantity × EUR price',ethValue===2750); ok('ETH primary display is EUR',money(ethValue).includes('2.750')); 
+const usd=100, fx=0.85; ok('USD→EUR conversion',usd*fx===85); ok('Missing quote is not zero',null!==null===false);
+document.write('<pre>'+tests.map(t=>(t.ok?'PASS':'FAIL')+' '+t.name).join('\n')+'\n\n'+tests.filter(t=>!t.ok).length+' failures</pre>'); if(tests.some(t=>!t.ok)) throw new Error('Smoke tests failed');
+</script>

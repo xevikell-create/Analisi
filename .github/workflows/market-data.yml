@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: market-data
+  cancel-in-progress: true
+
 jobs:
   market:
     runs-on: ubuntu-latest
@@ -15,7 +19,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Fetch market quotes with fallback
+      - name: Fetch market quotes, FX and Ethereum
         env:
           TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
         run: |
@@ -26,14 +30,13 @@ jobs:
           with open('market-symbols.json', encoding='utf-8') as f:
               registry = json.load(f)['assets']
           symbols = {name: symbol for name, symbol in registry.items() if symbol}
-          out = {'provider': 'fallback', 'updatedAt': datetime.now(timezone.utc).isoformat(), 'quotes': {}}
+          out = {'provider': 'fallback', 'updatedAt': datetime.now(timezone.utc).isoformat(), 'quotes': {}, 'fxRates': {}, 'crypto': {}}
 
           def get_json(url):
               req = urllib.request.Request(url, headers={'User-Agent': 'PatrimonioV2/1.0'})
               with urllib.request.urlopen(req, timeout=20) as r:
                   return json.load(r)
 
-          # Primary: Twelve Data batch endpoint.
           key = os.environ.get('TWELVE_DATA_API_KEY', '')
           if key and symbols:
               try:
@@ -42,21 +45,12 @@ jobs:
                   for name, symbol in symbols.items():
                       q = payload.get(symbol, {}) if isinstance(payload, dict) else {}
                       if isinstance(q, dict) and q.get('close'):
-                          out['quotes'][name] = {
-                              'symbol': symbol,
-                              'price': float(q['close']),
-                              'currency': q.get('currency'),
-                              'change': float(q.get('change') or 0),
-                              'percentChange': float(q.get('percent_change') or 0),
-                              'timestamp': q.get('timestamp'),
-                              'source': 'Twelve Data'
-                          }
+                          out['quotes'][name] = {'symbol': symbol, 'price': float(q['close']), 'currency': q.get('currency'), 'change': float(q.get('change') or 0), 'percentChange': float(q.get('percent_change') or 0), 'timestamp': q.get('timestamp'), 'source': 'Twelve Data'}
                   if out['quotes']:
                       out['provider'] = 'twelvedata'
               except Exception as e:
                   out['primaryError'] = str(e)
 
-          # Fallback: Yahoo Finance chart endpoint, one symbol at a time.
           missing = [(name, symbol) for name, symbol in symbols.items() if name not in out['quotes']]
           for name, symbol in missing:
               try:
@@ -70,17 +64,26 @@ jobs:
                       vals = [x for x in closes if isinstance(x, (int, float))]
                       price = vals[-1] if vals else None
                   if price is not None:
-                      out['quotes'][name] = {
-                          'symbol': symbol,
-                          'price': float(price),
-                          'currency': str(meta.get('currency') or 'EUR').upper(),
-                          'change': 0,
-                          'percentChange': 0,
-                          'timestamp': datetime.now(timezone.utc).isoformat(),
-                          'source': 'Yahoo Finance'
-                      }
+                      out['quotes'][name] = {'symbol': symbol, 'price': float(price), 'currency': str(meta.get('currency') or 'EUR').upper(), 'change': 0, 'percentChange': 0, 'timestamp': datetime.now(timezone.utc).isoformat(), 'source': 'Yahoo Finance'}
               except Exception:
                   pass
+
+          for base, key_name in [('USD','USD_EUR'),('HKD','HKD_EUR')]:
+              try:
+                  payload = get_json(f'https://api.frankfurter.app/latest?from={base}&to=EUR')
+                  rate = payload.get('rates', {}).get('EUR')
+                  if rate is not None:
+                      out['fxRates'][key_name] = float(rate)
+              except Exception:
+                  pass
+
+          try:
+              payload = get_json('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=eur')
+              price = payload.get('ethereum', {}).get('eur')
+              if price is not None:
+                  out['crypto']['ETH_EUR'] = float(price)
+          except Exception:
+              pass
 
           if len(out['quotes']) < len(symbols):
               out['error'] = f"Only {len(out['quotes'])}/{len(symbols)} quotes available"
@@ -89,7 +92,7 @@ jobs:
 
           with open('market-data.json', 'w', encoding='utf-8') as f:
               json.dump(out, f, ensure_ascii=False, indent=2)
-          print(f"Saved {len(out['quotes'])}/{len(symbols)} market quotes using {out['provider']}")
+          print(f"Saved {len(out['quotes'])}/{len(symbols)} quotes; FX={out['fxRates']}; ETH={out['crypto'].get('ETH_EUR')}")
           PY
 
       - name: Commit updated market data

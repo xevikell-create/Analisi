@@ -1,58 +1,46 @@
 {
   "provider": "twelvedata",
-  "updatedAt": "2026-08-21T16:05:05.993349+00:00",
+  "updatedAt": "2026-08-21T17:57:51.312869+00:00",
   "quotes": {
     "First Solar": {
       "symbol": "FSLR",
-      "price": 220.44,
+      "price": 214.795,
       "currency": "USD",
       "timestamp": "2026-08-21"
     },
     "Netflix": {
       "symbol": "NFLX",
-      "price": 80.375,
+      "price": 79.74,
       "currency": "USD",
       "timestamp": "2026-08-21"
     },
     "Meta Platforms": {
       "symbol": "META",
-      "price": 549.57,
+      "price": 549.76,
       "currency": "USD",
       "timestamp": "2026-08-21"
     },
     "Apple": {
       "symbol": "AAPL",
-      "price": 311.385,
+      "price": 309.64,
       "currency": "USD",
       "timestamp": "2026-08-21"
     },
     "Palantir Technologies": {
       "symbol": "PLTR",
-      "price": 181.8,
+      "price": 179.4,
       "currency": "USD",
       "timestamp": "2026-08-21"
     },
     "Toyota": {
       "symbol": "TM",
-      "price": 197.345,
+      "price": 197.12,
       "currency": "USD",
       "timestamp": "2026-08-21"
     },
     "AMD": {
       "symbol": "AMD",
-      "price": 469.36,
-      "currency": "USD",
-      "timestamp": "2026-08-21"
-    },
-    "Amazon": {
-      "symbol": "AMZN",
-      "price": 259.29,
-      "currency": "USD",
-      "timestamp": "2026-08-21"
-    },
-    "NextEra Energy": {
-      "symbol": "NEE",
-      "price": 84.68,
+      "price": 471.525,
       "currency": "USD",
       "timestamp": "2026-08-21"
     }
@@ -60,8 +48,10 @@
   "errors": {
     "BYD": "HTTP Error 404: Not Found",
     "Nvidia": "HTTP Error 429: Too Many Requests",
-    "CaixaBank": "HTTP Error 404: Not Found",
-    "iShares Core MSCI World Acc": "HTTP Error 404: Not Found"
+    "CaixaBank": "HTTP Error 429: Too Many Requests",
+    "Amazon": "HTTP Error 429: Too Many Requests",
+    "NextEra Energy": "HTTP Error 429: Too Many Requests",
+    "iShares Core MSCI World Acc": "HTTP Error 429: Too Many Requests"
   },
   "note": "Stock/ETF quotes refreshed by GitHub Actions. ETH/EUR is fetched live in the app from CoinGecko."
 }

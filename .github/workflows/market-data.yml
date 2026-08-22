@@ -37,6 +37,17 @@ jobs:
               with urllib.request.urlopen(req, timeout=20) as r:
                   return json.load(r)
 
+          def normalize_quote(price, currency):
+              raw = str(currency or 'EUR').upper()
+              # Yahoo can return London-listed securities in GBp/GBX (pence).
+              # Store everything in GBP so the frontend can apply GBP/EUR once.
+              if raw in ('GBP','GBPENCE','GBX','GBp'.upper()):
+                  p = float(price)
+                  if raw in ('GBX','GBPENCE') or p > 1000:
+                      return p / 100.0, 'GBP'
+                  return p, 'GBP'
+              return float(price), raw
+
           key = os.environ.get('TWELVE_DATA_API_KEY', '')
           if key and symbols:
               try:
@@ -45,7 +56,8 @@ jobs:
                   for name, symbol in symbols.items():
                       q = payload.get(symbol, {}) if isinstance(payload, dict) else {}
                       if isinstance(q, dict) and q.get('close'):
-                          out['quotes'][name] = {'symbol': symbol, 'price': float(q['close']), 'currency': q.get('currency'), 'change': float(q.get('change') or 0), 'percentChange': float(q.get('percent_change') or 0), 'timestamp': q.get('timestamp'), 'source': 'Twelve Data'}
+                          price, currency = normalize_quote(q['close'], q.get('currency'))
+                          out['quotes'][name] = {'symbol': symbol, 'price': price, 'currency': currency, 'change': float(q.get('change') or 0), 'percentChange': float(q.get('percent_change') or 0), 'timestamp': q.get('timestamp'), 'source': 'Twelve Data'}
                   if out['quotes']:
                       out['provider'] = 'twelvedata'
               except Exception as e:
@@ -64,11 +76,12 @@ jobs:
                       vals = [x for x in closes if isinstance(x, (int, float))]
                       price = vals[-1] if vals else None
                   if price is not None:
-                      out['quotes'][name] = {'symbol': symbol, 'price': float(price), 'currency': str(meta.get('currency') or 'EUR').upper(), 'change': 0, 'percentChange': 0, 'timestamp': datetime.now(timezone.utc).isoformat(), 'source': 'Yahoo Finance'}
+                      price, currency = normalize_quote(price, meta.get('currency'))
+                      out['quotes'][name] = {'symbol': symbol, 'price': price, 'currency': currency, 'change': 0, 'percentChange': 0, 'timestamp': datetime.now(timezone.utc).isoformat(), 'source': 'Yahoo Finance'}
               except Exception:
                   pass
 
-          for base, key_name in [('USD','USD_EUR'),('HKD','HKD_EUR'),('JPY','JPY_EUR')]:
+          for base, key_name in [('USD','USD_EUR'),('HKD','HKD_EUR'),('JPY','JPY_EUR'),('GBP','GBP_EUR')]:
               try:
                   payload = get_json(f'https://api.frankfurter.app/latest?from={base}&to=EUR')
                   rate = payload.get('rates', {}).get('EUR')

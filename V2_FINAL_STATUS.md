@@ -1,17 +1,24 @@
-# Patrimonio V2 — revisión integral en curso
+# Patrimonio V2 — cierre técnico
 
-Objetivo: dejar todos los módulos conectados al mismo motor patrimonial y evitar discrepancias entre dashboard, cartera, liquidez, crypto, objetivo, riesgo, decisiones, aportaciones, alertas, radar e historial.
+## Estado
+Revisión técnica final en curso.
+
+## Reglas de mercado
+- 🟢 LIVE: cotización y FX disponibles y recientes.
+- 🟡 FALLBACK: se utiliza el último dato válido/cacheado cuando el proveedor devuelve error temporal (por ejemplo HTTP 429).
+- 🔴 SIN DATOS: no existe una valoración fiable; la posición no se inventa ni se marca como valorada.
 
 ## Criterios de cierre
 - Una única fuente de verdad para patrimonio total.
-- Precios/FX con fallback seguro y estado de calidad visible.
-- Ethereum mostrado como cantidad, precio e importe EUR.
-- Posiciones con valoración fiable no pasan a Pendiente por un fallo temporal de FX.
-- Dashboard, cartera y módulos analíticos usan la misma valoración.
-- Riesgo y concentración calculados sobre patrimonio completo.
-- Objetivo y proyecciones recalculados con datos actuales.
-- Decisión "¿Dónde pongo el próximo euro?" explicable y trazable.
-- Aportaciones, alertas, radar e historial persistentes.
-- PWA móvil revisada.
+- Dashboard, cartera, liquidez, crypto, objetivo y riesgo comparten valoración.
+- ETH: cantidad + precio EUR + importe EUR.
+- Toyota: ticker 7203.T y conversión JPY/EUR validada.
+- Errores temporales de proveedor no convierten automáticamente posiciones valorables en Pendiente.
+- El estado de calidad del mercado es visible.
+- Decisión “¿Dónde pongo el próximo euro?” usa la valoración común.
+- Aportaciones, alertas, radar e historial mantienen sus datos.
+- PWA/manifest conservados.
+- Validación automática en GitHub Actions configurada.
 
-Estado: revisión integral ejecutándose.
+## Incidencia conocida durante la revisión
+El snapshot de mercado puede devolver HTTP 429 del proveedor. Esto debe tratarse como fallback/caché, no como mercado LIVE.

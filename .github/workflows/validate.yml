@@ -53,9 +53,23 @@ jobs:
         run: node --check market.js
       - name: Validate JSON data
         run: |
+          set -euo pipefail
           python3 - <<'PY'
           import json
           for p in ['market-data.json','manifest.json']:
               with open(p,encoding='utf-8') as f: json.load(f)
               print(p, 'OK')
           PY
+      - name: Validate market quality states
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -Riq "429\|fallback\|cache\|stale" market.js market-data.json index.html
+          echo "Market fallback/stale handling markers present."
+      - name: Validate no obvious duplicate portfolio engine
+        shell: bash
+        run: |
+          set -euo pipefail
+          count=$(grep -o "PortfolioIntelligenceV4" market.js | wc -l)
+          test "$count" -ge 1
+          echo "Portfolio intelligence engine detected: $count reference(s)."

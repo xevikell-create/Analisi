@@ -1,0 +1,61 @@
+name: Validate Patrimonio V2
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate required files
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f index.html
+          test -f market.js
+          test -f market-data.json
+          test -f manifest.json
+          grep -q "Patrimonio V2" index.html
+          grep -q "PortfolioIntelligenceV4" market.js
+          grep -q "MarketV4" market.js
+          grep -q "Ethereum" market.js
+          echo "Required files and core modules present."
+      - name: Syntax check inline JavaScript
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re, subprocess, tempfile
+          html = Path('index.html').read_text(encoding='utf-8')
+          scripts = re.findall(r'<script(?:\s[^>]*)?>(.*?)</script>', html, flags=re.S|re.I)
+          inline = '\n'.join(s for s in scripts if s.strip())
+          if not inline.strip():
+              raise SystemExit('No inline JavaScript found')
+          with tempfile.NamedTemporaryFile('w', suffix='.js', delete=False, encoding='utf-8') as f:
+              f.write(inline)
+              path=f.name
+          r=subprocess.run(['node','--check',path], text=True, capture_output=True)
+          print(r.stdout)
+          print(r.stderr)
+          raise SystemExit(r.returncode)
+          PY
+      - name: Validate market.js syntax
+        run: node --check market.js
+      - name: Validate JSON data
+        run: |
+          python3 - <<'PY'
+          import json
+          for p in ['market-data.json','manifest.json']:
+              with open(p,encoding='utf-8') as f: json.load(f)
+              print(p, 'OK')
+          PY

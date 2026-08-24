@@ -24,6 +24,7 @@ jobs:
           test -f market.js
           test -f market-data.json
           test -f manifest.json
+          test -f market-symbols.json
           grep -q "Patrimonio V2" index.html
           grep -q "PortfolioIntelligenceV4" market.js
           grep -q "MarketV4" market.js
@@ -56,9 +57,28 @@ jobs:
           set -euo pipefail
           python3 - <<'PY'
           import json
-          for p in ['market-data.json','manifest.json']:
+          for p in ['market-data.json','manifest.json','market-symbols.json']:
               with open(p,encoding='utf-8') as f: json.load(f)
               print(p, 'OK')
+          PY
+      - name: Validate complete market snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          symbols=json.load(open('market-symbols.json',encoding='utf-8'))['assets']
+          market=json.load(open('market-data.json',encoding='utf-8'))
+          quotes=market.get('quotes',{})
+          missing=[name for name in symbols if name not in quotes]
+          if missing:
+              raise SystemExit('Missing market quotes: '+', '.join(missing))
+          for key in ('USD_EUR','HKD_EUR','JPY_EUR','GBP_EUR'):
+              if not market.get('fxRates',{}).get(key):
+                  raise SystemExit('Missing FX rate: '+key)
+          if not market.get('crypto',{}).get('ETH_EUR'):
+              raise SystemExit('Missing ETH/EUR price')
+          print(f"Market snapshot complete: {len(quotes)}/{len(symbols)} quotes; FX=4; ETH=OK")
           PY
       - name: Validate market quality states
         shell: bash

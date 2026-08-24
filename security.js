@@ -1,19 +1,15 @@
-/* security layer for the personal PWA */
+/* Patrimonio V2 security layer: device biometric (WebAuthn) + 6-digit PIN fallback + automatic lock */
 (function(){
-  const LOCK_KEY='patrimonio_v4_lock';
-  const TIMEOUT_MS=5*60*1000;
-  let locked=false,lastActivity=Date.now();
-  const supportsBiometric=!!(window.PublicKeyCredential&&navigator.credentials);
-  function mark(){lastActivity=Date.now();}
-  ['click','touchstart','keydown','scroll'].forEach(e=>window.addEventListener(e,mark,{passive:true}));
-  function lock(){locked=true;const el=document.getElementById('security-lock');if(el){el.style.display='flex';}}
-  function unlock(){locked=false;lastActivity=Date.now();const el=document.getElementById('security-lock');if(el){el.style.display='none';}}
-  window.PatrimonioSecurity={lock,unlock,isLocked:()=>locked,supportsBiometric};
-  setInterval(()=>{if(!locked&&Date.now()-lastActivity>TIMEOUT_MS)lock();},15000);
-  document.addEventListener('visibilitychange',()=>{if(document.hidden) mark();});
-  document.addEventListener('DOMContentLoaded',()=>{
-    const overlay=document.createElement('div');overlay.id='security-lock';overlay.style.cssText='display:none;position:fixed;inset:0;z-index:9999;background:#111827;color:#fff;align-items:center;justify-content:center;padding:24px;text-align:center';
-    overlay.innerHTML='<div style="max-width:360px;width:100%"><div style="font-size:48px">🔒</div><h2>Patrimonio bloqueado</h2><p style="opacity:.75">La aplicación se bloqueó por inactividad.</p><button id="security-unlock" style="border:0;border-radius:12px;padding:13px 20px;font-weight:700">Desbloquear</button></div>';
-    document.body.appendChild(overlay);document.getElementById('security-unlock').onclick=()=>unlock();
-  });
+const SKEY='patrimonio_v2_security_v1', TIMEOUT=30000; let st=null,timer=null;
+const b64=b=>btoa(String.fromCharCode(...new Uint8Array(b))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+const ub64=s=>{s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return Uint8Array.from(atob(s),c=>c.charCodeAt(0))};
+async function hash(v){return b64(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(v)))}
+function overlay(){if(document.getElementById('security-lock'))return;document.body.insertAdjacentHTML('afterbegin','<div id="security-lock" style="position:fixed;inset:0;background:#111827;color:#fff;z-index:2147483647;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center"><div style="width:min(360px,100%)"><div style="font-size:48px">🔐</div><h2>Patrimonio V2 bloqueado</h2><p style="color:#cbd5e1">Valida tu identidad para acceder a tus datos.</p><button id="security-biometric" style="width:100%;border:0;background:#2563eb;color:#fff;border-radius:12px;padding:13px;font-weight:700;font-size:16px">Face ID / Autenticación</button><input id="security-pin" inputmode="numeric" maxlength="6" type="password" placeholder="PIN de 6 dígitos" style="width:100%;box-sizing:border-box;margin-top:12px;padding:12px;text-align:center;font-size:20px;letter-spacing:6px"><button id="security-pin-btn" style="width:100%;border:0;background:#2563eb;color:#fff;border-radius:12px;padding:12px;margin-top:8px;font-weight:700">Desbloquear con PIN</button><p id="security-msg" style="color:#fca5a5;min-height:20px"></p></div></div>')}
+function lock(){overlay();document.getElementById('security-lock').style.display='flex';sessionStorage.removeItem('patrimonio_v2_unlocked');const p=document.getElementById('security-pin');if(p)p.value=''}
+function unlock(){document.getElementById('security-lock').style.display='none';sessionStorage.setItem('patrimonio_v2_unlocked','1');clearTimeout(timer);timer=setTimeout(lock,TIMEOUT)}
+async function init(){overlay();try{st=JSON.parse(localStorage.getItem(SKEY)||'null')}catch(e){}if(!st){const pin=prompt('Crea un PIN de 6 dígitos para proteger Patrimonio V2');if(!/^\d{6}$/.test(pin||'')){document.getElementById('security-msg').textContent='Debes crear un PIN de 6 dígitos.';return}st={pinHash:await hash(pin),credentialId:null};localStorage.setItem(SKEY,JSON.stringify(st))}document.getElementById('security-biometric').onclick=biometric;document.getElementById('security-pin-btn').onclick=pinUnlock;lock()}
+async function pinUnlock(){const p=document.getElementById('security-pin').value;if(st&&await hash(p)===st.pinHash)unlock();else document.getElementById('security-msg').textContent='PIN incorrecto.'}
+async function biometric(){try{if(!window.PublicKeyCredential||!navigator.credentials){document.getElementById('security-msg').textContent='Face ID no disponible aquí. Usa el PIN.';return}if(!st.credentialId){const c=await navigator.credentials.create({publicKey:{challenge:crypto.getRandomValues(new Uint8Array(32)),rp:{name:'Patrimonio V2',id:location.hostname},user:{id:crypto.getRandomValues(new Uint8Array(16)),name:'usuario',displayName:'Patrimonio V2'},pubKeyCredParams:[{type:'public-key',alg:-7},{type:'public-key',alg:-257}],authenticatorSelection:{authenticatorAttachment:'platform',userVerification:'required'},timeout:60000}});st.credentialId=b64(c.rawId);localStorage.setItem(SKEY,JSON.stringify(st));unlock();return}await navigator.credentials.get({publicKey:{challenge:crypto.getRandomValues(new Uint8Array(32)),allowCredentials:[{type:'public-key',id:ub64(st.credentialId)}],userVerification:'required',timeout:60000}});unlock()}catch(e){document.getElementById('security-msg').textContent='No se pudo validar. Usa el PIN.'}}
+document.addEventListener('visibilitychange',()=>{if(document.hidden)lock();else if(sessionStorage.getItem('patrimonio_v2_unlocked'))timer=setTimeout(lock,TIMEOUT);else lock()});
+document.addEventListener('DOMContentLoaded',init);
 })();

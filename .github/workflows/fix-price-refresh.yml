@@ -1,0 +1,34 @@
+name: Fix price refresh
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch price refresh
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text()
+          old="async function sync(){if(window.PortfolioIntelligenceV4){I=await PortfolioIntelligenceV4.build(data);if(I.eth.price)data.crypto.ethPrice=I.eth.price;data.market.lastSync=new Date().toLocaleString('es-ES');data.market.source='market-data + FX fallback';save()}render(current)}"
+          new="""async function sync(){try{const m=await window.MarketV4.sync(),q=m.quotes||{},fx={USD:m.usdEur,HKD:m.hkdEur,JPY:m.jpyEur,GBP:m.gbpEur,EUR:1},aliases={'MSCI World Acc':'iShares Core MSCI World Acc','Meta':'Meta Platforms','Palantir':'Palantir Technologies','S&P 500 ETF':'Vanguard S&P 500 Dist ETF'},positions=window.V4Portfolio?.positions||[];const rows=positions.map(p=>{const qd=q[p.name]||q[aliases[p.name]],rate=fx[qd?.currency||p.currency]||1,price=Number(qd?.price),costRate=fx[p.costCurrency||p.currency]||1,costEUR=Number(p.quantity)*Number(p.averageCost)*costRate,valueEUR=Number(p.quantity)*price*rate,gainEUR=valueEUR-costEUR;return{name:p.name,quantity:p.quantity,averageCost:p.averageCost,currency:qd?.currency||p.currency,quote:Number.isFinite(price)?price:null,valueEUR:Number.isFinite(valueEUR)?valueEUR:0,costEUR,gainEUR,returnPct:costEUR?gainEUR/costEUR:0,status:Number.isFinite(price)?'live-price':'pending'}});const inv=rows.reduce((a,r)=>a+r.valueEUR,0),ethPrice=Number(m.ethPrice)||0,ethValue=Number(data.crypto.eth||0)*ethPrice;I={rows,liveInvestment:inv,total:inv+liq()+ethValue,eth:{price:ethPrice,valueEUR:ethValue}};data.crypto.ethPrice=ethPrice;data.market.lastSync=m.updatedAt?new Date(m.updatedAt).toLocaleString('es-ES'):new Date().toLocaleString('es-ES');data.market.source=m.provider||'market-data';save();render(current)}catch(e){console.error(e);render(current)}}\nfunction refreshPrices(){const b=document.getElementById('refreshPricesBtn');if(b){b.disabled=true;b.textContent='⏳ Actualizando...'}sync().finally(()=>{if(b){b.disabled=false;b.textContent='🔄 Actualizar precios'}})}"""
+          if old in s:
+            s=s.replace(old,new)
+          if 'id="refreshPricesBtn"' not in s:
+            s=s.replace('<button id="privacyBtn" class="privacy-btn" onclick="togglePrivate()">👁️ Modo privado</button>','<div style="display:flex;gap:7px;align-items:center"><button id="refreshPricesBtn" class="privacy-btn" onclick="refreshPrices()">🔄 Actualizar precios</button><button id="privacyBtn" class="privacy-btn" onclick="togglePrivate()">👁️ Modo privado</button></div>')
+          if "render('dashboard');setTimeout(sync,50);" not in s:
+            s=s.replace("render('dashboard');","render('dashboard');setTimeout(sync,50);")
+          p.write_text(s)
+          PY
+      - name: Commit patched app
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git diff --cached --quiet || git commit -m 'Fix live prices and add refresh button'
+          git push

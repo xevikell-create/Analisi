@@ -21,37 +21,25 @@ jobs:
         run: |
           set -euo pipefail
           test -f index.html
+          test -f app.js
           test -f market.js
           test -f market-data.json
           test -f manifest.json
           test -f market-symbols.json
+          test -f security.js
           grep -q "Patrimonio V2" index.html
           grep -q "PortfolioIntelligenceV4" market.js
           grep -q "MarketV4" market.js
           grep -q "Ethereum" market.js
+          grep -q "¿Dónde pongo el próximo euro?" app.js
           echo "Required files and core modules present."
-      - name: Syntax check inline JavaScript
+      - name: Validate JavaScript syntax
         shell: bash
         run: |
           set -euo pipefail
-          python3 - <<'PY'
-          from pathlib import Path
-          import re, subprocess, tempfile
-          html = Path('index.html').read_text(encoding='utf-8')
-          scripts = re.findall(r'<script(?:\s[^>]*)?>(.*?)</script>', html, flags=re.S|re.I)
-          inline = '\n'.join(s for s in scripts if s.strip())
-          if not inline.strip():
-              raise SystemExit('No inline JavaScript found')
-          with tempfile.NamedTemporaryFile('w', suffix='.js', delete=False, encoding='utf-8') as f:
-              f.write(inline)
-              path=f.name
-          r=subprocess.run(['node','--check',path], text=True, capture_output=True)
-          print(r.stdout)
-          print(r.stderr)
-          raise SystemExit(r.returncode)
-          PY
-      - name: Validate market.js syntax
-        run: node --check market.js
+          node --check app.js
+          node --check market.js
+          node --check security.js
       - name: Validate JSON data
         run: |
           set -euo pipefail
@@ -84,12 +72,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          grep -Riq "429\|fallback\|cache\|stale" market.js market-data.json index.html
+          grep -Riq "429\|fallback\|cache\|stale" market.js market-data.json app.js
           echo "Market fallback/stale handling markers present."
-      - name: Validate no obvious duplicate portfolio engine
+      - name: Validate portfolio engine and contribution logic
         shell: bash
         run: |
           set -euo pipefail
-          count=$(grep -o "PortfolioIntelligenceV4" market.js | wc -l)
-          test "$count" -ge 1
-          echo "Portfolio intelligence engine detected: $count reference(s)."
+          grep -q "PortfolioIntelligenceV4" market.js
+          grep -q "newAvg" app.js
+          grep -q "patrimonio_positions_overrides" app.js
+          echo "Portfolio engine and average-cost contribution logic detected."

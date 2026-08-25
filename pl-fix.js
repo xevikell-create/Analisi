@@ -1,37 +1,42 @@
-/* P/L total fix — Patrimonio V2 — incluye Ethereum en P/L total */
+/* P/L total fix V2 — coste ETH incluido correctamente */
 (function(){
+  const KEY='patrimonio_v4';
+  function state(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch{return {}}}
+  function saveEthCost(){
+    const d=state();
+    if(!Number.isFinite(Number(d?.crypto?.ethCostEUR))){
+      d.crypto={...(d.crypto||{}),ethCostEUR:2000};
+      localStorage.setItem(KEY,JSON.stringify(d));
+    }
+    return Number(d?.crypto?.ethCostEUR)||2000;
+  }
   function buildRows(m){
     const fx={USD:Number(m.usdEur)||0.85,HKD:Number(m.hkdEur)||0.108,JPY:Number(m.jpyEur)||0.0058,GBP:Number(m.gbpEur)||0.856,EUR:1};
     const aliases={Meta:'Meta Platforms',Palantir:'Palantir Technologies','S&P 500 ETF':'Vanguard S&P 500 Dist ETF','MSCI World Acc':'iShares Core MSCI World Acc'};
-    const overrides=JSON.parse(localStorage.getItem('patrimonio_positions_overrides')||'{}');
-    return (window.V4Portfolio?.positions||[]).map(p=>{const x={...p,...(overrides[p.name]||{})};const qd=m.quotes?.[p.name]||m.quotes?.[aliases[p.name]];const rate=fx[qd?.currency||p.currency]||1;const costRate=fx[p.costCurrency||p.currency]||1;const price=Number(qd?.price);const cost=Number(x.quantity)*Number(x.averageCost)*costRate;const value=Number.isFinite(price)?Number(x.quantity)*price*rate:0;return{name:p.name,quantity:Number(x.quantity),averageCost:Number(x.averageCost),currency:qd?.currency||p.currency,quote:Number.isFinite(price)?price:null,valueEUR:value,costEUR:cost,gainEUR:value-cost,returnPct:cost?(value-cost)/cost:0}});
-  }
-  function ethPL(m){
-    const eth=Number(window.data?.crypto?.eth)||0;
-    const price=Number(m.ethPrice)||0;
-    const value=eth*price;
-    const cost=Number(window.data?.crypto?.ethCostEUR);
-    const gain=value-(Number.isFinite(cost)?cost:0);
-    return {value,cost:Number.isFinite(cost)?cost:0,gain};
+    const ov=JSON.parse(localStorage.getItem('patrimonio_positions_overrides')||'{}');
+    return (window.V4Portfolio?.positions||[]).map(p=>{
+      const x={...p,...(ov[p.name]||{})}; const qd=m.quotes?.[p.name]||m.quotes?.[aliases[p.name]];
+      const rate=fx[qd?.currency||p.currency]||1; const costRate=fx[p.costCurrency||p.currency]||1;
+      const price=Number(qd?.price); const cost=Number(x.quantity)*Number(x.averageCost)*costRate;
+      const value=Number.isFinite(price)?Number(x.quantity)*price*rate:0;
+      return {name:p.name,quantity:Number(x.quantity),averageCost:Number(x.averageCost),currency:qd?.currency||p.currency,quote:Number.isFinite(price)?price:null,valueEUR:value,costEUR:cost,gainEUR:value-cost,returnPct:cost?(value-cost)/cost:0};
+    });
   }
   function totals(m){
-    const rs=buildRows(m); const invCost=rs.reduce((s,r)=>s+r.costEUR,0); const invValue=rs.reduce((s,r)=>s+r.valueEUR,0); const invGain=invValue-invCost;
-    const eth=ethPL(m); const totalCost=invCost+eth.cost; const totalValue=invValue+eth.value; const totalGain=invGain+eth.gain; const totalPct=totalCost?totalGain/totalCost:0;
-    return {rs,invCost,invValue,invGain,invPct:invCost?invGain/invCost:0,eth,totalCost,totalValue,totalGain,totalPct};
+    const rs=buildRows(m), invCost=rs.reduce((s,r)=>s+r.costEUR,0), invValue=rs.reduce((s,r)=>s+r.valueEUR,0);
+    const d=state(), ethQty=Number(d?.crypto?.eth)||1.1, ethCost=saveEthCost(), ethPrice=Number(m.ethPrice)||0, ethValue=ethQty*ethPrice;
+    const totalCost=invCost+ethCost, totalValue=invValue+ethValue, totalGain=totalValue-totalCost;
+    return {rs,invCost,invValue,invGain:invValue-invCost,invPct:invCost?(invValue-invCost)/invCost:0,eth:{qty:ethQty,price:ethPrice,value:ethValue,cost:ethCost,gain:ethValue-ethCost},totalCost,totalValue,totalGain,totalPct:totalCost?totalGain/totalCost:0};
+  }
+  async function renderPL(){
+    const m=await window.MarketV4.sync(), z=totals(m), t=window.total();
+    const money=window.money,pct=window.pct,num=window.num,esc=window.esc;
+    document.getElementById('app').innerHTML=`<h2>📊 Cartera completa</h2><div class="card scroll"><table><thead><tr><th>Activo</th><th>Cantidad</th><th>Precio medio</th><th>Actual</th><th class="right">Valor €</th><th class="right">P/L</th></tr></thead><tbody>${z.rs.map(r=>`<tr><td><b>${esc(r.name)}</b></td><td>${num(r.quantity)}</td><td>${num(r.averageCost)} ${r.currency}</td><td>${r.quote==null?'—':num(r.quote)+' '+r.currency}</td><td class="right"><b>${money(r.valueEUR)}</b></td><td class="right ${r.gainEUR>=0?'positive':'negative'}">${money(r.gainEUR)}<br>${pct(r.returnPct)}</td></tr>`).join('')}<tr><td><b>Ethereum</b></td><td>${num(z.eth.qty)}</td><td>${money(z.eth.cost/z.eth.qty)}</td><td>${money(z.eth.price)}</td><td class="right"><b>${money(z.eth.value)}</b></td><td class="right ${z.eth.gain>=0?'positive':'negative'}">${money(z.eth.gain)}</td></tr></tbody></table></div><div class="grid section"><div class="card">P/L acciones + ETFs<div class="kpi ${z.invGain>=0?'positive':'negative'}">${money(z.invGain)}</div><span>${pct(z.invPct)}</span></div><div class="card">P/L Ethereum<div class="kpi ${z.eth.gain>=0?'positive':'negative'}">${money(z.eth.gain)}</div><span>Coste registrado: ${money(z.eth.cost)}</span></div><div class="card">P/L GLOBAL<div class="kpi ${z.totalGain>=0?'positive':'negative'}">${money(z.totalGain)}</div><span>${pct(z.totalPct)}</span></div></div><div class="card"><b>P/L global correcto:</b> ${money(z.totalGain)} (${pct(z.totalPct)})<br><span class="muted">Coste total invertido: ${money(z.totalCost)} · Valor actual: ${money(z.totalValue)} · Liquidez excluida del P/L.</span></div>`;
+    window.applyPrivate?.();
   }
   function patch(){
-    const originalDashboard=window.pages.dashboard;
-    window.pages.dashboard=async function(){
-      try{
-        const m=await window.MarketV4.sync(); const z=totals(m); const t=window.total(), gap=Math.max(0,window.data.target-t);
-        document.getElementById('app').innerHTML=`<div class="card hero"><span class="badge">MOTOR PATRIMONIAL</span><h2>Patrimonio total</h2><div class="kpi sensitive">${window.money(t)}</div><p class="muted">${window.pct(t/window.data.target)} del objetivo de ${window.money(window.data.target)}</p><div class="progress"><div style="width:${Math.min(100,t/window.data.target*100)}%"></div></div><p class="small">Faltan ${window.money(gap)}</p></div><div class="grid section"><div class="card">Inversiones<div class="kpi sensitive">${window.money(z.invValue)}</div><span>P/L ${window.money(z.invGain)} · ${window.pct(z.invPct)}</span></div><div class="card">Liquidez<div class="kpi sensitive">${window.money(window.liq())}</div><span>${window.pct(window.liq()/Math.max(1,t))}</span></div><div class="card">Ethereum<div class="kpi sensitive">${window.money(z.eth.value)}</div><span>P/L ${window.money(z.eth.gain)}</span></div><div class="card">P/L total<div class="kpi ${z.totalGain>=0?'positive':'negative'} sensitive">${window.money(z.totalGain)}</div><span>${window.pct(z.totalPct)}</span></div></div><div class="card"><b>P/L total cartera:</b> ${window.money(z.totalGain)} (${window.pct(z.totalPct)})<br><span class="muted">Acciones + ETFs + Ethereum. La liquidez queda fuera.</span><br><small>Inversiones: ${window.money(z.invGain)} · Ethereum: ${window.money(z.eth.gain)}</small></div>`;
-        window.applyPrivate?.();
-      }catch(e){console.error(e);originalDashboard();}
-    };
-    window.pages.cartera=function(){
-      window.MarketV4.sync().then(m=>{const z=totals(m);document.getElementById('app').innerHTML=`<h2>Cartera completa</h2><div class="card scroll"><table><thead><tr><th>Activo</th><th>Cantidad</th><th>Precio medio</th><th>Actual</th><th class="right">Valor €</th><th class="right">P/L</th><th>Estado</th></tr></thead><tbody>${z.rs.map(r=>`<tr><td><b>${window.esc(r.name)}</b></td><td>${window.num(r.quantity)}</td><td>${window.num(r.averageCost)} ${r.currency}</td><td>${r.quote==null?'—':window.num(r.quote)+' '+r.currency}</td><td class="right"><b>${window.money(r.valueEUR)}</b></td><td class="right ${r.gainEUR>=0?'positive':'negative'}">${window.money(r.gainEUR)}<br>${window.pct(r.returnPct)}</td><td><span class="badge green">LIVE</span></td></tr>`).join('')}<tr><td><b>Ethereum</b></td><td>${window.num(window.data.crypto.eth)}</td><td>—</td><td>${window.num(Number(m.ethPrice)||0)} EUR</td><td class="right"><b>${window.money(z.eth.value)}</b></td><td class="right ${z.eth.gain>=0?'positive':'negative'}">${window.money(z.eth.gain)}</td><td><span class="badge green">LIVE</span></td></tr></tbody></table></div><div class="card section"><b>P/L total cartera:</b> ${window.money(z.totalGain)} (${window.pct(z.totalPct)})<br><span class="muted">Acciones + ETFs + Ethereum. Sin liquidez.</span><br>Acciones/ETFs: ${window.money(z.invGain)} · Ethereum: ${window.money(z.eth.gain)}</div>`;window.applyPrivate?.();}).catch(console.error);
-    };
-    window.pages.dashboard();
+    saveEthCost();
+    if(window.pages){window.pages.cartera=renderPL;}
   }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(patch,0));else setTimeout(patch,0);
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(patch,50));else setTimeout(patch,50);
 })();

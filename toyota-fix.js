@@ -1,13 +1,20 @@
-/* Toyota P/L correction: keep the position and historical cost in JPY. */
+/* Toyota P/L correction — source of truth: 83.34 shares, average cost 2,897 JPY/share. */
 (function(){
   const KEY='patrimonio_positions_overrides';
-  try{
-    const ov=JSON.parse(localStorage.getItem(KEY)||'{}');
-    if(ov.Toyota){
-      ov.Toyota={quantity:83.34,averageCost:2897};
-      localStorage.setItem(KEY,JSON.stringify(ov));
-    }
-  }catch(e){ console.warn('Toyota migration skipped',e); }
-  function run(){ if(typeof sync==='function') sync(); else setTimeout(run,100); }
+  const TOYOTA={quantity:83.34,averageCost:2897};
+  function enforce(){
+    try{
+      const ov=JSON.parse(localStorage.getItem(KEY)||'{}');
+      if(ov.Toyota?.quantity!==TOYOTA.quantity || ov.Toyota?.averageCost!==TOYOTA.averageCost){
+        ov.Toyota={...TOYOTA};
+        localStorage.setItem(KEY,JSON.stringify(ov));
+      }
+    }catch(e){ console.warn('Toyota override skipped',e); }
+  }
+  function run(){
+    enforce();
+    if(typeof sync==='function') sync();
+    else setTimeout(run,100);
+  }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run); else run();
 })();

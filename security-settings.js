@@ -1,7 +1,7 @@
 /* Centro de configuración de seguridad */
 (function(){
   const KEY='patrimonio_security_settings';
-  const defaults={biometric:true,lockOnBackground:true,lockOnReload:true,privateMode:false};
+  const defaults={biometric:true,lockOnBackground:false,lockOnReload:true,privateMode:false};
   function get(){try{return {...defaults,...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch{return {...defaults}}}
   function save(s){localStorage.setItem(KEY,JSON.stringify(s));window.SECURITY_SETTINGS=s;}
   window.SECURITY_SETTINGS=get();

@@ -1,41 +1,72 @@
 window.DecisionEngineV4={
   rank({positions=[],crypto=[],quotes={},cash=0,weeklyContribution=300,usdPerEur=1}={}){
+    const fx=Math.max(Number(usdPerEur)||1,0.000001);
     const rows=positions.map(p=>{
       const symbol=p.ticker||p.name;
       const raw=quotes[symbol]??quotes[p.name];
       const q=typeof raw==='object'?Number(raw?.price):Number(raw);
       const currency=String(raw?.currency||p.currency||'EUR').toUpperCase();
-      const fx=Number(usdPerEur)||1;
-      const priceEUR=Number.isFinite(q)?(currency==='USD'?q/Math.max(fx,0.000001):currency==='HKD'?q*0.108:q):null;
+      const priceEUR=Number.isFinite(q)?(currency==='USD'?q/fx:currency==='HKD'?q*0.108:q):null;
       const quantity=Number(p.quantity)||0;
-      const cost=quantity*(Number(p.averageCost)||0)*(currency==='USD'?1/Math.max(fx,0.000001):currency==='HKD'?0.108:1);
+      const avg=Number(p.averageCost)||0;
+      const cost=quantity*avg*(currency==='USD'?1/fx:currency==='HKD'?0.108:1);
       const value=Number.isFinite(priceEUR)?quantity*priceEUR:null;
       const gain=value==null?null:value-cost;
-      return {...p,symbol,value,cost,gain,price:priceEUR,currency};
+      const ret=cost>0&&gain!=null?gain/cost:0;
+      return {...p,symbol,value,cost,gain,returnPct:ret,price:priceEUR,currency};
     });
     const eth=Array.isArray(crypto)?crypto.find(c=>(c.ticker||c.name||'').toUpperCase()==='ETH'):null;
     const ethQty=Number(eth?.quantity)||0;
     const ethPrice=Number(eth?.price)||Number(quotes.ETH)||0;
     const ethValue=ethQty*ethPrice;
+    const ethCost=Number(eth?.cost)||Number(eth?.totalCost)||2000;
     const priced=rows.filter(r=>r.value!=null);
-    const totalInvested=priced.reduce((s,r)=>s+r.value,0)+ethValue;
-    const core=priced.find(r=>r.core);
-    const scores=priced.map(r=>{
-      let score=50;
-      if(r.core) score+=25;
-      const weight=totalInvested?r.value/totalInvested:0;
-      if(weight<0.03) score+=10;
-      if(weight>0.20) score-=20;
-      if(r.gain!=null&&r.cost>0){const ret=r.gain/r.cost;if(ret<-0.20)score+=8;if(ret>0.80)score-=8;}
-      return {...r,score:Math.max(0,Math.min(100,score)),weight};
+    const totalMarketValue=priced.reduce((s,r)=>s+r.value,0)+ethValue;
+    const investable=priced.map(r=>({...r,weight:totalMarketValue?r.value/totalMarketValue:0}));
+    const candidates=investable.map(r=>{
+      const weight=r.weight;
+      let valuation=50;
+      if(r.valuationScore!=null) valuation=Math.max(0,Math.min(100,Number(r.valuationScore)));
+      else if(r.fairValue!=null&&r.price>0){const upside=Number(r.fairValue)/r.price-1;valuation=Math.max(0,Math.min(100,50+upside*50));}
+      let quality=r.qualityScore!=null?Number(r.qualityScore):50;
+      quality=Math.max(0,Math.min(100,quality));
+      let balance=50+(0.08-weight)*300;
+      balance=Math.max(0,Math.min(100,balance));
+      let momentum=50;
+      if(r.returnPct<-0.20)momentum=65;
+      if(r.returnPct>0.80)momentum=35;
+      let score=valuation*0.35+quality*0.25+balance*0.25+momentum*0.15;
+      if(r.core)score+=7;
+      if(weight>0.20)score-=20;
+      if(weight>0.30)score-=15;
+      score=Math.max(0,Math.min(100,score));
+      let action='ESPERAR';
+      if(score>=75)action='COMPRAR';
+      else if(score>=62)action='REFORZAR';
+      else if(score>=48)action='MANTENER';
+      const reason=r.core?'Es el núcleo de la cartera y mantiene prioridad estructural.':weight<0.03?'Está infraponderada y tiene margen para aumentar peso.':weight>0.20?'La concentración limita nuevas compras.':'Su puntuación global no justifica aumentar posición ahora.';
+      return {...r,score,action,reason,components:{valuation,quality,balance,momentum}};
     }).sort((a,b)=>b.score-a.score);
-    const winner=scores[0]||core||null;
-    return {action:winner?'REFORZAR':'ESPERAR',recommendation:winner?winner.name:'Sin datos de mercado',amount:Number(weeklyContribution)||0,reason:winner?(winner.core?'Es el núcleo de la cartera y tiene prioridad estructural.':'Tiene margen de peso y no presenta una concentración excesiva.'):'Faltan cotizaciones para calcular una decisión fiable.',totalMarketValue:totalInvested,cash:Number(cash)||0,pricedPositions:priced.length,crypto:{ethQuantity:ethQty,ethPrice,ethValue},candidates:scores};
+    const winner=candidates[0]||null;
+    const top=candidates.slice(0,3);
+    return {
+      action:winner?.action||'ESPERAR',
+      recommendation:winner?.name||winner?.symbol||'Sin datos de mercado',
+      amount:Number(weeklyContribution)||0,
+      suggestedAllocation:winner&&winner.score>=62?100:0,
+      reason:winner?.reason||'Faltan cotizaciones para calcular una decisión fiable.',
+      score:winner?Math.round(winner.score):0,
+      totalMarketValue,
+      cash:Number(cash)||0,
+      pricedPositions:priced.length,
+      crypto:{ethQuantity:ethQty,ethPrice,ethValue,ethCost},
+      candidates,
+      top3:top,
+      confidence:winner?Math.round(Math.max(0,Math.min(100,50+Math.abs(winner.score-50)))):0
+    };
   }
 };
 
-// Compatibility layer: the V4 portfolio screen must not turn a valid quote into
-// "Pendiente" merely because the FX endpoint is temporarily unavailable.
 (function installCarteraMarketFix(){
   const FALLBACK_USD_EUR=0.85;
   function patch(){

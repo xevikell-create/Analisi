@@ -18,9 +18,9 @@
       }catch(e){console.error(e);originalDashboard();}
     };
     window.pages.cartera=function(){
-      window.pages.__plFixRows=buildRows;
       window.MarketV4.sync().then(m=>{const rs=buildRows(m);const cost=rs.reduce((s,r)=>s+r.costEUR,0);const value=rs.reduce((s,r)=>s+r.valueEUR,0);const gain=value-cost;const pct=cost?gain/cost:0;document.getElementById('app').innerHTML=`<h2>Cartera completa</h2><div class="card scroll"><table><thead><tr><th>Activo</th><th>Cantidad</th><th>Precio medio</th><th>Actual</th><th class="right">Valor €</th><th class="right">P/L</th><th>Estado</th></tr></thead><tbody>${rs.map(r=>`<tr><td><b>${window.esc(r.name)}</b></td><td>${window.num(r.quantity)}</td><td>${window.num(r.averageCost)} ${r.currency}</td><td>${r.quote==null?'—':window.num(r.quote)+' '+r.currency}</td><td class="right"><b>${window.money(r.valueEUR)}</b></td><td class="right ${r.gainEUR>=0?'positive':'negative'}">${window.money(r.gainEUR)}<br>${window.pct(r.returnPct)}</td><td><span class="badge green">LIVE</span></td></tr>`).join('')}</tbody></table></div><div class="card section"><b>Resultado total de inversiones:</b> ${window.money(gain)} (${window.pct(pct)})<br><span class="muted">Sin incluir Ethereum ni liquidez.</span></div>`;window.applyPrivate?.();}).catch(console.error);
     };
+    window.pages.dashboard();
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(patch,0));else setTimeout(patch,0);
 })();

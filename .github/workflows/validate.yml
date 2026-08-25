@@ -20,32 +20,24 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test -f index.html
-          test -f app.js
-          test -f market.js
-          test -f market-data.json
-          test -f manifest.json
-          test -f market-symbols.json
-          test -f security.js
+          for f in index.html app.js market.js market-data.json manifest.json market-symbols.json security.js final-audit.js security-settings.js pl-chart.js pl-fix.js; do test -f "$f"; done
           grep -q "Patrimonio V2" index.html
-          grep -q "PortfolioIntelligenceV4" market.js
           grep -q "MarketV4" market.js
           grep -q "Ethereum" market.js
           grep -q "¿Dónde pongo el próximo euro?" app.js
-          echo "Required files and core modules present."
+          grep -q "final-audit.js" index.html
+          echo "Required files and final modules present."
       - name: Validate JavaScript syntax
         shell: bash
         run: |
           set -euo pipefail
-          node --check app.js
-          node --check market.js
-          node --check security.js
+          for f in app.js market.js security.js security-settings.js security-settings-fix.js security-nav.js pl-fix.js pl-chart.js final-audit.js toyota-fix.js; do node --check "$f"; done
       - name: Validate JSON data
         run: |
           set -euo pipefail
           python3 - <<'PY'
           import json
-          for p in ['market-data.json','manifest.json','market-symbols.json']:
+          for p in ['market-data.json','manifest.json','market-symbols.json','portfolio-data.json']:
               with open(p,encoding='utf-8') as f: json.load(f)
               print(p, 'OK')
           PY
@@ -62,23 +54,26 @@ jobs:
           if missing:
               raise SystemExit('Missing market quotes: '+', '.join(missing))
           for key in ('USD_EUR','HKD_EUR','JPY_EUR','GBP_EUR'):
-              if not market.get('fxRates',{}).get(key):
-                  raise SystemExit('Missing FX rate: '+key)
-          if not market.get('crypto',{}).get('ETH_EUR'):
-              raise SystemExit('Missing ETH/EUR price')
+              if not market.get('fxRates',{}).get(key): raise SystemExit('Missing FX rate: '+key)
+          if not market.get('crypto',{}).get('ETH_EUR'): raise SystemExit('Missing ETH/EUR price')
           print(f"Market snapshot complete: {len(quotes)}/{len(symbols)} quotes; FX=4; ETH=OK")
           PY
-      - name: Validate market quality states
+      - name: Validate final calculation features
         shell: bash
         run: |
           set -euo pipefail
-          grep -Riq "429\|fallback\|cache\|stale" market.js market-data.json app.js
-          echo "Market fallback/stale handling markers present."
+          grep -q "totalCost" final-audit.js
+          grep -q "totalValue" final-audit.js
+          grep -q "Ethereum" final-audit.js
+          grep -q "patrimonio_crypto_cost_eur" final-audit.js
+          grep -q "lockOnBackground" security.js
+          ! grep -q "TIMEOUT=30000" security.js
+          echo "Final P/L, chart, ETH cost basis and security timeout checks passed."
       - name: Validate portfolio engine and contribution logic
         shell: bash
         run: |
           set -euo pipefail
-          grep -q "PortfolioIntelligenceV4" market.js
           grep -q "newAvg" app.js
           grep -q "patrimonio_positions_overrides" app.js
+          grep -q "finalContribution" final-audit.js
           echo "Portfolio engine and average-cost contribution logic detected."

@@ -14,11 +14,9 @@ jobs:
         with:
           python-version: '3.12'
       - name: Refresh market snapshot
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           python - <<'PY'
-          import json, time, urllib.request
+          import json, time, urllib.request, urllib.parse
           from pathlib import Path
           p=Path('radar-data.json')
           data=json.loads(p.read_text()) if p.exists() else {'version':1,'assets':{}}
@@ -30,8 +28,7 @@ jobs:
                   with urllib.request.urlopen(req,timeout=15) as r: j=json.load(r)
                   res=j['chart']['result'][0]; meta=res.get('meta',{})
                   a['price']=meta.get('regularMarketPrice'); a['currency']=meta.get('currency') or a.get('currency'); a['updatedAt']=time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()); a['sources']=[{'type':'market','name':'Yahoo Finance'}]
-              except Exception as e:
-                  a['refreshError']=str(e)
+              except Exception as e: a['refreshError']=str(e)
           data['updatedAt']=time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()); p.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
           PY
       - name: Commit snapshot

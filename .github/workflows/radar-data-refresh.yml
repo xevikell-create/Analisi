@@ -31,10 +31,12 @@ jobs:
               except Exception as e: a['refreshError']=str(e)
           data['updatedAt']=time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()); p.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
           PY
+      - name: Refresh US fundamentals from SEC XBRL
+        run: python scripts/refresh_sec_fundamentals.py
       - name: Commit snapshot
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add radar-data.json
-          git diff --cached --quiet || git commit -m 'chore: refresh Radar market data'
+          git diff --cached --quiet || git commit -m 'chore: refresh Radar market and fundamentals data'
           git push

@@ -1,60 +1,21 @@
-/* Radar de oportunidades V2 — módulo funcional */
+/* RADAR V3 — cartera + universo de mercado, sin inventar datos */
 (function(){
-  function boot(){
-    if(typeof pages==='undefined'||typeof data==='undefined'||typeof rows!=='function'||typeof total!=='function'||typeof money!=='function'||typeof pct!=='function'||typeof num!=='function'||typeof esc!=='function'||typeof save!=='function'){
-      setTimeout(boot,100);return;
-    }
-
-    const cfg=()=>data.radarConfig||{targets:{},watchlist:[]};
-    function ensure(){if(!data.radarConfig)data.radarConfig={targets:{},watchlist:[]};return data.radarConfig}
-    function score(r){
-      const t=Math.max(1,total());
-      const weight=Number(r.valueEUR||0)/t;
-      let s=45;
-      const ret=Number(r.returnPct||0);
-      if(ret<=-.25)s+=25; else if(ret<=-.15)s+=18; else if(ret<=-.10)s+=12; else if(ret<0)s+=6;
-      if(weight<.025)s+=12; else if(weight<.05)s+=7; else if(weight>.25)s-=22; else if(weight>.15)s-=10;
-      if(r.core)s+=12;
-      const target=Number(cfg().targets?.[r.name]);
-      const price=Number(r.quote);
-      if(target>0&&price>0){const gap=target/price-1;if(gap>=.20)s+=15;else if(gap>=.10)s+=9;else if(gap<0)s-=12}
-      return Math.max(0,Math.min(100,Math.round(s)));
-    }
-    function label(s){return s>=75?'OPORTUNIDAD':s>=58?'VIGILAR':'ESPERAR'}
-    function renderRadar(){
-      const c=ensure();
-      const rs=rows().filter(r=>Number(r.valueEUR)>0).map(r=>({...r,weight:Number(r.valueEUR||0)/Math.max(1,total())})).map(r=>({...r,score:score(r)})).sort((a,b)=>b.score-a.score);
-      const opportunities=rs.filter(r=>r.score>=75);
-      const watch=rs.filter(r=>r.score>=58&&r.score<75);
-      document.getElementById('app').innerHTML=`
-        <h2>🔎 Radar de oportunidades</h2>
-        <div class="grid section">
-          <div class="card"><span class="muted">Oportunidades</span><div class="kpi">${opportunities.length}</div><span class="small">Score ≥ 75</span></div>
-          <div class="card"><span class="muted">En vigilancia</span><div class="kpi">${watch.length}</div><span class="small">Score 58–74</span></div>
-          <div class="card"><span class="muted">Universo analizado</span><div class="kpi">${rs.length}</div><span class="small">Posiciones con precio</span></div>
-        </div>
-        <div class="card section">
-          <h3>Señales actuales</h3>
-          ${rs.length?rs.slice(0,12).map(r=>{const target=Number(c.targets?.[r.name])||0;const gap=target&&r.quote?target/r.quote-1:null;const st=label(r.score);const cls=st==='OPORTUNIDAD'?'green':st==='VIGILAR'?'amber':'red';return `<div class="row"><span><b>${esc(r.name)}</b><br><span class="muted">Peso ${pct(r.weight)} · P/L ${pct(r.returnPct)}${gap!==null?' · Objetivo '+num(target)+' ('+(gap*100).toFixed(1)+'%)':''}</span></span><span style="text-align:right"><span class="badge ${cls}">${st}</span><br><span class="score">${r.score}/100</span></span></div>`}).join(''):'<div class="empty">Sin datos de mercado para analizar.</div>'}
-        </div>
-        <div class="card section">
-          <h3>🎯 Precios objetivo del radar</h3>
-          <p class="muted">Define un precio objetivo por activo. El radar premiará descuentos relevantes frente a ese objetivo.</p>
-          <div class="form">${rs.map(r=>`<label>${esc(r.name)}<input id="radar-target-${esc(r.name)}" type="number" step="0.0001" value="${Number(c.targets?.[r.name])||''}" placeholder="Precio objetivo"></label>`).join('')}</div>
-          <button class="action" style="margin-top:12px" onclick="saveRadarTargets()">💾 Guardar objetivos y recalcular</button>
-        </div>
-        <div class="card section">
-          <h3>Cómo decide el radar</h3>
-          <div class="pill"><span>caída / P/L</span><span>peso de cartera</span><span>MSCI World núcleo</span><span>precio objetivo</span><span>concentración</span></div>
-          <p class="muted" style="margin-top:12px">No compra automáticamente: identifica dónde merece la pena investigar antes de asignar el próximo euro.</p>
-        </div>`;
-    }
-    window.saveRadarTargets=function(){
-      const c=ensure();
-      rows().forEach(r=>{const el=document.getElementById('radar-target-'+CSS.escape(r.name));if(el){const v=Number(el.value);if(v>0)c.targets[r.name]=v;else delete c.targets[r.name]}});
-      data.radarConfig=c;save();render('radar');
-    };
-    pages.radar=renderRadar;
+ function boot(){
+  if(typeof pages==='undefined'||typeof data==='undefined'||typeof rows!=='function'||typeof total!=='function'||typeof money!=='function'||typeof pct!=='function'||typeof num!=='function'||typeof esc!=='function'||typeof save!=='function'||!window.RadarEngineV3){setTimeout(boot,100);return;}
+  const quoteMap=()=>{const q={};try{const c=JSON.parse(localStorage.getItem('patrimonio_market_cache')||'null');Object.entries(c?.quotes||{}).forEach(([k,v])=>{q[k]={price:Number(v.price),currency:v.currency,updatedAt:v.timestamp||c.updatedAt}})}catch(e){}return q};
+  function universe(){
+   const current=rows().map(r=>{const p=(window.V4Portfolio?.positions||[]).find(p=>p.name===r.name);return{name:r.name,ticker:p?.ticker||r.name,valueEUR:r.valueEUR,quote:r.quote,currency:r.currency,returnPct:r.returnPct,assetType:'stock',core:!!p?.core};});
+   const byTicker=new Map(current.map(x=>[x.ticker,x]));
+   (window.RadarUniverseV1?.candidates||[]).forEach(c=>{if(!byTicker.has(c.ticker))byTicker.set(c.ticker,{...c,valueEUR:0})});
+   const q=quoteMap();
+   return [...byTicker.values()].map(a=>{const z=q[a.ticker]||q[a.name];return {...a,quote:Number.isFinite(a.quote)?a.quote:(z?.price??null),currency:a.currency||z?.currency||null,updatedAt:a.updatedAt||z?.updatedAt||data.market?.lastSync};});
   }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+  pages.radar=function(){
+   const rs=rows().filter(r=>Number(r.valueEUR)>0),t=Math.max(1,total()),ctx=RadarEngineV3.buildContext(rs.map(r=>({ticker:r.name,name:r.name,valueEUR:r.valueEUR,sector:r.sector,country:r.country})),t),ranked=RadarEngineV3.rank(universe(),ctx),opp=ranked.filter(x=>x.radar.action==='OPORTUNIDAD'),watch=ranked.filter(x=>x.radar.action==='VIGILAR'),insufficient=ranked.filter(x=>x.radar.action==='DATOS_INSUFICIENTES'),climate=opp.length>=3?'FAVORABLE':watch.length>=3?'SELECTIVO':'PRUDENTE',top=opp[0]||watch[0]||insufficient[0];
+   document.getElementById('app').innerHTML=`<div class="radar-head"><div><span class="radar-eyebrow">INTELLIGENCE CENTER</span><h2>🔎 Radar</h2><p>Oportunidades dentro y fuera de tu cartera.</p></div><div class="climate ${climate==='FAVORABLE'?'good':climate==='SELECTIVO'?'warn':'care'}">${climate}<small>clima</small></div></div><div class="radar-stats"><div><b>${opp.length}</b><span>Oportunidades</span></div><div><b>${watch.length}</b><span>En vigilancia</span></div><div><b>${ranked.length}</b><span>Universo</span></div></div><div class="radar-card hero-radar"><div><span class="radar-eyebrow">PRÓXIMO EURO</span><h3>${top?esc(top.name):'Sin señal'}</h3><p>${top?(top.radar.action==='DATOS_INSUFICIENTES'?'Pendiente de datos fundamentales suficientes.':'Mejor señal disponible con los datos actuales.'):'Sin datos.'}</p></div><strong>${top?top.radar.score:'—'}<small>/100</small></strong></div>${opp.length?`<div class="radar-card"><div class="radar-title"><h3>🏆 Mejores oportunidades</h3><span>Encaje con cartera</span></div>${opp.slice(0,8).map(card).join('')}</div>`:''}<div class="radar-card"><div class="radar-title"><h3>👀 Vigilancia / datos pendientes</h3><span>${watch.length+insufficient.length}</span></div>${(watch.concat(insufficient)).slice(0,10).map(card).join('')}</div><div class="radar-card"><div class="radar-title"><h3>🛡️ Seguridad</h3><span>Antes de invertir</span></div><div class="risk-line"><span>Mayor posición</span><b>${rs.length?Math.round(Math.max(...rs.map(r=>r.valueEUR/t))*100):0}%</b></div><div class="risk-line"><span>Liquidez</span><b>${money(typeof liq==='function'?liq():0)}</b></div><div class="risk-line"><span>Datos insuficientes</span><b>${insufficient.length}</b></div><p class="hint">No se fuerza una recomendación cuando faltan datos críticos. El universo sí queda visible para poder ampliarlo y alimentarlo con datos fundamentales, macro y noticias.</p></div><div class="radar-card"><div class="radar-title"><h3>🌍 Universo</h3><span>${ranked.length} activos</span></div><div class="chips"><i>EEUU</i><i>Europa</i><i>Japón</i><i>China</i><i>Taiwán</i><i>ETFs</i><i>Technology</i><i>Healthcare</i><i>Industrials</i><i>Financials</i></div></div>`;
+  };
+  function card(x,i){const r=x.radar||{},cls=r.action==='OPORTUNIDAD'?'good':r.action==='VIGILAR'?'warn':'care';return `<div class="radar-item"><div class="rank">${i+1}</div><div class="radar-main"><b>${esc(x.name)}</b><span>${r.action||'ESPERAR'} · confianza ${r.confidence||0}% · ${x.quote?'precio '+num(x.quote):'precio pendiente'}</span></div><div class="radar-score ${cls}">${r.score||0}</div></div>`}
+  const s=document.createElement('style');s.textContent=`.radar-head{display:flex;justify-content:space-between;align-items:center;margin:4px 2px 14px}.radar-head h2{margin:3px 0;font-size:28px}.radar-head p{margin:0;color:var(--muted);font-size:13px}.radar-eyebrow{font-size:10px;font-weight:800;letter-spacing:1.5px;color:var(--blue)}.climate{min-width:78px;text-align:center;border-radius:14px;padding:10px 8px;font-weight:800;font-size:11px}.climate small{display:block;font-weight:500;margin-top:3px}.climate.good,.radar-score.good{background:#e9f8ef;color:#167347}.climate.warn,.radar-score.warn{background:#fff7df;color:#8a5a00}.climate.care,.radar-score.care{background:#fdecec;color:#b52c2c}.radar-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}.radar-stats div{background:#fff;border:1px solid var(--border);border-radius:13px;padding:12px}.radar-stats b{font-size:23px;display:block}.radar-stats span{font-size:11px;color:var(--muted)}.radar-card{background:#fff;border:1px solid var(--border);border-radius:17px;padding:15px;margin:10px 0;box-shadow:0 2px 8px #00000008}.hero-radar{background:linear-gradient(135deg,#111827,#253b66);color:#fff;display:flex;justify-content:space-between;align-items:center}.hero-radar .radar-eyebrow{color:#a8c7ff}.hero-radar h3{font-size:21px;margin:5px 0}.hero-radar p{margin:0;color:#cbd5e1;font-size:12px}.hero-radar>strong{font-size:38px}.hero-radar strong small{font-size:11px;color:#cbd5e1}.radar-title{display:flex;justify-content:space-between;align-items:center}.radar-title h3{margin:0 0 8px}.radar-title span{font-size:11px;color:var(--muted)}.radar-item{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--border)}.radar-item:last-child{border-bottom:0}.rank{width:25px;height:25px;border-radius:50%;background:#eef2f7;display:grid;place-items:center;font-size:11px;font-weight:800}.radar-main{flex:1}.radar-main b{display:block;font-size:14px}.radar-main span{display:block;color:var(--muted);font-size:10px;margin-top:3px}.radar-score{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;font-weight:900}.risk-line{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}.hint{font-size:11px;color:var(--muted);line-height:1.5}.chips{display:flex;flex-wrap:wrap;gap:6px}.chips i{font-style:normal;background:#eef2f7;border-radius:99px;padding:6px 9px;font-size:11px}`;document.head.appendChild(s);
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();

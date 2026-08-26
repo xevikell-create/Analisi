@@ -1,0 +1,19 @@
+{
+  "version":"1.0.0",
+  "updatedAt":"2026-08-26T23:00:00+02:00",
+  "sourcePolicy":["Reuters/current market reporting","official macro releases when available"],
+  "macro":{
+    "inflation":3.7,
+    "ratePressure":64,
+    "oilShock":55,
+    "recessionRisk":35,
+    "liquidity":45,
+    "regime":"INFLACION_PERSISTENTE_RIESGO_GEOPOLITICO"
+  },
+  "news":{
+    "global":[
+      {"date":"2026-08-26T17:45:00Z","impact":-0.18,"reliability":0.98,"topic":"US inflation above Fed target / Middle East uncertainty"},
+      {"date":"2026-08-26T17:45:00Z","impact":0.08,"reliability":0.98,"topic":"Hormuz reopening talks reduce near-term oil risk"}
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 {
   "provider": "yahoo",
-  "updatedAt": "2026-08-31T04:08:36.914504+00:00",
+  "updatedAt": "2026-08-31T04:23:37.680077+00:00",
   "quotes": {
     "First Solar": {
       "symbol": "FSLR",
@@ -8,7 +8,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-08-31T04:08:37.297679+00:00",
+      "timestamp": "2026-08-31T04:23:37.899660+00:00",
       "source": "Yahoo Finance"
     },
     "BYD": {
@@ -17,7 +17,7 @@
       "currency": "HKD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-08-31T04:08:37.398325+00:00",
+      "timestamp": "2026-08-31T04:23:37.952799+00:00",
       "source": "Yahoo Finance"
     },
     "Netflix": {
@@ -26,7 +26,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-08-31T04:08:37.542894+00:00",
+      "timestamp": "2026-08-31T04:23:38.013267+00:00",
       "source": "Yahoo Finance"
     },
     "Meta Platforms": {
@@ -35,7 +35,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-08-31T04:08:37.681176+00:00",
+      "timestamp": "2026-08-31T04:23:38.104427+00:00",
       "source": "Yahoo Finance"
     },
     "Apple": {
@@ -44,7 +44,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-08-31T04:08:37.831648+00:00",
+      "timestamp": "2026-08-31T04:23:38.170753+00:00",
       "source": "Yahoo Finance"
     },
     "Palantir Technologies": {
@@ -53,16 +53,16 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-08-31T04:08:37.968751+00:00",
+      "timestamp": "2026-08-31T04:23:38.283812+00:00",
       "source": "Yahoo Finance"
     },
     "Toyota": {
       "symbol": "7203.T",
-      "price": 3168.0,
+      "price": 3177.0,
       "currency": "JPY",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-08-31T04:08:38.071072+00:00",
+      "timestamp": "2026-08-31T04:23:38.351975+00:00",
       "source": "Yahoo Finance"
     },
     "AMD": {
@@ -71,7 +71,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-08-31T04:08:38.213235+00:00",
+      "timestamp": "2026-08-31T04:23:38.411294+00:00",
       "source": "Yahoo Finance"
     },
     "Nvidia": {
@@ -80,7 +80,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-08-31T04:08:38.390826+00:00",
+      "timestamp": "2026-08-31T04:23:38.516144+00:00",
       "source": "Yahoo Finance"
     },
     "CaixaBank": {
@@ -89,7 +89,7 @@
       "currency": "EUR",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-08-31T04:08:38.635388+00:00",
+      "timestamp": "2026-08-31T04:23:38.586016+00:00",
       "source": "Yahoo Finance"
     },
     "Vanguard S&P 500 Dist ETF": {
@@ -98,7 +98,7 @@
       "currency": "GBP",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-08-31T04:08:38.779376+00:00",
+      "timestamp": "2026-08-31T04:23:38.720410+00:00",
       "source": "Yahoo Finance"
     },
     "Amazon": {
@@ -107,7 +107,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-08-31T04:08:38.906095+00:00",
+      "timestamp": "2026-08-31T04:23:38.801386+00:00",
       "source": "Yahoo Finance"
     },
     "NextEra Energy": {
@@ -116,7 +116,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-08-31T04:08:39.045292+00:00",
+      "timestamp": "2026-08-31T04:23:38.862538+00:00",
       "source": "Yahoo Finance"
     },
     "iShares Core MSCI World Acc": {
@@ -125,7 +125,7 @@
       "currency": "GBP",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-08-31T04:08:39.187920+00:00",
+      "timestamp": "2026-08-31T04:23:38.929883+00:00",
       "source": "Yahoo Finance"
     }
   },
@@ -136,7 +136,7 @@
     "GBP_EUR": 1.1666
   },
   "crypto": {
-    "ETH_EUR": 2083.22
+    "ETH_EUR": 2081.65
   },
   "primaryError": "HTTP Error 429: Too Many Requests"
 }

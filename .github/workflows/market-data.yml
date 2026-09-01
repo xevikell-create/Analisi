@@ -33,15 +33,13 @@ jobs:
           out = {'provider': 'fallback', 'updatedAt': datetime.now(timezone.utc).isoformat(), 'quotes': {}, 'fxRates': {}, 'crypto': {}}
 
           def get_json(url):
-              req = urllib.request.Request(url, headers={'User-Agent': 'PatrimonioV2/1.0'})
+              req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 PatrimonioV2/1.1'})
               with urllib.request.urlopen(req, timeout=20) as r:
                   return json.load(r)
 
           def normalize_quote(price, currency):
               raw = str(currency or 'EUR').upper()
-              # Yahoo can return London-listed securities in GBp/GBX (pence).
-              # Store everything in GBP so the frontend can apply GBP/EUR once.
-              if raw in ('GBP','GBPENCE','GBX','GBp'.upper()):
+              if raw in ('GBP','GBPENCE','GBX'):
                   p = float(price)
                   if raw in ('GBX','GBPENCE') or p > 1000:
                       return p / 100.0, 'GBP'
@@ -65,21 +63,37 @@ jobs:
 
           missing = [(name, symbol) for name, symbol in symbols.items() if name not in out['quotes']]
           for name, symbol in missing:
-              try:
-                  url = 'https://query1.finance.yahoo.com/v8/finance/chart/' + urllib.parse.quote(symbol, safe='') + '?range=1d&interval=1m'
-                  payload = get_json(url)
-                  result = (payload.get('chart') or {}).get('result') or []
-                  meta = result[0].get('meta', {}) if result else {}
-                  price = meta.get('regularMarketPrice')
-                  if price is None and result:
-                      closes = ((result[0].get('indicators') or {}).get('quote') or [{}])[0].get('close') or []
-                      vals = [x for x in closes if isinstance(x, (int, float))]
-                      price = vals[-1] if vals else None
-                  if price is not None:
-                      price, currency = normalize_quote(price, meta.get('currency'))
-                      out['quotes'][name] = {'symbol': symbol, 'price': price, 'currency': currency, 'change': 0, 'percentChange': 0, 'timestamp': datetime.now(timezone.utc).isoformat(), 'source': 'Yahoo Finance'}
-              except Exception:
-                  pass
+              for host in ('query1.finance.yahoo.com', 'query2.finance.yahoo.com'):
+                  if name in out['quotes']:
+                      break
+                  try:
+                      url = 'https://' + host + '/v8/finance/chart/' + urllib.parse.quote(symbol, safe='') + '?range=1d&interval=1m'
+                      payload = get_json(url)
+                      result = (payload.get('chart') or {}).get('result') or []
+                      meta = result[0].get('meta', {}) if result else {}
+                      price = meta.get('regularMarketPrice')
+                      if price is None and result:
+                          closes = ((result[0].get('indicators') or {}).get('quote') or [{}])[0].get('close') or []
+                          vals = [x for x in closes if isinstance(x, (int, float))]
+                          price = vals[-1] if vals else None
+                      if price is not None:
+                          price, currency = normalize_quote(price, meta.get('currency'))
+                          out['quotes'][name] = {'symbol': symbol, 'price': price, 'currency': currency, 'change': 0, 'percentChange': 0, 'timestamp': datetime.now(timezone.utc).isoformat(), 'source': 'Yahoo Finance'}
+                  except Exception:
+                      pass
+
+          # Last-resort quote continuity: use the fresh Radar market snapshot when a symbol
+          # is temporarily rate-limited by the quote provider. This prevents a live position
+          # from disappearing from the portfolio merely because one provider returned 429/403.
+          try:
+              radar = json.load(open('radar-data.json', encoding='utf-8')).get('assets', {})
+              for name, symbol in symbols.items():
+                  if name not in out['quotes']:
+                      a = next((x for x in radar.values() if x.get('ticker') == symbol and x.get('price') is not None), None)
+                      if a:
+                          out['quotes'][name] = {'symbol': symbol, 'price': float(a['price']), 'currency': a.get('currency','USD'), 'change': 0, 'percentChange': 0, 'timestamp': a.get('updatedAt') or datetime.now(timezone.utc).isoformat(), 'source': 'Radar market snapshot'}
+          except Exception as e:
+              out['fallbackError'] = str(e)
 
           for base, key_name in [('USD','USD_EUR'),('HKD','HKD_EUR'),('JPY','JPY_EUR'),('GBP','GBP_EUR')]:
               try:

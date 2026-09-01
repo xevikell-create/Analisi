@@ -1,97 +1,26 @@
-/* RADAR PORTFOLIO ADVISOR V6 — cartera-aware: oportunidad + encaje patrimonial */
+/* RADAR PORTFOLIO ADVISOR V6.1 — cartera-aware: oportunidad + encaje patrimonial + concentración real */
 (function(){
-  'use strict';
-  const VERSION='6.0.0';
-  const DATA='./radar-data.json?advisor_v6='+Date.now();
-  const clamp=x=>Math.max(0,Math.min(100,Number(x)||0));
-  const n=x=>Number.isFinite(Number(x))?Number(x):null;
-  const esc=s=>String(s??'').replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c]));
-  const sectorMap={
-    'AMD':'IA/semiconductores','NVIDIA':'IA/semiconductores','First Solar':'Energía/solar','Next Era Energy':'Utilities/energía','Meta':'Tecnología/comunicación','Palantir':'IA/software','Apple':'Tecnología','Amazon':'Consumo/tecnología','Netflix':'Consumo/comunicación','BYD':'Industriales/automoción','Toyota':'Industriales/automoción','Caixa banc':'Bancos','MSCI World Acc':'Renta variable global','S&P 500 ETF':'Renta variable USA'
-  };
-  const themeMap={
-    'IA/semiconductores':'IA','Tecnología':'Tecnología','Tecnología/comunicación':'Tecnología','IA/software':'IA','Bancos':'Bancos','Consumo/tecnología':'Consumo','Consumo/comunicación':'Consumo','Consumo':'Consumo','Industriales/automoción':'Industriales','Energía/solar':'Energía','Utilities/energía':'Energía','Renta variable global':'Global','Renta variable USA':'USA'
-  };
-  const targets={
-    'IA':0.12,'Tecnología':0.20,'Bancos':0.10,'Consumo':0.12,'Industriales':0.12,'Energía':0.08,'Salud':0.08,'Global':0.35,'USA':0.35
-  };
-  function classify(a){return a.sector||sectorMap[a.ticker]||sectorMap[a.name]||'Otros';}
-  function theme(a){const s=classify(a);return themeMap[s]||s;}
-  function loadPortfolio(){
-    let raw={};try{raw=JSON.parse(localStorage.getItem('patrimonio_positions_overrides')||'{}')}catch{}
-    const ps=(window.V4Portfolio&&Array.isArray(window.V4Portfolio.positions))?window.V4Portfolio.positions:[];
-    const out=ps.map(p=>({...p,...(raw[p.name]||{})}));
-    const assets=out.map(p=>({name:p.name,ticker:p.ticker||p.name,quantity:n(p.quantity)||0,averageCost:n(p.averageCost)||0,valueEUR:n(p.valueEUR)||0,sector:p.sector||sectorMap[p.name]||'Otros'}));
-    return assets;
-  }
-  function allocation(portfolio){
-    const t=portfolio.reduce((s,p)=>s+(n(p.valueEUR)||0),0)||1, sectors={},themes={};
-    portfolio.forEach(p=>{const w=(n(p.valueEUR)||0)/t;const s=p.sector||'Otros';const th=theme(p);sectors[s]=(sectors[s]||0)+w;themes[th]=(themes[th]||0)+w});
-    return {total:t,sectors,themes};
-  }
-  function baseOpportunity(a){
-    const vals=[];
-    if(n(a.revenueGrowth)!==null)vals.push(clamp(50+n(a.revenueGrowth)*1.3));
-    if(n(a.epsGrowth)!==null)vals.push(clamp(50+n(a.epsGrowth)*.7));
-    if(n(a.roe)!==null)vals.push(clamp(n(a.roe)/35*100));
-    if(n(a.roic)!==null)vals.push(clamp(n(a.roic)/30*100));
-    if(n(a.operatingMargin)!==null)vals.push(clamp(n(a.operatingMargin)/35*100));
-    if(n(a.debtToEbitda)!==null)vals.push(clamp(100-n(a.debtToEbitda)*18));
-    if(n(a.pe)!==null)vals.push(clamp(100-Math.max(0,n(a.pe)-10)*2.2));
-    if(n(a.fcfMargin)!==null)vals.push(clamp(50+n(a.fcfMargin)*2));
-    return vals.length?vals.reduce((x,y)=>x+y,0)/vals.length:50;
-  }
-  function fitScore(a,alloc){
-    const th=theme(a), w=alloc.themes[th]||0, target=targets[th]??0.08;
-    let s=75;
-    if(w>target*1.75)s-=32; else if(w>target*1.35)s-=20; else if(w>target*1.10)s-=10;
-    else if(w<target*.45)s+=18; else if(w<target*.70)s+=10;
-    // Direct position concentration
-    const direct=alloc.total?((loadPortfolio().find(p=>(p.ticker||p.name)===(a.ticker||a.name))?.valueEUR||0)/alloc.total):0;
-    if(direct>.10)s-=25; else if(direct>.07)s-=12;
-    // Core ETF receives a structural bonus when portfolio is concentrated
-    if((a.ticker||a.name)==='MSCI World Acc'){
-      const tech=alloc.themes['Tecnología']||0, ia=alloc.themes['IA']||0;
-      if(tech+ia>.30)s+=12;
-    }
-    return clamp(s);
-  }
-  function overlapPenalty(a,alloc){
-    const th=theme(a),w=alloc.themes[th]||0,target=targets[th]??.08;
-    return w>target*1.75?20:w>target*1.35?12:w>target*1.10?6:0;
-  }
-  function confidence(a){
-    const keys=['price','revenueGrowth','epsGrowth','roe','roic','operatingMargin','debtToEbitda','pe','fcfMargin'];
-    const available=keys.filter(k=>n(a[k])!==null).length;
-    return {available,score:clamp(45+available*6)};
-  }
-  function analyse(a,alloc){
-    const opp=baseOpportunity(a),fit=fitScore(a,alloc),riskPenalty=overlapPenalty(a,alloc),c=confidence(a);
-    const final=clamp(opp*.55+fit*.45-riskPenalty);
-    let action=final>=82&&c.score>=75?'COMPRAR':final>=74?'VIGILAR':'ESPERAR';
-    if(fit<45)action='EVITAR AUMENTAR';
-    return {...a,sector:classify(a),theme:theme(a),opportunity:Math.round(opp),fit:Math.round(fit),score:Math.round(final),confidence:Math.round(c.score),metrics:c.available,action,overlapPenalty:riskPenalty,currentThemeWeight:alloc.themes[theme(a)]||0,targetThemeWeight:targets[theme(a)]??.08};
-  }
-  function render(list,alloc,assets){
-    const app=document.getElementById('app');if(!app)return;
-    const ranked=list.sort((a,b)=>b.score-a.score),best=ranked[0];
-    const thRows=Object.entries(alloc.themes).sort((a,b)=>b[1]-a[1]).map(([k,w])=>{const target=targets[k];const over=target&&w>target*1.35;return `<div class="row"><span><b>${esc(k)}</b><br><span class="muted">Actual ${(w*100).toFixed(1)}% · objetivo ${target?(target*100).toFixed(0)+'%':'sin objetivo'}</span></span><span class="badge ${over?'red':target&&w<target*.7?'amber':'green'}">${over?'SOBREPESO':target&&w<target*.7?'INFRAPESO':'OK'}</span></div>`}).join('');
-    const rows=ranked.map((a,i)=>`<div class="row"><span><b>${i+1}. ${esc(a.name||a.ticker)}</b><br><span class="muted">${esc(a.theme)} · oportunidad ${a.opportunity} · encaje ${a.fit} · ${a.metrics} datos</span></span><span class="badge ${a.action==='COMPRAR'?'green':a.action==='ESPERAR'?'amber':'red'}">${a.score}/100</span></div>`).join('');
-    app.innerHTML=`<h2>🔎 Radar · Asesor V6</h2><p class="muted">No busca solo acciones buenas: busca acciones que mejoren tu cartera.</p>
-    <div class="card hero"><span class="badge">¿DÓNDE PONGO EL PRÓXIMO EURO?</span><h2>${best?esc(best.name||best.ticker):'ESPERAR'}</h2><div class="kpi">${best?best.score+'/100':'—'}</div><p>${best?`Oportunidad ${best.opportunity}/100 · encaje con cartera ${best.fit}/100 · confianza ${best.confidence}/100.`:'Sin datos suficientes.'}</p><p class="small">${best?`Sector/factor: ${esc(best.theme)} · peso actual ${(best.currentThemeWeight*100).toFixed(1)}% · objetivo ${(best.targetThemeWeight*100).toFixed(0)}%.`:''}</p></div>
-    <div class="grid section"><div class="card"><b>Activos recibidos</b><div class="kpi">${assets.length}</div></div><div class="card"><b>Analizados</b><div class="kpi">${ranked.length}</div></div><div class="card"><b>Mejor encaje</b><div class="kpi">${best?best.fit:'—'}</div></div></div>
-    <div class="two"><div class="card"><h3>🏆 Ranking cartera-aware</h3>${rows||'<div class="empty">No hay activos válidos.</div>'}</div><div class="card"><h3>🧭 Concentración temática</h3>${thRows||'<div class="empty">Sin posiciones clasificadas.</div>'}</div></div>
-    <div class="card section"><h3>Cómo decide</h3><div class="pill"><span>55% calidad/oportunidad</span><span>45% encaje cartera</span><span>penalización concentración</span><span>riesgo de posición</span><span>diversificación</span></div><p class="muted">La recomendación puede cambiar aunque una empresa tenga buenas métricas: si ya tienes demasiado peso en su sector/factor, el asesor reduce su prioridad.</p></div>`;
-  }
-  async function run(){
-    const app=document.getElementById('app');if(!app)return;
-    app.innerHTML='<div class="card"><h2>🔎 Radar · Asesor V6</h2><p class="muted">Calculando oportunidad, concentración y encaje con tu cartera…</p></div>';
-    try{const r=await fetch(DATA,{cache:'no-store'});if(!r.ok)throw Error('radar-data.json HTTP '+r.status);const d=await r.json();const assets=Object.values(d.assets||{});const port=loadPortfolio();const alloc=allocation(port);const list=assets.filter(a=>n(a.price)>0).map(a=>analyse(a,alloc));render(list,alloc,assets);}catch(e){console.error('Radar Advisor V6',e);app.innerHTML=`<div class="card"><h2>🔎 Radar</h2><p class="negative"><b>Error al analizar el Radar</b></p><p class="muted">${esc(e.message||e)}</p><button class="action" onclick="location.reload()">Reintentar</button></div>`}}
-  function install(){
-    const old=window.setPage;if(typeof old==='function'&&!window.__radarAdvisorV6){window.setPage=function(p){old(p);if(p==='radar')setTimeout(run,25)};window.__radarAdvisorV6=true;}
-    document.addEventListener('click',e=>{if(e.target.closest?.('button[data-p="radar"]'))setTimeout(run,25)},true);
-    if(typeof current!=='undefined'&&current==='radar')run();
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install);else install();
-  window.RadarPortfolioAdvisorV6={VERSION,run,targets};
+'use strict';
+const VERSION='6.1.0',DATA='./radar-data.json?advisor_v61='+Date.now();
+const clamp=x=>Math.max(0,Math.min(100,Number(x)||0)),n=x=>Number.isFinite(Number(x))?Number(x):null;
+const esc=s=>String(s??'').replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c]));
+const themeByName={'MSCI World Acc':'Core global','Vanguard S&P 500 Dist ETF':'USA/core','S&P 500 ETF':'USA/core','AMD':'IA/semiconductores','Nvidia':'IA/semiconductores','NVIDIA':'IA/semiconductores','NVDA':'IA/semiconductores','TSMC':'IA/semiconductores','TSM':'IA/semiconductores','AVGO':'IA/semiconductores','Palantir':'IA/software','Meta':'Tecnología/comunicación','Alphabet':'Tecnología/comunicación','GOOGL':'Tecnología/comunicación','Microsoft':'Tecnología/comunicación','MSFT':'Tecnología/comunicación','Apple':'Tecnología/comunicación','Amazon':'Consumo','Netflix':'Consumo/comunicación','KO':'Consumo','BYD':'Industriales','Toyota':'Industriales','Berkshire Hathaway':'Finanzas','BRK.B':'Finanzas','CaixaBank':'Bancos','Caixa banc':'Bancos','JPM':'Bancos','V':'Pagos','First Solar':'Energía','FSLR':'Energía','NextEra Energy':'Energía','NEE':'Energía','JNJ':'Salud'};
+const themeBySector={'Semiconductors':'IA/semiconductores','Communication':'Tecnología/comunicación','Technology':'Tecnología/comunicación','Consumer':'Consumo','Consumer Defensive':'Consumo','Financials':'Finanzas','Industrials':'Industriales','Energy':'Energía','Utilities':'Energía','Health Care':'Salud','Healthcare':'Salud'};
+const target={'IA/semiconductores':.12,'Tecnología/comunicación':.18,'Bancos':.10,'Finanzas':.08,'Consumo':.12,'Industriales':.12,'Energía':.08,'Salud':.08,'Otros':.12};
+function classify(a){return a.theme||themeByName[a.name]||themeByName[a.ticker]||themeBySector[a.sector]||'Otros'}
+function portfolioRows(){
+ if(typeof I!=='undefined'&&Array.isArray(I?.rows)&&I.rows.length)return I.rows.filter(r=>Number(r.valueEUR)>0).map(r=>({...r,theme:classify(r)}));
+ let ov={};try{ov=JSON.parse(localStorage.getItem('patrimonio_positions_overrides')||'{}')}catch{}
+ const ps=window.V4Portfolio?.positions||[];return ps.map(p=>({...p,...(ov[p.name]||{}),valueEUR:n(p.valueEUR)||0,theme:classify(p)})).filter(p=>p.valueEUR>0)
+}
+function allocation(rows){const total=rows.reduce((s,p)=>s+(n(p.valueEUR)||0),0)||1,themes={};rows.forEach(p=>{const t=classify(p);themes[t]=(themes[t]||0)+(Number(p.valueEUR)||0)/total});return{total,themes}}
+function baseOpportunity(a){const p=[];if(n(a.revenueGrowth)!==null)p.push(clamp(50+n(a.revenueGrowth)*1.3));if(n(a.epsGrowth)!==null)p.push(clamp(50+n(a.epsGrowth)*.7));if(n(a.roe)!==null)p.push(clamp(n(a.roe)/35*100));if(n(a.roic)!==null)p.push(clamp(n(a.roic)/30*100));if(n(a.operatingMargin)!==null)p.push(clamp(n(a.operatingMargin)/35*100));if(n(a.debtToEbitda)!==null)p.push(clamp(100-n(a.debtToEbitda)*18));if(n(a.pe)!==null)p.push(clamp(100-Math.max(0,n(a.pe)-10)*2.2));if(n(a.fcfMargin)!==null)p.push(clamp(50+n(a.fcfMargin)*2));return p.length?p.reduce((x,y)=>x+y,0)/p.length:50}
+function fitScore(a,alloc,rows){const th=classify(a),w=alloc.themes[th]||0,t=target[th]??.10;let s=70;if(w>t*1.75)s-=35;else if(w>t*1.35)s-=22;else if(w>t*1.10)s-=10;else if(w<t*.45)s+=18;else if(w<t*.70)s+=10;const own=rows.find(p=>(p.ticker||p.name)===(a.ticker||a.name)||p.name===a.name);const direct=own&&alloc.total?Number(own.valueEUR)/alloc.total:0;if(direct>.10)s-=28;else if(direct>.07)s-=14;const concentration=(alloc.themes['IA/semiconductores']||0)+(alloc.themes['Tecnología/comunicación']||0);if(concentration>.35&&['Consumo','Industriales','Energía','Salud','Bancos','Finanzas'].includes(th))s+=10;if(th==='Core global')s+=concentration>.30?15:5;return clamp(s)}
+function concentrationPenalty(a,alloc){const th=classify(a),w=alloc.themes[th]||0,t=target[th]??.10;return w>t*1.75?22:w>t*1.35?13:w>t*1.10?6:0}
+function confidence(a){const keys=['price','revenueGrowth','epsGrowth','roe','roic','operatingMargin','debtToEbitda','pe','fcfMargin'],available=keys.filter(k=>n(a[k])!==null).length,completeness=n(a.completeness);return{available,score:Math.round(clamp(42+available*6+(completeness!==null?Math.min(10,completeness/10):0)))}}
+function analyse(a,alloc,rows){const opp=baseOpportunity(a),fit=fitScore(a,alloc,rows),pen=concentrationPenalty(a,alloc),c=confidence(a),final=clamp(opp*.55+fit*.45-pen);let action=final>=82&&c.score>=75?'COMPRAR':final>=70?'VIGILAR':'ESPERAR';if(fit<40)action='EVITAR AUMENTAR';return{...a,theme:classify(a),opportunity:Math.round(opp),fit:Math.round(fit),score:Math.round(final),confidence:c.score,metrics:c.available,action,concentrationPenalty:pen,currentThemeWeight:alloc.themes[classify(a)]||0,targetThemeWeight:target[classify(a)]??.10}}
+function render(list,alloc,assets){const app=document.getElementById('app');if(!app)return;const ranked=list.sort((a,b)=>b.score-a.score),best=ranked[0],keys=Object.keys({...alloc.themes,...target}),ths=keys.sort((a,b)=>(alloc.themes[b]||0)-(alloc.themes[a]||0)).map(k=>{const w=alloc.themes[k]||0,t=target[k],over=t&&w>t*1.35,under=t&&w<t*.70;return`<div class="row"><span><b>${esc(k)}</b><br><span class="muted">Actual ${(w*100).toFixed(1)}% · objetivo ${t?(t*100).toFixed(0)+'%':'—'}</span></span><span class="badge ${over?'red':under?'amber':'green'}">${over?'SOBREPESO':under?'INFRAPESO':'OK'}</span></div>`}).join(''),rs=ranked.map((a,i)=>`<div class="row"><span><b>${i+1}. ${esc(a.name||a.ticker)}</b><br><span class="muted">${esc(a.theme)} · oportunidad ${a.opportunity} · encaje ${a.fit} · ${a.metrics}/9 datos</span></span><span class="badge ${a.action==='COMPRAR'?'green':a.action==='ESPERAR'?'amber':'red'}">${a.score}/100</span></div>`).join(''),buys=ranked.filter(a=>a.action==='COMPRAR').length,con=((alloc.themes['IA/semiconductores']||0)+(alloc.themes['Tecnología/comunicación']||0));app.innerHTML=`<h2>🔎 Radar · Asesor V6.1</h2><p class="muted">Motor cartera-aware: oportunidad + encaje + concentración + diversificación.</p><div class="card hero"><span class="badge">¿DÓNDE PONGO EL PRÓXIMO EURO?</span><h2>${best?esc(best.name||best.ticker):'ESPERAR'}</h2><div class="kpi">${best?best.score+'/100':'—'}</div><p>${best?`Oportunidad ${best.opportunity}/100 · encaje ${best.fit}/100 · confianza ${best.confidence}/100.`:'Sin datos suficientes.'}</p><p class="small">${best?`Factor: ${esc(best.theme)} · peso actual ${(best.currentThemeWeight*100).toFixed(1)}% · objetivo ${(best.targetThemeWeight*100).toFixed(0)}%.`:''}</p></div><div class="grid section"><div class="card"><b>Activos recibidos</b><div class="kpi">${assets.length}</div></div><div class="card"><b>Analizados</b><div class="kpi">${ranked.length}</div></div><div class="card"><b>COMPRAR</b><div class="kpi">${buys}</div></div><div class="card"><b>IA + tecnología</b><div class="kpi">${(con*100).toFixed(1)}%</div></div></div><div class="two"><div class="card"><h3>🏆 Ranking cartera-aware</h3>${rs||'<div class="empty">No hay activos con precio válido.</div>'}</div><div class="card"><h3>🧭 Distribución temática</h3>${ths||'<div class="empty">Sin posiciones clasificadas.</div>'}</div></div><div class="card section"><h3>🧠 Por qué gana el primero</h3>${best?`<div class="row"><span>Oportunidad fundamental</span><b>${best.opportunity}/100</b></div><div class="row"><span>Encaje con tu cartera</span><b>${best.fit}/100</b></div><div class="row"><span>Penalización concentración</span><b>-${best.concentrationPenalty}</b></div><div class="row"><span>Confianza de datos</span><b>${best.confidence}/100</b></div>`:'<div class="empty">No hay datos suficientes.</div>'}</div><div class="card section"><h3>Regla del motor</h3><div class="pill"><span>55% oportunidad</span><span>45% encaje</span><span>penaliza concentración</span><span>premia diversificación</span><span>ESPERAR si no hay ventaja clara</span></div><p class="muted">Una empresa excelente no recibe automáticamente una compra: si ya estás muy expuesto a su factor o posición, el motor reduce su prioridad.</p></div>`}
+async function run(){const app=document.getElementById('app');if(!app)return;app.innerHTML='<div class="card"><h2>🔎 Radar · Asesor V6.1</h2><p class="muted">Calculando oportunidad, concentración y encaje con tu cartera…</p></div>';try{const r=await fetch(DATA,{cache:'no-store'});if(!r.ok)throw Error('radar-data.json HTTP '+r.status);const d=await r.json(),assets=Object.values(d.assets||{}),rows=portfolioRows(),alloc=allocation(rows),list=assets.filter(a=>n(a.price)>0).map(a=>analyse(a,alloc,rows));render(list,alloc,assets)}catch(e){console.error('Radar Advisor V6.1',e);app.innerHTML=`<div class="card"><h2>🔎 Radar</h2><p class="negative"><b>Error al analizar el Radar</b></p><p class="muted">${esc(e.message||e)}</p><button class="action" onclick="location.reload()">Reintentar</button></div>`}}
+function install(){const old=window.setPage;if(typeof old==='function'&&!window.__radarAdvisorV61){window.setPage=function(p){old(p);if(p==='radar')setTimeout(run,25)};window.__radarAdvisorV61=true}document.addEventListener('click',e=>{if(e.target.closest?.('button[data-p="radar"]'))setTimeout(run,25)},true);if(typeof current!=='undefined'&&current==='radar')run()}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install);else install();window.RadarPortfolioAdvisorV6={VERSION,run,target};
 })();

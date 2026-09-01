@@ -55,3 +55,11 @@
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install);else install();
 })();
+
+/* V6 loader — portfolio-aware scoring is the final Radar layer. */
+(function(){
+  const s=document.createElement('script');
+  s.src='./radar-portfolio-advisor-v6.js?v=20260901-1';
+  s.async=false;
+  document.head.appendChild(s);
+})();

@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "updatedAt": "2026-09-03T18:27:02Z",
+  "updatedAt": "2026-09-03T19:20:14Z",
   "assets": {
     "GOOGL": {
       "name": "Alphabet",
@@ -8,7 +8,7 @@
       "assetType": "stock",
       "sector": "Communication",
       "country": "USA",
-      "price": 343.22,
+      "price": 343.26,
       "currency": "USD",
       "revenueGrowth": 20.05,
       "epsGrowth": 112.48,
@@ -22,7 +22,7 @@
       "operatingMargin": 33.11,
       "fcfMargin": 11.95,
       "avgVolume": 25715844,
-      "updatedAt": "2026-09-03T18:27:00Z",
+      "updatedAt": "2026-09-03T19:20:11Z",
       "completeness": 96,
       "sourceType": "institutional",
       "sources": [
@@ -39,7 +39,7 @@
       "assetType": "stock",
       "sector": "Communication",
       "country": "USA",
-      "price": 614.4,
+      "price": 613.49,
       "currency": "USD",
       "revenueGrowth": 27.65,
       "epsGrowth": -3.75,
@@ -53,7 +53,7 @@
       "operatingMargin": 38.08,
       "fcfMargin": 17.95,
       "avgVolume": 13848016,
-      "updatedAt": "2026-09-03T18:27:00Z",
+      "updatedAt": "2026-09-03T19:20:12Z",
       "completeness": 96,
       "sourceType": "institutional",
       "sources": [
@@ -70,7 +70,7 @@
       "assetType": "stock",
       "sector": "Semiconductors",
       "country": "Taiwan",
-      "price": 415.335,
+      "price": 415.73,
       "currency": "USD",
       "revenueGrowth": 30.6,
       "epsGrowth": 53.4,
@@ -84,7 +84,7 @@
       "operatingMargin": 56.08,
       "fcfMargin": 25.75,
       "avgVolume": 7449311,
-      "updatedAt": "2026-09-03T18:27:00Z",
+      "updatedAt": "2026-09-03T19:20:12Z",
       "completeness": 98,
       "sourceType": "institutional",
       "sources": [
@@ -132,7 +132,7 @@
       "assetType": "stock",
       "sector": "Consumer",
       "country": "USA",
-      "price": 259.13,
+      "price": 258.86,
       "currency": "USD",
       "revenueGrowth": 12.0,
       "epsGrowth": 20.0,
@@ -145,7 +145,7 @@
       "interestCoverage": 28.13,
       "operatingMargin": 12.08,
       "avgVolume": 50000000,
-      "updatedAt": "2026-09-03T18:27:00Z",
+      "updatedAt": "2026-09-03T19:20:12Z",
       "completeness": 88,
       "sourceType": "institutional",
       "sources": [
@@ -159,9 +159,9 @@
     "AAPL": {
       "ticker": "AAPL",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 327.06,
+      "price": 327.48,
       "currency": "USD",
-      "updatedAt": "2026-09-03T18:27:01Z",
+      "updatedAt": "2026-09-03T19:20:12Z",
       "sources": [
         {
           "type": "market",
@@ -172,9 +172,9 @@
     "MSFT": {
       "ticker": "MSFT",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 515.155,
+      "price": 512.14,
       "currency": "USD",
-      "updatedAt": "2026-09-03T18:27:01Z",
+      "updatedAt": "2026-09-03T19:20:12Z",
       "sources": [
         {
           "type": "market",
@@ -185,9 +185,9 @@
     "NVDA": {
       "ticker": "NVDA",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 229.67,
+      "price": 229.6,
       "currency": "USD",
-      "updatedAt": "2026-09-03T18:27:01Z",
+      "updatedAt": "2026-09-03T19:20:12Z",
       "sources": [
         {
           "type": "market",
@@ -198,9 +198,9 @@
     "AMD": {
       "ticker": "AMD",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 456.985,
+      "price": 456.505,
       "currency": "USD",
-      "updatedAt": "2026-09-03T18:27:01Z",
+      "updatedAt": "2026-09-03T19:20:12Z",
       "sources": [
         {
           "type": "market",
@@ -211,9 +211,9 @@
     "AVGO": {
       "ticker": "AVGO",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 355.57,
+      "price": 357.455,
       "currency": "USD",
-      "updatedAt": "2026-09-03T18:27:01Z",
+      "updatedAt": "2026-09-03T19:20:13Z",
       "sources": [
         {
           "type": "market",
@@ -224,9 +224,9 @@
     "JPM": {
       "ticker": "JPM",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 361.673,
+      "price": 362.05,
       "currency": "USD",
-      "updatedAt": "2026-09-03T18:27:01Z",
+      "updatedAt": "2026-09-03T19:20:13Z",
       "sources": [
         {
           "type": "market",
@@ -237,9 +237,9 @@
     "V": {
       "ticker": "V",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 378.33,
+      "price": 379.4,
       "currency": "USD",
-      "updatedAt": "2026-09-03T18:27:01Z",
+      "updatedAt": "2026-09-03T19:20:13Z",
       "sources": [
         {
           "type": "market",
@@ -250,9 +250,9 @@
     "KO": {
       "ticker": "KO",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 88.935,
+      "price": 89.1,
       "currency": "USD",
-      "updatedAt": "2026-09-03T18:27:01Z",
+      "updatedAt": "2026-09-03T19:20:13Z",
       "sources": [
         {
           "type": "market",
@@ -263,9 +263,9 @@
     "JNJ": {
       "ticker": "JNJ",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 278.1,
+      "price": 278.57,
       "currency": "USD",
-      "updatedAt": "2026-09-03T18:27:01Z",
+      "updatedAt": "2026-09-03T19:20:13Z",
       "sources": [
         {
           "type": "market",
@@ -276,9 +276,9 @@
     "NEE": {
       "ticker": "NEE",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 83.865,
+      "price": 84.075,
       "currency": "USD",
-      "updatedAt": "2026-09-03T18:27:01Z",
+      "updatedAt": "2026-09-03T19:20:13Z",
       "sources": [
         {
           "type": "market",
@@ -289,9 +289,9 @@
     "FSLR": {
       "ticker": "FSLR",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 207.0,
+      "price": 206.74,
       "currency": "USD",
-      "updatedAt": "2026-09-03T18:27:01Z",
+      "updatedAt": "2026-09-03T19:20:13Z",
       "sources": [
         {
           "type": "market",

@@ -1,6 +1,6 @@
 {
   "provider": "yahoo",
-  "updatedAt": "2026-09-04T07:15:59.602617+00:00",
+  "updatedAt": "2026-09-04T07:43:55.667652+00:00",
   "quotes": {
     "First Solar": {
       "symbol": "FSLR",
@@ -8,16 +8,16 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-04T07:15:59.877040+00:00",
+      "timestamp": "2026-09-04T07:43:55.837043+00:00",
       "source": "Yahoo Finance"
     },
     "BYD": {
       "symbol": "1211.HK",
-      "price": 85.65,
+      "price": 85.95,
       "currency": "HKD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-04T07:15:59.949447+00:00",
+      "timestamp": "2026-09-04T07:43:55.905610+00:00",
       "source": "Yahoo Finance"
     },
     "Netflix": {
@@ -26,7 +26,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-04T07:16:00.035169+00:00",
+      "timestamp": "2026-09-04T07:43:55.977559+00:00",
       "source": "Yahoo Finance"
     },
     "Meta Platforms": {
@@ -35,7 +35,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-04T07:16:00.115607+00:00",
+      "timestamp": "2026-09-04T07:43:56.089491+00:00",
       "source": "Yahoo Finance"
     },
     "Apple": {
@@ -44,7 +44,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-04T07:16:00.170993+00:00",
+      "timestamp": "2026-09-04T07:43:56.175918+00:00",
       "source": "Yahoo Finance"
     },
     "Palantir Technologies": {
@@ -53,7 +53,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-04T07:16:00.277393+00:00",
+      "timestamp": "2026-09-04T07:43:56.236154+00:00",
       "source": "Yahoo Finance"
     },
     "Toyota": {
@@ -62,7 +62,7 @@
       "currency": "JPY",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-04T07:16:00.364798+00:00",
+      "timestamp": "2026-09-04T07:43:56.290679+00:00",
       "source": "Yahoo Finance"
     },
     "AMD": {
@@ -71,7 +71,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-04T07:16:00.459743+00:00",
+      "timestamp": "2026-09-04T07:43:56.348390+00:00",
       "source": "Yahoo Finance"
     },
     "Nvidia": {
@@ -80,25 +80,25 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-04T07:16:00.536251+00:00",
+      "timestamp": "2026-09-04T07:43:56.416827+00:00",
       "source": "Yahoo Finance"
     },
     "CaixaBank": {
       "symbol": "CABK.MC",
-      "price": 13.48,
+      "price": 13.405,
       "currency": "EUR",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-04T07:16:00.599768+00:00",
+      "timestamp": "2026-09-04T07:43:56.483136+00:00",
       "source": "Yahoo Finance"
     },
     "Vanguard S&P 500 Dist ETF": {
       "symbol": "VUSA.L",
-      "price": 108.5423,
+      "price": 108.59,
       "currency": "GBP",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-04T07:16:00.664622+00:00",
+      "timestamp": "2026-09-04T07:43:56.548836+00:00",
       "source": "Yahoo Finance"
     },
     "Amazon": {
@@ -107,7 +107,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-04T07:16:00.748764+00:00",
+      "timestamp": "2026-09-04T07:43:56.621070+00:00",
       "source": "Yahoo Finance"
     },
     "NextEra Energy": {
@@ -116,16 +116,16 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-04T07:16:00.847536+00:00",
+      "timestamp": "2026-09-04T07:43:56.688917+00:00",
       "source": "Yahoo Finance"
     },
     "iShares Core MSCI World Acc": {
       "symbol": "SWDA.L",
-      "price": 109.73,
+      "price": 109.77,
       "currency": "GBP",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-04T07:16:00.909908+00:00",
+      "timestamp": "2026-09-04T07:43:56.744091+00:00",
       "source": "Yahoo Finance"
     }
   },
@@ -136,7 +136,7 @@
     "GBP_EUR": 1.162
   },
   "crypto": {
-    "ETH_EUR": 2163.41
+    "ETH_EUR": 2156.05
   },
   "primaryError": "HTTP Error 429: Too Many Requests"
 }

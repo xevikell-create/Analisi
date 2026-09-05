@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "updatedAt": "2026-09-05T03:22:46Z",
+  "updatedAt": "2026-09-05T04:22:53Z",
   "assets": {
     "GOOGL": {
       "name": "Alphabet",
@@ -22,7 +22,7 @@
       "operatingMargin": 33.11,
       "fcfMargin": 11.95,
       "avgVolume": 25715844,
-      "updatedAt": "2026-09-05T03:22:45Z",
+      "updatedAt": "2026-09-05T04:22:52Z",
       "completeness": 96,
       "sourceType": "institutional",
       "sources": [
@@ -53,7 +53,7 @@
       "operatingMargin": 38.08,
       "fcfMargin": 17.95,
       "avgVolume": 13848016,
-      "updatedAt": "2026-09-05T03:22:45Z",
+      "updatedAt": "2026-09-05T04:22:52Z",
       "completeness": 96,
       "sourceType": "institutional",
       "sources": [
@@ -84,7 +84,7 @@
       "operatingMargin": 56.08,
       "fcfMargin": 25.75,
       "avgVolume": 7449311,
-      "updatedAt": "2026-09-05T03:22:45Z",
+      "updatedAt": "2026-09-05T04:22:52Z",
       "completeness": 98,
       "sourceType": "institutional",
       "sources": [
@@ -145,7 +145,7 @@
       "interestCoverage": 28.13,
       "operatingMargin": 12.08,
       "avgVolume": 50000000,
-      "updatedAt": "2026-09-05T03:22:45Z",
+      "updatedAt": "2026-09-05T04:22:52Z",
       "completeness": 88,
       "sourceType": "institutional",
       "sources": [
@@ -161,7 +161,7 @@
       "secError": "HTTP Error 403: Forbidden",
       "price": 319.97,
       "currency": "USD",
-      "updatedAt": "2026-09-05T03:22:45Z",
+      "updatedAt": "2026-09-05T04:22:52Z",
       "sources": [
         {
           "type": "market",
@@ -174,7 +174,7 @@
       "secError": "HTTP Error 403: Forbidden",
       "price": 499.7,
       "currency": "USD",
-      "updatedAt": "2026-09-05T03:22:45Z",
+      "updatedAt": "2026-09-05T04:22:52Z",
       "sources": [
         {
           "type": "market",
@@ -187,7 +187,7 @@
       "secError": "HTTP Error 403: Forbidden",
       "price": 230.36,
       "currency": "USD",
-      "updatedAt": "2026-09-05T03:22:45Z",
+      "updatedAt": "2026-09-05T04:22:52Z",
       "sources": [
         {
           "type": "market",
@@ -200,7 +200,7 @@
       "secError": "HTTP Error 403: Forbidden",
       "price": 477.57,
       "currency": "USD",
-      "updatedAt": "2026-09-05T03:22:45Z",
+      "updatedAt": "2026-09-05T04:22:52Z",
       "sources": [
         {
           "type": "market",
@@ -213,7 +213,7 @@
       "secError": "HTTP Error 403: Forbidden",
       "price": 357.895,
       "currency": "USD",
-      "updatedAt": "2026-09-05T03:22:45Z",
+      "updatedAt": "2026-09-05T04:22:52Z",
       "sources": [
         {
           "type": "market",
@@ -226,7 +226,7 @@
       "secError": "HTTP Error 403: Forbidden",
       "price": 358.64,
       "currency": "USD",
-      "updatedAt": "2026-09-05T03:22:45Z",
+      "updatedAt": "2026-09-05T04:22:52Z",
       "sources": [
         {
           "type": "market",
@@ -239,7 +239,7 @@
       "secError": "HTTP Error 403: Forbidden",
       "price": 375.07,
       "currency": "USD",
-      "updatedAt": "2026-09-05T03:22:45Z",
+      "updatedAt": "2026-09-05T04:22:53Z",
       "sources": [
         {
           "type": "market",
@@ -252,7 +252,7 @@
       "secError": "HTTP Error 403: Forbidden",
       "price": 88.07,
       "currency": "USD",
-      "updatedAt": "2026-09-05T03:22:45Z",
+      "updatedAt": "2026-09-05T04:22:53Z",
       "sources": [
         {
           "type": "market",
@@ -265,7 +265,7 @@
       "secError": "HTTP Error 403: Forbidden",
       "price": 275.23,
       "currency": "USD",
-      "updatedAt": "2026-09-05T03:22:46Z",
+      "updatedAt": "2026-09-05T04:22:53Z",
       "sources": [
         {
           "type": "market",
@@ -278,7 +278,7 @@
       "secError": "HTTP Error 403: Forbidden",
       "price": 83.43,
       "currency": "USD",
-      "updatedAt": "2026-09-05T03:22:46Z",
+      "updatedAt": "2026-09-05T04:22:53Z",
       "sources": [
         {
           "type": "market",
@@ -291,7 +291,7 @@
       "secError": "HTTP Error 403: Forbidden",
       "price": 204.45,
       "currency": "USD",
-      "updatedAt": "2026-09-05T03:22:46Z",
+      "updatedAt": "2026-09-05T04:22:53Z",
       "sources": [
         {
           "type": "market",

@@ -1,14 +1,16 @@
 {
-  "version": 3,
-  "updatedAt": "2026-09-08T19:23:12Z",
+  "version": 5,
+  "updatedAt": "2026-09-08T20:24:32Z",
   "assets": {
     "GOOGL": {
       "name": "Alphabet",
       "ticker": "GOOGL",
+      "marketTicker": "GOOGL",
       "assetType": "stock",
       "sector": "Communication",
       "country": "USA",
-      "price": 337.38,
+      "theme": "Tecnología/comunicación",
+      "price": 338.36,
       "currency": "USD",
       "revenueGrowth": 20.05,
       "epsGrowth": 112.48,
@@ -31,15 +33,19 @@
           "name": "Yahoo Finance"
         }
       ],
-      "secError": "HTTP Error 403: Forbidden"
+      "secError": "HTTP Error 403: Forbidden",
+      "marketUpdatedAt": "2026-09-08T20:24:23Z",
+      "marketSource": "Yahoo Finance"
     },
     "META": {
-      "name": "Meta",
+      "name": "Meta Platforms",
       "ticker": "META",
+      "marketTicker": "META",
       "assetType": "stock",
       "sector": "Communication",
       "country": "USA",
-      "price": 612.435,
+      "theme": "Tecnología/comunicación",
+      "price": 613.48,
       "currency": "USD",
       "revenueGrowth": 27.65,
       "epsGrowth": -3.75,
@@ -62,15 +68,19 @@
           "name": "Yahoo Finance"
         }
       ],
-      "secError": "HTTP Error 403: Forbidden"
+      "secError": "HTTP Error 403: Forbidden",
+      "marketUpdatedAt": "2026-09-08T20:24:23Z",
+      "marketSource": "Yahoo Finance"
     },
     "TSM": {
       "name": "TSMC",
       "ticker": "TSM",
+      "marketTicker": "TSM",
       "assetType": "stock",
       "sector": "Semiconductors",
       "country": "Taiwan",
-      "price": 439.485,
+      "theme": "IA/semiconductores",
+      "price": 439.0,
       "currency": "USD",
       "revenueGrowth": 30.6,
       "epsGrowth": 53.4,
@@ -92,15 +102,19 @@
           "type": "market",
           "name": "Yahoo Finance"
         }
-      ]
+      ],
+      "marketUpdatedAt": "2026-09-08T20:24:23Z",
+      "marketSource": "Yahoo Finance"
     },
     "BRK.B": {
       "name": "Berkshire Hathaway",
       "ticker": "BRK.B",
+      "marketTicker": "BRK-B",
       "assetType": "stock",
       "sector": "Financials",
       "country": "USA",
-      "price": 504.91,
+      "theme": "Finanzas",
+      "price": 505.83,
       "currency": "USD",
       "revenueGrowth": 3.93,
       "epsGrowth": 36.32,
@@ -123,16 +137,19 @@
           "name": "S&P Global Market Intelligence / StockAnalysis"
         }
       ],
-      "refreshError": "HTTP Error 404: Not Found",
-      "secError": "HTTP Error 403: Forbidden"
+      "secError": "HTTP Error 403: Forbidden",
+      "marketUpdatedAt": "2026-09-08T20:24:23Z",
+      "marketSource": "Yahoo Finance"
     },
     "AMZN": {
       "name": "Amazon",
       "ticker": "AMZN",
+      "marketTicker": "AMZN",
       "assetType": "stock",
       "sector": "Consumer",
       "country": "USA",
-      "price": 257.046,
+      "theme": "Consumo",
+      "price": 256.97,
       "currency": "USD",
       "revenueGrowth": 12.0,
       "epsGrowth": 20.0,
@@ -154,12 +171,20 @@
           "name": "Yahoo Finance"
         }
       ],
-      "secError": "HTTP Error 403: Forbidden"
+      "secError": "HTTP Error 403: Forbidden",
+      "marketUpdatedAt": "2026-09-08T20:24:23Z",
+      "marketSource": "Yahoo Finance"
     },
     "AAPL": {
+      "name": "Apple",
       "ticker": "AAPL",
+      "marketTicker": "AAPL",
+      "assetType": "stock",
+      "sector": "Technology",
+      "country": "USA",
+      "theme": "Tecnología/comunicación",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 315.84,
+      "price": 316.22,
       "currency": "USD",
       "updatedAt": "2026-09-08T19:23:10Z",
       "sources": [
@@ -167,12 +192,20 @@
           "type": "market",
           "name": "Yahoo Finance"
         }
-      ]
+      ],
+      "marketUpdatedAt": "2026-09-08T20:24:23Z",
+      "marketSource": "Yahoo Finance"
     },
     "MSFT": {
+      "name": "Microsoft",
       "ticker": "MSFT",
+      "marketTicker": "MSFT",
+      "assetType": "stock",
+      "sector": "Technology",
+      "country": "USA",
+      "theme": "Tecnología/comunicación",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 492.505,
+      "price": 493.95,
       "currency": "USD",
       "updatedAt": "2026-09-08T19:23:10Z",
       "sources": [
@@ -180,12 +213,20 @@
           "type": "market",
           "name": "Yahoo Finance"
         }
-      ]
+      ],
+      "marketUpdatedAt": "2026-09-08T20:24:23Z",
+      "marketSource": "Yahoo Finance"
     },
     "NVDA": {
+      "name": "Nvidia",
       "ticker": "NVDA",
+      "marketTicker": "NVDA",
+      "assetType": "stock",
+      "sector": "Semiconductors",
+      "country": "USA",
+      "theme": "IA/semiconductores",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 225.549,
+      "price": 225.73,
       "currency": "USD",
       "updatedAt": "2026-09-08T19:23:10Z",
       "sources": [
@@ -193,12 +234,20 @@
           "type": "market",
           "name": "Yahoo Finance"
         }
-      ]
+      ],
+      "marketUpdatedAt": "2026-09-08T20:24:24Z",
+      "marketSource": "Yahoo Finance"
     },
     "AMD": {
+      "name": "AMD",
       "ticker": "AMD",
+      "marketTicker": "AMD",
+      "assetType": "stock",
+      "sector": "Semiconductors",
+      "country": "USA",
+      "theme": "IA/semiconductores",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 506.36,
+      "price": 505.74,
       "currency": "USD",
       "updatedAt": "2026-09-08T19:23:10Z",
       "sources": [
@@ -206,12 +255,20 @@
           "type": "market",
           "name": "Yahoo Finance"
         }
-      ]
+      ],
+      "marketUpdatedAt": "2026-09-08T20:24:24Z",
+      "marketSource": "Yahoo Finance"
     },
     "AVGO": {
+      "name": "Broadcom",
       "ticker": "AVGO",
+      "marketTicker": "AVGO",
+      "assetType": "stock",
+      "sector": "Semiconductors",
+      "country": "USA",
+      "theme": "IA/semiconductores",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 369.315,
+      "price": 368.56,
       "currency": "USD",
       "updatedAt": "2026-09-08T19:23:10Z",
       "sources": [
@@ -219,12 +276,20 @@
           "type": "market",
           "name": "Yahoo Finance"
         }
-      ]
+      ],
+      "marketUpdatedAt": "2026-09-08T20:24:24Z",
+      "marketSource": "Yahoo Finance"
     },
     "JPM": {
+      "name": "JPMorgan",
       "ticker": "JPM",
+      "marketTicker": "JPM",
+      "assetType": "stock",
+      "sector": "Financials",
+      "country": "USA",
+      "theme": "Bancos",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 354.195,
+      "price": 353.51,
       "currency": "USD",
       "updatedAt": "2026-09-08T19:23:10Z",
       "sources": [
@@ -232,12 +297,20 @@
           "type": "market",
           "name": "Yahoo Finance"
         }
-      ]
+      ],
+      "marketUpdatedAt": "2026-09-08T20:24:24Z",
+      "marketSource": "Yahoo Finance"
     },
     "V": {
+      "name": "Visa",
       "ticker": "V",
+      "marketTicker": "V",
+      "assetType": "stock",
+      "sector": "Financials",
+      "country": "USA",
+      "theme": "Finanzas",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 369.12,
+      "price": 368.64,
       "currency": "USD",
       "updatedAt": "2026-09-08T19:23:11Z",
       "sources": [
@@ -245,12 +318,20 @@
           "type": "market",
           "name": "Yahoo Finance"
         }
-      ]
+      ],
+      "marketUpdatedAt": "2026-09-08T20:24:24Z",
+      "marketSource": "Yahoo Finance"
     },
     "KO": {
+      "name": "Coca-Cola",
       "ticker": "KO",
+      "marketTicker": "KO",
+      "assetType": "stock",
+      "sector": "Consumer Defensive",
+      "country": "USA",
+      "theme": "Consumo",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 88.415,
+      "price": 88.36,
       "currency": "USD",
       "updatedAt": "2026-09-08T19:23:11Z",
       "sources": [
@@ -258,12 +339,20 @@
           "type": "market",
           "name": "Yahoo Finance"
         }
-      ]
+      ],
+      "marketUpdatedAt": "2026-09-08T20:24:24Z",
+      "marketSource": "Yahoo Finance"
     },
     "JNJ": {
+      "name": "Johnson & Johnson",
       "ticker": "JNJ",
+      "marketTicker": "JNJ",
+      "assetType": "stock",
+      "sector": "Health Care",
+      "country": "USA",
+      "theme": "Salud",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 270.3,
+      "price": 269.12,
       "currency": "USD",
       "updatedAt": "2026-09-08T19:23:11Z",
       "sources": [
@@ -271,12 +360,20 @@
           "type": "market",
           "name": "Yahoo Finance"
         }
-      ]
+      ],
+      "marketUpdatedAt": "2026-09-08T20:24:24Z",
+      "marketSource": "Yahoo Finance"
     },
     "NEE": {
+      "name": "NextEra Energy",
       "ticker": "NEE",
+      "marketTicker": "NEE",
+      "assetType": "stock",
+      "sector": "Utilities",
+      "country": "USA",
+      "theme": "Energía",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 84.129,
+      "price": 83.83,
       "currency": "USD",
       "updatedAt": "2026-09-08T19:23:11Z",
       "sources": [
@@ -284,12 +381,20 @@
           "type": "market",
           "name": "Yahoo Finance"
         }
-      ]
+      ],
+      "marketUpdatedAt": "2026-09-08T20:24:25Z",
+      "marketSource": "Yahoo Finance"
     },
     "FSLR": {
+      "name": "First Solar",
       "ticker": "FSLR",
+      "marketTicker": "FSLR",
+      "assetType": "stock",
+      "sector": "Energy",
+      "country": "USA",
+      "theme": "Energía",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 213.17,
+      "price": 213.25,
       "currency": "USD",
       "updatedAt": "2026-09-08T19:23:11Z",
       "sources": [
@@ -297,7 +402,648 @@
           "type": "market",
           "name": "Yahoo Finance"
         }
-      ]
+      ],
+      "marketUpdatedAt": "2026-09-08T20:24:25Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "SWDA": {
+      "name": "iShares Core MSCI World Acc",
+      "ticker": "SWDA",
+      "marketTicker": "SWDA.L",
+      "assetType": "etf",
+      "sector": "Core Global",
+      "country": "Global",
+      "theme": "Core global",
+      "price": 10919.0,
+      "currency": "GBp",
+      "marketUpdatedAt": "2026-09-08T20:24:25Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "VUSA": {
+      "name": "Vanguard S&P 500 Dist ETF",
+      "ticker": "VUSA",
+      "marketTicker": "VUSA.L",
+      "assetType": "etf",
+      "sector": "Core USA",
+      "country": "USA",
+      "theme": "USA/core",
+      "price": 107.78,
+      "currency": "GBP",
+      "marketUpdatedAt": "2026-09-08T20:24:25Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "1211.HK": {
+      "name": "BYD",
+      "ticker": "1211.HK",
+      "marketTicker": "1211.HK",
+      "assetType": "stock",
+      "sector": "Industrials",
+      "country": "China",
+      "theme": "Industriales",
+      "price": 83.85,
+      "currency": "HKD",
+      "marketUpdatedAt": "2026-09-08T20:24:25Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "PLTR": {
+      "name": "Palantir Technologies",
+      "ticker": "PLTR",
+      "marketTicker": "PLTR",
+      "assetType": "stock",
+      "sector": "Technology",
+      "country": "USA",
+      "theme": "Palantir",
+      "price": 170.3,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:25Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "NFLX": {
+      "name": "Netflix",
+      "ticker": "NFLX",
+      "marketTicker": "NFLX",
+      "assetType": "stock",
+      "sector": "Consumer",
+      "country": "USA",
+      "theme": "Consumo",
+      "price": 76.77,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:25Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "TM": {
+      "name": "Toyota",
+      "ticker": "TM",
+      "marketTicker": "TM",
+      "assetType": "stock",
+      "sector": "Industrials",
+      "country": "Japan",
+      "theme": "Industriales",
+      "price": 191.45,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:26Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "CABK": {
+      "name": "CaixaBank",
+      "ticker": "CABK",
+      "marketTicker": "CABK.MC",
+      "assetType": "stock",
+      "sector": "Financials",
+      "country": "Spain",
+      "theme": "Bancos",
+      "price": 13.335,
+      "currency": "EUR",
+      "marketUpdatedAt": "2026-09-08T20:24:26Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "ETH-USD": {
+      "name": "Ethereum",
+      "ticker": "ETH-USD",
+      "marketTicker": "ETH-USD",
+      "assetType": "crypto",
+      "sector": "Crypto",
+      "country": "Global",
+      "theme": "Otros",
+      "price": 2484.47,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:26Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "ASML": {
+      "name": "ASML",
+      "ticker": "ASML",
+      "marketTicker": "ASML",
+      "assetType": "stock",
+      "sector": "Semiconductors",
+      "country": "Netherlands",
+      "theme": "IA/semiconductores",
+      "price": 1764.85,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:26Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "MA": {
+      "name": "Mastercard",
+      "ticker": "MA",
+      "marketTicker": "MA",
+      "assetType": "stock",
+      "sector": "Financials",
+      "country": "USA",
+      "theme": "Finanzas",
+      "price": 570.89,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:26Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "PEP": {
+      "name": "PepsiCo",
+      "ticker": "PEP",
+      "marketTicker": "PEP",
+      "assetType": "stock",
+      "sector": "Consumer Defensive",
+      "country": "USA",
+      "theme": "Consumo",
+      "price": 138.45,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:26Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "COST": {
+      "name": "Costco",
+      "ticker": "COST",
+      "marketTicker": "COST",
+      "assetType": "stock",
+      "sector": "Consumer",
+      "country": "USA",
+      "theme": "Consumo",
+      "price": 910.18,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:26Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "PG": {
+      "name": "Procter & Gamble",
+      "ticker": "PG",
+      "marketTicker": "PG",
+      "assetType": "stock",
+      "sector": "Consumer Defensive",
+      "country": "USA",
+      "theme": "Consumo",
+      "price": 145.58,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:27Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "LLY": {
+      "name": "Eli Lilly",
+      "ticker": "LLY",
+      "marketTicker": "LLY",
+      "assetType": "stock",
+      "sector": "Health Care",
+      "country": "USA",
+      "theme": "Salud",
+      "price": 1123.91,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:27Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "UNH": {
+      "name": "UnitedHealth",
+      "ticker": "UNH",
+      "marketTicker": "UNH",
+      "assetType": "stock",
+      "sector": "Health Care",
+      "country": "USA",
+      "theme": "Salud",
+      "price": 400.84,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:27Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "NVO": {
+      "name": "Novo Nordisk",
+      "ticker": "NVO",
+      "marketTicker": "NVO",
+      "assetType": "stock",
+      "sector": "Health Care",
+      "country": "Denmark",
+      "theme": "Salud",
+      "price": 45.16,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:27Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "XOM": {
+      "name": "Exxon Mobil",
+      "ticker": "XOM",
+      "marketTicker": "XOM",
+      "assetType": "stock",
+      "sector": "Energy",
+      "country": "USA",
+      "theme": "Energía",
+      "price": 160.66,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:27Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "CVX": {
+      "name": "Chevron",
+      "ticker": "CVX",
+      "marketTicker": "CVX",
+      "assetType": "stock",
+      "sector": "Energy",
+      "country": "USA",
+      "theme": "Energía",
+      "price": 209.8,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:27Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "LIN": {
+      "name": "Linde",
+      "ticker": "LIN",
+      "marketTicker": "LIN",
+      "assetType": "stock",
+      "sector": "Materials",
+      "country": "USA",
+      "theme": "Materiales",
+      "price": 468.38,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:28Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "FCX": {
+      "name": "Freeport-McMoRan",
+      "ticker": "FCX",
+      "marketTicker": "FCX",
+      "assetType": "stock",
+      "sector": "Materials",
+      "country": "USA",
+      "theme": "Materiales",
+      "price": 76.62,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:28Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "NEM": {
+      "name": "Newmont",
+      "ticker": "NEM",
+      "marketTicker": "NEM",
+      "assetType": "stock",
+      "sector": "Materials",
+      "country": "USA",
+      "theme": "Materiales",
+      "price": 127.09,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:28Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "BHP": {
+      "name": "BHP",
+      "ticker": "BHP",
+      "marketTicker": "BHP",
+      "assetType": "stock",
+      "sector": "Materials",
+      "country": "Australia",
+      "theme": "Materiales",
+      "price": 91.99,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:28Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "RIO": {
+      "name": "Rio Tinto",
+      "ticker": "RIO",
+      "marketTicker": "RIO",
+      "assetType": "stock",
+      "sector": "Materials",
+      "country": "UK",
+      "theme": "Materiales",
+      "price": 103.83,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:28Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "SHW": {
+      "name": "Sherwin-Williams",
+      "ticker": "SHW",
+      "marketTicker": "SHW",
+      "assetType": "stock",
+      "sector": "Materials",
+      "country": "USA",
+      "theme": "Materiales",
+      "price": 326.09,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:28Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "CAT": {
+      "name": "Caterpillar",
+      "ticker": "CAT",
+      "marketTicker": "CAT",
+      "assetType": "stock",
+      "sector": "Industrials",
+      "country": "USA",
+      "theme": "Industriales",
+      "price": 822.48,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:29Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "SIE.DE": {
+      "name": "Siemens",
+      "ticker": "SIE.DE",
+      "marketTicker": "SIE.DE",
+      "assetType": "stock",
+      "sector": "Industrials",
+      "country": "Germany",
+      "theme": "Industriales",
+      "price": 272.5,
+      "currency": "EUR",
+      "marketUpdatedAt": "2026-09-08T20:24:29Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "SU.PA": {
+      "name": "Schneider Electric",
+      "ticker": "SU.PA",
+      "marketTicker": "SU.PA",
+      "assetType": "stock",
+      "sector": "Industrials",
+      "country": "France",
+      "theme": "Industriales",
+      "price": 299.6,
+      "currency": "EUR",
+      "marketUpdatedAt": "2026-09-08T20:24:29Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "HON": {
+      "name": "Honeywell",
+      "ticker": "HON",
+      "marketTicker": "HON",
+      "assetType": "stock",
+      "sector": "Industrials",
+      "country": "USA",
+      "theme": "Industriales",
+      "price": 208.24,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:29Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "MCD": {
+      "name": "McDonald's",
+      "ticker": "MCD",
+      "marketTicker": "MCD",
+      "assetType": "stock",
+      "sector": "Consumer",
+      "country": "USA",
+      "theme": "Consumo",
+      "price": 255.81,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:29Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "NKE": {
+      "name": "Nike",
+      "ticker": "NKE",
+      "marketTicker": "NKE",
+      "assetType": "stock",
+      "sector": "Consumer",
+      "country": "USA",
+      "theme": "Consumo",
+      "price": 38.1,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:29Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "ADBE": {
+      "name": "Adobe",
+      "ticker": "ADBE",
+      "marketTicker": "ADBE",
+      "assetType": "stock",
+      "sector": "Technology",
+      "country": "USA",
+      "theme": "Tecnología/comunicación",
+      "price": 257.26,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:30Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "CRM": {
+      "name": "Salesforce",
+      "ticker": "CRM",
+      "marketTicker": "CRM",
+      "assetType": "stock",
+      "sector": "Technology",
+      "country": "USA",
+      "theme": "Tecnología/comunicación",
+      "price": 249.12,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:30Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "ORCL": {
+      "name": "Oracle",
+      "ticker": "ORCL",
+      "marketTicker": "ORCL",
+      "assetType": "stock",
+      "sector": "Technology",
+      "country": "USA",
+      "theme": "Tecnología/comunicación",
+      "price": 162.52,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:30Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "NOW": {
+      "name": "ServiceNow",
+      "ticker": "NOW",
+      "marketTicker": "NOW",
+      "assetType": "stock",
+      "sector": "Technology",
+      "country": "USA",
+      "theme": "Tecnología/comunicación",
+      "price": 134.21,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:30Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "BAS.DE": {
+      "name": "BASF",
+      "ticker": "BAS.DE",
+      "marketTicker": "BAS.DE",
+      "assetType": "stock",
+      "sector": "Materials",
+      "country": "Germany",
+      "theme": "Materiales",
+      "price": 53.67,
+      "currency": "EUR",
+      "marketUpdatedAt": "2026-09-08T20:24:30Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "AI.PA": {
+      "name": "Air Liquide",
+      "ticker": "AI.PA",
+      "marketTicker": "AI.PA",
+      "assetType": "stock",
+      "sector": "Materials",
+      "country": "France",
+      "theme": "Materiales",
+      "price": 173.16,
+      "currency": "EUR",
+      "marketUpdatedAt": "2026-09-08T20:24:30Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "WMIN": {
+      "name": "SPDR MSCI World Materials UCITS ETF",
+      "ticker": "WMIN",
+      "marketTicker": "WMIN.DE",
+      "assetType": "etf",
+      "sector": "Materials",
+      "country": "Global",
+      "theme": "Materiales",
+      "price": 61.67,
+      "currency": "EUR",
+      "marketUpdatedAt": "2026-09-08T20:24:30Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "WMTS": {
+      "name": "iShares MSCI World Materials Sector Advanced UCITS ETF",
+      "ticker": "WMTS",
+      "marketTicker": "WMTS.L",
+      "assetType": "etf",
+      "sector": "Materials",
+      "country": "Global",
+      "theme": "Materiales",
+      "refreshError": "HTTP Error 404: Not Found"
+    },
+    "WDSC": {
+      "name": "SPDR MSCI World Small Cap UCITS ETF",
+      "ticker": "WDSC",
+      "marketTicker": "WDSC.L",
+      "assetType": "etf",
+      "sector": "Small Cap",
+      "country": "Global",
+      "theme": "Otros",
+      "price": 150.03,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:31Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "WQDV": {
+      "name": "iShares MSCI World Quality Dividend Advanced UCITS ETF",
+      "ticker": "WQDV",
+      "marketTicker": "WQDV.L",
+      "assetType": "etf",
+      "sector": "Global",
+      "country": "Global",
+      "theme": "Otros",
+      "price": 9.8025,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:31Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "INRG": {
+      "name": "iShares Global Clean Energy UCITS ETF",
+      "ticker": "INRG",
+      "marketTicker": "INRG.L",
+      "assetType": "etf",
+      "sector": "Energy",
+      "country": "Global",
+      "theme": "Energía",
+      "price": 780.0,
+      "currency": "GBp",
+      "marketUpdatedAt": "2026-09-08T20:24:31Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "WHEA": {
+      "name": "iShares MSCI World Health Care Sector UCITS ETF",
+      "ticker": "WHEA",
+      "marketTicker": "WHEA.L",
+      "assetType": "etf",
+      "sector": "Health Care",
+      "country": "Global",
+      "theme": "Salud",
+      "price": 70.96,
+      "currency": "USD",
+      "marketUpdatedAt": "2026-09-08T20:24:31Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "WOSC": {
+      "name": "iShares MSCI World Consumer Staples Sector UCITS ETF",
+      "ticker": "WOSC",
+      "marketTicker": "WOSC.L",
+      "assetType": "etf",
+      "sector": "Consumer Defensive",
+      "country": "Global",
+      "theme": "Consumo",
+      "price": 110.81,
+      "currency": "GBP",
+      "marketUpdatedAt": "2026-09-08T20:24:31Z",
+      "marketSource": "Yahoo Finance"
+    },
+    "WIND": {
+      "name": "iShares MSCI World Industrials Sector UCITS ETF",
+      "ticker": "WIND",
+      "marketTicker": "WIND.L",
+      "assetType": "etf",
+      "sector": "Industrials",
+      "country": "Global",
+      "theme": "Industriales",
+      "currency": null,
+      "marketUpdatedAt": "2026-09-08T20:24:31Z",
+      "marketSource": "Yahoo Finance"
     }
+  },
+  "universe": "radar-universe-v2.json",
+  "coverage": {
+    "mode": "dynamic-index-expansion",
+    "sources": [
+      [
+        "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies",
+        "US",
+        "large_cap"
+      ],
+      [
+        "https://en.wikipedia.org/wiki/Nasdaq-100",
+        "US",
+        "large_cap"
+      ],
+      [
+        "https://en.wikipedia.org/wiki/FTSE_100_Index",
+        "GB",
+        "large_cap"
+      ],
+      [
+        "https://en.wikipedia.org/wiki/DAX",
+        "DE",
+        "large_cap"
+      ],
+      [
+        "https://en.wikipedia.org/wiki/CAC_40",
+        "FR",
+        "large_cap"
+      ],
+      [
+        "https://en.wikipedia.org/wiki/Euro_Stoxx_50",
+        "EU",
+        "large_cap"
+      ],
+      [
+        "https://en.wikipedia.org/wiki/Nikkei_225",
+        "JP",
+        "large_cap"
+      ],
+      [
+        "https://en.wikipedia.org/wiki/Hang_Seng_Index",
+        "HK",
+        "large_cap"
+      ],
+      [
+        "https://en.wikipedia.org/wiki/S%26P/TSX_60",
+        "CA",
+        "large_cap"
+      ],
+      [
+        "https://en.wikipedia.org/wiki/ASX_200",
+        "AU",
+        "large_cap"
+      ]
+    ],
+    "sourceHits": {
+      "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies": 0,
+      "https://en.wikipedia.org/wiki/Nasdaq-100": 0,
+      "https://en.wikipedia.org/wiki/FTSE_100_Index": 0,
+      "https://en.wikipedia.org/wiki/DAX": 0,
+      "https://en.wikipedia.org/wiki/CAC_40": 0,
+      "https://en.wikipedia.org/wiki/Euro_Stoxx_50": 0,
+      "https://en.wikipedia.org/wiki/Nikkei_225": 0,
+      "https://en.wikipedia.org/wiki/Hang_Seng_Index": 0,
+      "https://en.wikipedia.org/wiki/S%26P/TSX_60": 0,
+      "https://en.wikipedia.org/wiki/ASX_200": 0
+    },
+    "assetCount": 60,
+    "generatedBy": "scripts/expand_radar_universe.py",
+    "pricedAssets": 58
   }
 }

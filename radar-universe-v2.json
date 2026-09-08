@@ -1,66 +1,615 @@
 {
-  "version": 2,
+  "version": 3,
   "description": "Expanded Radar universe: portfolio holdings plus diversified external opportunities and ETFs. Prices/fundamentals are refreshed by GitHub Actions; missing data is never fabricated.",
   "assets": [
-    {"name":"iShares Core MSCI World Acc","ticker":"SWDA","marketTicker":"SWDA.L","assetType":"etf","sector":"Core Global","country":"Global","theme":"Core global"},
-    {"name":"Vanguard S&P 500 Dist ETF","ticker":"VUSA","marketTicker":"VUSA.L","assetType":"etf","sector":"Core USA","country":"USA","theme":"USA/core"},
-    {"name":"BYD","ticker":"1211.HK","marketTicker":"1211.HK","assetType":"stock","sector":"Industrials","country":"China","theme":"Industriales"},
-    {"name":"Palantir Technologies","ticker":"PLTR","marketTicker":"PLTR","assetType":"stock","sector":"Technology","country":"USA","theme":"Palantir"},
-    {"name":"Netflix","ticker":"NFLX","marketTicker":"NFLX","assetType":"stock","sector":"Consumer","country":"USA","theme":"Consumo"},
-    {"name":"Toyota","ticker":"TM","marketTicker":"TM","assetType":"stock","sector":"Industrials","country":"Japan","theme":"Industriales"},
-    {"name":"CaixaBank","ticker":"CABK","marketTicker":"CABK.MC","assetType":"stock","sector":"Financials","country":"Spain","theme":"Bancos"},
-    {"name":"Ethereum","ticker":"ETH-USD","marketTicker":"ETH-USD","assetType":"crypto","sector":"Crypto","country":"Global","theme":"Otros"},
-    {"name":"Alphabet","ticker":"GOOGL","marketTicker":"GOOGL","assetType":"stock","sector":"Communication","country":"USA","theme":"Tecnología/comunicación"},
-    {"name":"Meta Platforms","ticker":"META","marketTicker":"META","assetType":"stock","sector":"Communication","country":"USA","theme":"Tecnología/comunicación"},
-    {"name":"Microsoft","ticker":"MSFT","marketTicker":"MSFT","assetType":"stock","sector":"Technology","country":"USA","theme":"Tecnología/comunicación"},
-    {"name":"Apple","ticker":"AAPL","marketTicker":"AAPL","assetType":"stock","sector":"Technology","country":"USA","theme":"Tecnología/comunicación"},
-    {"name":"Amazon","ticker":"AMZN","marketTicker":"AMZN","assetType":"stock","sector":"Consumer","country":"USA","theme":"Consumo"},
-    {"name":"Nvidia","ticker":"NVDA","marketTicker":"NVDA","assetType":"stock","sector":"Semiconductors","country":"USA","theme":"IA/semiconductores"},
-    {"name":"AMD","ticker":"AMD","marketTicker":"AMD","assetType":"stock","sector":"Semiconductors","country":"USA","theme":"IA/semiconductores"},
-    {"name":"Broadcom","ticker":"AVGO","marketTicker":"AVGO","assetType":"stock","sector":"Semiconductors","country":"USA","theme":"IA/semiconductores"},
-    {"name":"TSMC","ticker":"TSM","marketTicker":"TSM","assetType":"stock","sector":"Semiconductors","country":"Taiwan","theme":"IA/semiconductores"},
-    {"name":"ASML","ticker":"ASML","marketTicker":"ASML","assetType":"stock","sector":"Semiconductors","country":"Netherlands","theme":"IA/semiconductores"},
-    {"name":"Berkshire Hathaway","ticker":"BRK.B","marketTicker":"BRK-B","assetType":"stock","sector":"Financials","country":"USA","theme":"Finanzas"},
-    {"name":"JPMorgan","ticker":"JPM","marketTicker":"JPM","assetType":"stock","sector":"Financials","country":"USA","theme":"Bancos"},
-    {"name":"Visa","ticker":"V","marketTicker":"V","assetType":"stock","sector":"Financials","country":"USA","theme":"Finanzas"},
-    {"name":"Mastercard","ticker":"MA","marketTicker":"MA","assetType":"stock","sector":"Financials","country":"USA","theme":"Finanzas"},
-    {"name":"Coca-Cola","ticker":"KO","marketTicker":"KO","assetType":"stock","sector":"Consumer Defensive","country":"USA","theme":"Consumo"},
-    {"name":"PepsiCo","ticker":"PEP","marketTicker":"PEP","assetType":"stock","sector":"Consumer Defensive","country":"USA","theme":"Consumo"},
-    {"name":"Costco","ticker":"COST","marketTicker":"COST","assetType":"stock","sector":"Consumer","country":"USA","theme":"Consumo"},
-    {"name":"Procter & Gamble","ticker":"PG","marketTicker":"PG","assetType":"stock","sector":"Consumer Defensive","country":"USA","theme":"Consumo"},
-    {"name":"Johnson & Johnson","ticker":"JNJ","marketTicker":"JNJ","assetType":"stock","sector":"Health Care","country":"USA","theme":"Salud"},
-    {"name":"Eli Lilly","ticker":"LLY","marketTicker":"LLY","assetType":"stock","sector":"Health Care","country":"USA","theme":"Salud"},
-    {"name":"UnitedHealth","ticker":"UNH","marketTicker":"UNH","assetType":"stock","sector":"Health Care","country":"USA","theme":"Salud"},
-    {"name":"Novo Nordisk","ticker":"NVO","marketTicker":"NVO","assetType":"stock","sector":"Health Care","country":"Denmark","theme":"Salud"},
-    {"name":"NextEra Energy","ticker":"NEE","marketTicker":"NEE","assetType":"stock","sector":"Utilities","country":"USA","theme":"Energía"},
-    {"name":"First Solar","ticker":"FSLR","marketTicker":"FSLR","assetType":"stock","sector":"Energy","country":"USA","theme":"Energía"},
-    {"name":"Exxon Mobil","ticker":"XOM","marketTicker":"XOM","assetType":"stock","sector":"Energy","country":"USA","theme":"Energía"},
-    {"name":"Chevron","ticker":"CVX","marketTicker":"CVX","assetType":"stock","sector":"Energy","country":"USA","theme":"Energía"},
-    {"name":"Linde","ticker":"LIN","marketTicker":"LIN","assetType":"stock","sector":"Materials","country":"USA","theme":"Materiales"},
-    {"name":"Freeport-McMoRan","ticker":"FCX","marketTicker":"FCX","assetType":"stock","sector":"Materials","country":"USA","theme":"Materiales"},
-    {"name":"Newmont","ticker":"NEM","marketTicker":"NEM","assetType":"stock","sector":"Materials","country":"USA","theme":"Materiales"},
-    {"name":"BHP","ticker":"BHP","marketTicker":"BHP","assetType":"stock","sector":"Materials","country":"Australia","theme":"Materiales"},
-    {"name":"Rio Tinto","ticker":"RIO","marketTicker":"RIO","assetType":"stock","sector":"Materials","country":"UK","theme":"Materiales"},
-    {"name":"Sherwin-Williams","ticker":"SHW","marketTicker":"SHW","assetType":"stock","sector":"Materials","country":"USA","theme":"Materiales"},
-    {"name":"Caterpillar","ticker":"CAT","marketTicker":"CAT","assetType":"stock","sector":"Industrials","country":"USA","theme":"Industriales"},
-    {"name":"Siemens","ticker":"SIE.DE","marketTicker":"SIE.DE","assetType":"stock","sector":"Industrials","country":"Germany","theme":"Industriales"},
-    {"name":"Schneider Electric","ticker":"SU.PA","marketTicker":"SU.PA","assetType":"stock","sector":"Industrials","country":"France","theme":"Industriales"},
-    {"name":"Honeywell","ticker":"HON","marketTicker":"HON","assetType":"stock","sector":"Industrials","country":"USA","theme":"Industriales"},
-    {"name":"McDonald's","ticker":"MCD","marketTicker":"MCD","assetType":"stock","sector":"Consumer","country":"USA","theme":"Consumo"},
-    {"name":"Nike","ticker":"NKE","marketTicker":"NKE","assetType":"stock","sector":"Consumer","country":"USA","theme":"Consumo"},
-    {"name":"Adobe","ticker":"ADBE","marketTicker":"ADBE","assetType":"stock","sector":"Technology","country":"USA","theme":"Tecnología/comunicación"},
-    {"name":"Salesforce","ticker":"CRM","marketTicker":"CRM","assetType":"stock","sector":"Technology","country":"USA","theme":"Tecnología/comunicación"},
-    {"name":"Oracle","ticker":"ORCL","marketTicker":"ORCL","assetType":"stock","sector":"Technology","country":"USA","theme":"Tecnología/comunicación"},
-    {"name":"ServiceNow","ticker":"NOW","marketTicker":"NOW","assetType":"stock","sector":"Technology","country":"USA","theme":"Tecnología/comunicación"},
-    {"name":"BASF","ticker":"BAS.DE","marketTicker":"BAS.DE","assetType":"stock","sector":"Materials","country":"Germany","theme":"Materiales"},
-    {"name":"Air Liquide","ticker":"AI.PA","marketTicker":"AI.PA","assetType":"stock","sector":"Materials","country":"France","theme":"Materiales"},
-    {"name":"SPDR MSCI World Materials UCITS ETF","ticker":"WMIN","marketTicker":"WMIN.DE","assetType":"etf","sector":"Materials","country":"Global","theme":"Materiales"},
-    {"name":"iShares MSCI World Materials Sector Advanced UCITS ETF","ticker":"WMTS","marketTicker":"WMTS.L","assetType":"etf","sector":"Materials","country":"Global","theme":"Materiales"},
-    {"name":"SPDR MSCI World Small Cap UCITS ETF","ticker":"WDSC","marketTicker":"WDSC.L","assetType":"etf","sector":"Small Cap","country":"Global","theme":"Otros"},
-    {"name":"iShares MSCI World Quality Dividend Advanced UCITS ETF","ticker":"WQDV","marketTicker":"WQDV.L","assetType":"etf","sector":"Global","country":"Global","theme":"Otros"},
-    {"name":"iShares Global Clean Energy UCITS ETF","ticker":"INRG","marketTicker":"INRG.L","assetType":"etf","sector":"Energy","country":"Global","theme":"Energía"},
-    {"name":"iShares MSCI World Health Care Sector UCITS ETF","ticker":"WHEA","marketTicker":"WHEA.L","assetType":"etf","sector":"Health Care","country":"Global","theme":"Salud"},
-    {"name":"iShares MSCI World Consumer Staples Sector UCITS ETF","ticker":"WOSC","marketTicker":"WOSC.L","assetType":"etf","sector":"Consumer Defensive","country":"Global","theme":"Consumo"},
-    {"name":"iShares MSCI World Industrials Sector UCITS ETF","ticker":"WIND","marketTicker":"WIND.L","assetType":"etf","sector":"Industrials","country":"Global","theme":"Industriales"}
-  ]
+    {
+      "name": "iShares Core MSCI World Acc",
+      "ticker": "SWDA",
+      "marketTicker": "SWDA.L",
+      "assetType": "etf",
+      "sector": "Core Global",
+      "country": "Global",
+      "theme": "Core global"
+    },
+    {
+      "name": "Vanguard S&P 500 Dist ETF",
+      "ticker": "VUSA",
+      "marketTicker": "VUSA.L",
+      "assetType": "etf",
+      "sector": "Core USA",
+      "country": "USA",
+      "theme": "USA/core"
+    },
+    {
+      "name": "BYD",
+      "ticker": "1211.HK",
+      "marketTicker": "1211.HK",
+      "assetType": "stock",
+      "sector": "Industrials",
+      "country": "China",
+      "theme": "Industriales"
+    },
+    {
+      "name": "Palantir Technologies",
+      "ticker": "PLTR",
+      "marketTicker": "PLTR",
+      "assetType": "stock",
+      "sector": "Technology",
+      "country": "USA",
+      "theme": "Palantir"
+    },
+    {
+      "name": "Netflix",
+      "ticker": "NFLX",
+      "marketTicker": "NFLX",
+      "assetType": "stock",
+      "sector": "Consumer",
+      "country": "USA",
+      "theme": "Consumo"
+    },
+    {
+      "name": "Toyota",
+      "ticker": "TM",
+      "marketTicker": "TM",
+      "assetType": "stock",
+      "sector": "Industrials",
+      "country": "Japan",
+      "theme": "Industriales"
+    },
+    {
+      "name": "CaixaBank",
+      "ticker": "CABK",
+      "marketTicker": "CABK.MC",
+      "assetType": "stock",
+      "sector": "Financials",
+      "country": "Spain",
+      "theme": "Bancos"
+    },
+    {
+      "name": "Ethereum",
+      "ticker": "ETH-USD",
+      "marketTicker": "ETH-USD",
+      "assetType": "crypto",
+      "sector": "Crypto",
+      "country": "Global",
+      "theme": "Otros"
+    },
+    {
+      "name": "Alphabet",
+      "ticker": "GOOGL",
+      "marketTicker": "GOOGL",
+      "assetType": "stock",
+      "sector": "Communication",
+      "country": "USA",
+      "theme": "Tecnología/comunicación"
+    },
+    {
+      "name": "Meta Platforms",
+      "ticker": "META",
+      "marketTicker": "META",
+      "assetType": "stock",
+      "sector": "Communication",
+      "country": "USA",
+      "theme": "Tecnología/comunicación"
+    },
+    {
+      "name": "Microsoft",
+      "ticker": "MSFT",
+      "marketTicker": "MSFT",
+      "assetType": "stock",
+      "sector": "Technology",
+      "country": "USA",
+      "theme": "Tecnología/comunicación"
+    },
+    {
+      "name": "Apple",
+      "ticker": "AAPL",
+      "marketTicker": "AAPL",
+      "assetType": "stock",
+      "sector": "Technology",
+      "country": "USA",
+      "theme": "Tecnología/comunicación"
+    },
+    {
+      "name": "Amazon",
+      "ticker": "AMZN",
+      "marketTicker": "AMZN",
+      "assetType": "stock",
+      "sector": "Consumer",
+      "country": "USA",
+      "theme": "Consumo"
+    },
+    {
+      "name": "Nvidia",
+      "ticker": "NVDA",
+      "marketTicker": "NVDA",
+      "assetType": "stock",
+      "sector": "Semiconductors",
+      "country": "USA",
+      "theme": "IA/semiconductores"
+    },
+    {
+      "name": "AMD",
+      "ticker": "AMD",
+      "marketTicker": "AMD",
+      "assetType": "stock",
+      "sector": "Semiconductors",
+      "country": "USA",
+      "theme": "IA/semiconductores"
+    },
+    {
+      "name": "Broadcom",
+      "ticker": "AVGO",
+      "marketTicker": "AVGO",
+      "assetType": "stock",
+      "sector": "Semiconductors",
+      "country": "USA",
+      "theme": "IA/semiconductores"
+    },
+    {
+      "name": "TSMC",
+      "ticker": "TSM",
+      "marketTicker": "TSM",
+      "assetType": "stock",
+      "sector": "Semiconductors",
+      "country": "Taiwan",
+      "theme": "IA/semiconductores"
+    },
+    {
+      "name": "ASML",
+      "ticker": "ASML",
+      "marketTicker": "ASML",
+      "assetType": "stock",
+      "sector": "Semiconductors",
+      "country": "Netherlands",
+      "theme": "IA/semiconductores"
+    },
+    {
+      "name": "Berkshire Hathaway",
+      "ticker": "BRK.B",
+      "marketTicker": "BRK-B",
+      "assetType": "stock",
+      "sector": "Financials",
+      "country": "USA",
+      "theme": "Finanzas"
+    },
+    {
+      "name": "JPMorgan",
+      "ticker": "JPM",
+      "marketTicker": "JPM",
+      "assetType": "stock",
+      "sector": "Financials",
+      "country": "USA",
+      "theme": "Bancos"
+    },
+    {
+      "name": "Visa",
+      "ticker": "V",
+      "marketTicker": "V",
+      "assetType": "stock",
+      "sector": "Financials",
+      "country": "USA",
+      "theme": "Finanzas"
+    },
+    {
+      "name": "Mastercard",
+      "ticker": "MA",
+      "marketTicker": "MA",
+      "assetType": "stock",
+      "sector": "Financials",
+      "country": "USA",
+      "theme": "Finanzas"
+    },
+    {
+      "name": "Coca-Cola",
+      "ticker": "KO",
+      "marketTicker": "KO",
+      "assetType": "stock",
+      "sector": "Consumer Defensive",
+      "country": "USA",
+      "theme": "Consumo"
+    },
+    {
+      "name": "PepsiCo",
+      "ticker": "PEP",
+      "marketTicker": "PEP",
+      "assetType": "stock",
+      "sector": "Consumer Defensive",
+      "country": "USA",
+      "theme": "Consumo"
+    },
+    {
+      "name": "Costco",
+      "ticker": "COST",
+      "marketTicker": "COST",
+      "assetType": "stock",
+      "sector": "Consumer",
+      "country": "USA",
+      "theme": "Consumo"
+    },
+    {
+      "name": "Procter & Gamble",
+      "ticker": "PG",
+      "marketTicker": "PG",
+      "assetType": "stock",
+      "sector": "Consumer Defensive",
+      "country": "USA",
+      "theme": "Consumo"
+    },
+    {
+      "name": "Johnson & Johnson",
+      "ticker": "JNJ",
+      "marketTicker": "JNJ",
+      "assetType": "stock",
+      "sector": "Health Care",
+      "country": "USA",
+      "theme": "Salud"
+    },
+    {
+      "name": "Eli Lilly",
+      "ticker": "LLY",
+      "marketTicker": "LLY",
+      "assetType": "stock",
+      "sector": "Health Care",
+      "country": "USA",
+      "theme": "Salud"
+    },
+    {
+      "name": "UnitedHealth",
+      "ticker": "UNH",
+      "marketTicker": "UNH",
+      "assetType": "stock",
+      "sector": "Health Care",
+      "country": "USA",
+      "theme": "Salud"
+    },
+    {
+      "name": "Novo Nordisk",
+      "ticker": "NVO",
+      "marketTicker": "NVO",
+      "assetType": "stock",
+      "sector": "Health Care",
+      "country": "Denmark",
+      "theme": "Salud"
+    },
+    {
+      "name": "NextEra Energy",
+      "ticker": "NEE",
+      "marketTicker": "NEE",
+      "assetType": "stock",
+      "sector": "Utilities",
+      "country": "USA",
+      "theme": "Energía"
+    },
+    {
+      "name": "First Solar",
+      "ticker": "FSLR",
+      "marketTicker": "FSLR",
+      "assetType": "stock",
+      "sector": "Energy",
+      "country": "USA",
+      "theme": "Energía"
+    },
+    {
+      "name": "Exxon Mobil",
+      "ticker": "XOM",
+      "marketTicker": "XOM",
+      "assetType": "stock",
+      "sector": "Energy",
+      "country": "USA",
+      "theme": "Energía"
+    },
+    {
+      "name": "Chevron",
+      "ticker": "CVX",
+      "marketTicker": "CVX",
+      "assetType": "stock",
+      "sector": "Energy",
+      "country": "USA",
+      "theme": "Energía"
+    },
+    {
+      "name": "Linde",
+      "ticker": "LIN",
+      "marketTicker": "LIN",
+      "assetType": "stock",
+      "sector": "Materials",
+      "country": "USA",
+      "theme": "Materiales"
+    },
+    {
+      "name": "Freeport-McMoRan",
+      "ticker": "FCX",
+      "marketTicker": "FCX",
+      "assetType": "stock",
+      "sector": "Materials",
+      "country": "USA",
+      "theme": "Materiales"
+    },
+    {
+      "name": "Newmont",
+      "ticker": "NEM",
+      "marketTicker": "NEM",
+      "assetType": "stock",
+      "sector": "Materials",
+      "country": "USA",
+      "theme": "Materiales"
+    },
+    {
+      "name": "BHP",
+      "ticker": "BHP",
+      "marketTicker": "BHP",
+      "assetType": "stock",
+      "sector": "Materials",
+      "country": "Australia",
+      "theme": "Materiales"
+    },
+    {
+      "name": "Rio Tinto",
+      "ticker": "RIO",
+      "marketTicker": "RIO",
+      "assetType": "stock",
+      "sector": "Materials",
+      "country": "UK",
+      "theme": "Materiales"
+    },
+    {
+      "name": "Sherwin-Williams",
+      "ticker": "SHW",
+      "marketTicker": "SHW",
+      "assetType": "stock",
+      "sector": "Materials",
+      "country": "USA",
+      "theme": "Materiales"
+    },
+    {
+      "name": "Caterpillar",
+      "ticker": "CAT",
+      "marketTicker": "CAT",
+      "assetType": "stock",
+      "sector": "Industrials",
+      "country": "USA",
+      "theme": "Industriales"
+    },
+    {
+      "name": "Siemens",
+      "ticker": "SIE.DE",
+      "marketTicker": "SIE.DE",
+      "assetType": "stock",
+      "sector": "Industrials",
+      "country": "Germany",
+      "theme": "Industriales"
+    },
+    {
+      "name": "Schneider Electric",
+      "ticker": "SU.PA",
+      "marketTicker": "SU.PA",
+      "assetType": "stock",
+      "sector": "Industrials",
+      "country": "France",
+      "theme": "Industriales"
+    },
+    {
+      "name": "Honeywell",
+      "ticker": "HON",
+      "marketTicker": "HON",
+      "assetType": "stock",
+      "sector": "Industrials",
+      "country": "USA",
+      "theme": "Industriales"
+    },
+    {
+      "name": "McDonald's",
+      "ticker": "MCD",
+      "marketTicker": "MCD",
+      "assetType": "stock",
+      "sector": "Consumer",
+      "country": "USA",
+      "theme": "Consumo"
+    },
+    {
+      "name": "Nike",
+      "ticker": "NKE",
+      "marketTicker": "NKE",
+      "assetType": "stock",
+      "sector": "Consumer",
+      "country": "USA",
+      "theme": "Consumo"
+    },
+    {
+      "name": "Adobe",
+      "ticker": "ADBE",
+      "marketTicker": "ADBE",
+      "assetType": "stock",
+      "sector": "Technology",
+      "country": "USA",
+      "theme": "Tecnología/comunicación"
+    },
+    {
+      "name": "Salesforce",
+      "ticker": "CRM",
+      "marketTicker": "CRM",
+      "assetType": "stock",
+      "sector": "Technology",
+      "country": "USA",
+      "theme": "Tecnología/comunicación"
+    },
+    {
+      "name": "Oracle",
+      "ticker": "ORCL",
+      "marketTicker": "ORCL",
+      "assetType": "stock",
+      "sector": "Technology",
+      "country": "USA",
+      "theme": "Tecnología/comunicación"
+    },
+    {
+      "name": "ServiceNow",
+      "ticker": "NOW",
+      "marketTicker": "NOW",
+      "assetType": "stock",
+      "sector": "Technology",
+      "country": "USA",
+      "theme": "Tecnología/comunicación"
+    },
+    {
+      "name": "BASF",
+      "ticker": "BAS.DE",
+      "marketTicker": "BAS.DE",
+      "assetType": "stock",
+      "sector": "Materials",
+      "country": "Germany",
+      "theme": "Materiales"
+    },
+    {
+      "name": "Air Liquide",
+      "ticker": "AI.PA",
+      "marketTicker": "AI.PA",
+      "assetType": "stock",
+      "sector": "Materials",
+      "country": "France",
+      "theme": "Materiales"
+    },
+    {
+      "name": "SPDR MSCI World Materials UCITS ETF",
+      "ticker": "WMIN",
+      "marketTicker": "WMIN.DE",
+      "assetType": "etf",
+      "sector": "Materials",
+      "country": "Global",
+      "theme": "Materiales"
+    },
+    {
+      "name": "iShares MSCI World Materials Sector Advanced UCITS ETF",
+      "ticker": "WMTS",
+      "marketTicker": "WMTS.L",
+      "assetType": "etf",
+      "sector": "Materials",
+      "country": "Global",
+      "theme": "Materiales"
+    },
+    {
+      "name": "SPDR MSCI World Small Cap UCITS ETF",
+      "ticker": "WDSC",
+      "marketTicker": "WDSC.L",
+      "assetType": "etf",
+      "sector": "Small Cap",
+      "country": "Global",
+      "theme": "Otros"
+    },
+    {
+      "name": "iShares MSCI World Quality Dividend Advanced UCITS ETF",
+      "ticker": "WQDV",
+      "marketTicker": "WQDV.L",
+      "assetType": "etf",
+      "sector": "Global",
+      "country": "Global",
+      "theme": "Otros"
+    },
+    {
+      "name": "iShares Global Clean Energy UCITS ETF",
+      "ticker": "INRG",
+      "marketTicker": "INRG.L",
+      "assetType": "etf",
+      "sector": "Energy",
+      "country": "Global",
+      "theme": "Energía"
+    },
+    {
+      "name": "iShares MSCI World Health Care Sector UCITS ETF",
+      "ticker": "WHEA",
+      "marketTicker": "WHEA.L",
+      "assetType": "etf",
+      "sector": "Health Care",
+      "country": "Global",
+      "theme": "Salud"
+    },
+    {
+      "name": "iShares MSCI World Consumer Staples Sector UCITS ETF",
+      "ticker": "WOSC",
+      "marketTicker": "WOSC.L",
+      "assetType": "etf",
+      "sector": "Consumer Defensive",
+      "country": "Global",
+      "theme": "Consumo"
+    },
+    {
+      "name": "iShares MSCI World Industrials Sector UCITS ETF",
+      "ticker": "WIND",
+      "marketTicker": "WIND.L",
+      "assetType": "etf",
+      "sector": "Industrials",
+      "country": "Global",
+      "theme": "Industriales"
+    }
+  ],
+  "coverage": {
+    "mode": "dynamic-index-expansion",
+    "sources": [
+      [
+        "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies",
+        "US",
+        "large_cap"
+      ],
+      [
+        "https://en.wikipedia.org/wiki/Nasdaq-100",
+        "US",
+        "large_cap"
+      ],
+      [
+        "https://en.wikipedia.org/wiki/FTSE_100_Index",
+        "GB",
+        "large_cap"
+      ],
+      [
+        "https://en.wikipedia.org/wiki/DAX",
+        "DE",
+        "large_cap"
+      ],
+      [
+        "https://en.wikipedia.org/wiki/CAC_40",
+        "FR",
+        "large_cap"
+      ],
+      [
+        "https://en.wikipedia.org/wiki/Euro_Stoxx_50",
+        "EU",
+        "large_cap"
+      ],
+      [
+        "https://en.wikipedia.org/wiki/Nikkei_225",
+        "JP",
+        "large_cap"
+      ],
+      [
+        "https://en.wikipedia.org/wiki/Hang_Seng_Index",
+        "HK",
+        "large_cap"
+      ],
+      [
+        "https://en.wikipedia.org/wiki/S%26P/TSX_60",
+        "CA",
+        "large_cap"
+      ],
+      [
+        "https://en.wikipedia.org/wiki/ASX_200",
+        "AU",
+        "large_cap"
+      ]
+    ],
+    "sourceHits": {
+      "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies": 0,
+      "https://en.wikipedia.org/wiki/Nasdaq-100": 0,
+      "https://en.wikipedia.org/wiki/FTSE_100_Index": 0,
+      "https://en.wikipedia.org/wiki/DAX": 0,
+      "https://en.wikipedia.org/wiki/CAC_40": 0,
+      "https://en.wikipedia.org/wiki/Euro_Stoxx_50": 0,
+      "https://en.wikipedia.org/wiki/Nikkei_225": 0,
+      "https://en.wikipedia.org/wiki/Hang_Seng_Index": 0,
+      "https://en.wikipedia.org/wiki/S%26P/TSX_60": 0,
+      "https://en.wikipedia.org/wiki/ASX_200": 0
+    },
+    "assetCount": 60,
+    "generatedBy": "scripts/expand_radar_universe.py"
+  }
 }

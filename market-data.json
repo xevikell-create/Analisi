@@ -1,6 +1,6 @@
 {
   "provider": "yahoo",
-  "updatedAt": "2026-09-12T22:30:24.729376+00:00",
+  "updatedAt": "2026-09-12T22:53:19.810144+00:00",
   "quotes": {
     "First Solar": {
       "symbol": "FSLR",
@@ -8,7 +8,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-12T22:30:25.179420+00:00",
+      "timestamp": "2026-09-12T22:53:20.298575+00:00",
       "source": "Yahoo Finance"
     },
     "BYD": {
@@ -17,7 +17,7 @@
       "currency": "HKD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-12T22:30:25.314922+00:00",
+      "timestamp": "2026-09-12T22:53:20.591682+00:00",
       "source": "Yahoo Finance"
     },
     "Netflix": {
@@ -26,7 +26,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-12T22:30:25.454209+00:00",
+      "timestamp": "2026-09-12T22:53:20.812581+00:00",
       "source": "Yahoo Finance"
     },
     "Meta Platforms": {
@@ -35,7 +35,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-12T22:30:25.592862+00:00",
+      "timestamp": "2026-09-12T22:53:21.032456+00:00",
       "source": "Yahoo Finance"
     },
     "Apple": {
@@ -44,7 +44,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-12T22:30:25.712431+00:00",
+      "timestamp": "2026-09-12T22:53:21.224949+00:00",
       "source": "Yahoo Finance"
     },
     "Palantir Technologies": {
@@ -53,7 +53,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-12T22:30:25.845978+00:00",
+      "timestamp": "2026-09-12T22:53:21.435605+00:00",
       "source": "Yahoo Finance"
     },
     "Toyota": {
@@ -62,7 +62,7 @@
       "currency": "JPY",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-12T22:30:26.043857+00:00",
+      "timestamp": "2026-09-12T22:53:21.676886+00:00",
       "source": "Yahoo Finance"
     },
     "AMD": {
@@ -71,7 +71,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-12T22:30:26.182327+00:00",
+      "timestamp": "2026-09-12T22:53:21.915749+00:00",
       "source": "Yahoo Finance"
     },
     "Nvidia": {
@@ -80,7 +80,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-12T22:30:26.318497+00:00",
+      "timestamp": "2026-09-12T22:53:22.224824+00:00",
       "source": "Yahoo Finance"
     },
     "CaixaBank": {
@@ -89,7 +89,7 @@
       "currency": "EUR",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-12T22:30:26.457242+00:00",
+      "timestamp": "2026-09-12T22:53:22.573369+00:00",
       "source": "Yahoo Finance"
     },
     "Vanguard S&P 500 Dist ETF": {
@@ -98,7 +98,7 @@
       "currency": "GBP",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-12T22:30:26.630331+00:00",
+      "timestamp": "2026-09-12T22:53:22.895032+00:00",
       "source": "Yahoo Finance"
     },
     "Amazon": {
@@ -107,7 +107,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-12T22:30:26.833283+00:00",
+      "timestamp": "2026-09-12T22:53:23.093960+00:00",
       "source": "Yahoo Finance"
     },
     "NextEra Energy": {
@@ -116,7 +116,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-12T22:30:26.966953+00:00",
+      "timestamp": "2026-09-12T22:53:23.417506+00:00",
       "source": "Yahoo Finance"
     },
     "iShares Core MSCI World Acc": {
@@ -125,7 +125,7 @@
       "currency": "GBP",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-12T22:30:27.170529+00:00",
+      "timestamp": "2026-09-12T22:53:23.622482+00:00",
       "source": "Yahoo Finance"
     }
   },
@@ -136,7 +136,7 @@
     "GBP_EUR": 1.1653
   },
   "crypto": {
-    "ETH_EUR": 2173.57
+    "ETH_EUR": 2173.11
   },
   "primaryError": "HTTP Error 429: Too Many Requests"
 }

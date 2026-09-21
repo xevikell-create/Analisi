@@ -65,7 +65,7 @@
     return {out,monthly,annual};
   }
   function chartSVG(points,key='value'){
-    if(!points.length)return '<div class="empty">Aún no hay suficiente histórico.</div>';
+    if(!points.length)return '<div class="empty">Aún no hay histórico registrado. El primer cierre se crea automáticamente al abrir la app.</div>';
     const w=920,h=270,p=38,vals=points.map(x=>Number(x[key])||0),min=Math.min(...vals),max=Math.max(...vals),range=Math.max(1,max-min);
     const xy=points.map((x,i)=>[p+i*(w-2*p)/Math.max(1,points.length-1),h-p-((Number(x[key])||0)-min)/range*(h-2*p)]);
     const d=xy.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' ');
@@ -75,6 +75,7 @@
     const box=document.getElementById('evolutionV2');if(!box)return;
     snapshot();
     const p=periods(), ms=periodStats(p.monthly), ys=periodStats(p.annual), fs=flows(), last=p.a[p.a.length-1], first=p.a[0];
+    const historyCount=p.a.length, monthCount=p.monthly.length, yearCount=p.annual.length;
     const totalContrib=fs.reduce((s,f)=>s+Number(f.amount),0);
     const current=last?.value||Number(total())||0;
     const gainSinceFirst=first?current-first.value:0;
@@ -91,7 +92,7 @@
         </div>
         <div class="pill" style="margin:12px 0"><button class="secondary action" onclick="window.__evoMode='monthly';window.__evoRender()">Mensual</button><button class="secondary action" onclick="window.__evoMode='annual';window.__evoRender()">Anual</button><button class="secondary action" onclick="window.__evoMode='daily';window.__evoRender()">Diario</button></div>
         <div id="evoChart">${chartSVG(window.__evoMode==='annual'?p.annual:window.__evoMode==='daily'?p.a:p.monthly)}</div>
-        <p class="muted">El histórico se registra automáticamente cada día y se resume por mes y año. No se inventan valores que la app no haya registrado.</p>
+        <p class="muted"><b>${historyCount} cierres diarios · ${monthCount} meses · ${yearCount} años</b>. El histórico se registra automáticamente y se resume por mes y año. No se inventan valores que la app no haya registrado.</p>
       </div>
       <div class="two">
         <div class="card"><h3>📅 Resultado por año</h3><div class="scroll"><table><thead><tr><th>Año</th><th>Patrimonio</th><th>Aportado</th><th>Ganancia</th><th>Rent.</th></tr></thead><tbody>${ys.map(r=>`<tr><td>${r.date.slice(0,4)}</td><td>${fmt(r.value)}</td><td>${r.contrib?fmt(r.contrib):'—'}</td><td class="${r.gain>=0?'positive':'negative'}">${r.contrib?fmt(r.gain):'—'}</td><td>${r.returnPct==null?'—':pct(r.returnPct)}</td></tr>`).join('')}</tbody></table></div></div>

@@ -23,9 +23,17 @@
   }
   function migrate(){
     const a=read(HIST,[]), old=read(oldHistKey,[]);
-    if(a.length||!old.length)return;
-    const m=old.map(x=>({date:x.date,value:Number(x.value)||0,liquidity:null,invested:null,eth:null})).filter(x=>x.value>0);
-    write(HIST,m);
+    if(!old.length)return;
+    const merged=[...a];
+    old.forEach(x=>{
+      const value=Number(x.value)||0;
+      if(value<=0||!x.date)return;
+      const existing=merged.find(y=>y.date===x.date);
+      if(existing){if(!existing.value||existing.value<=0)existing.value=value;}
+      else merged.push({date:x.date,value,liquidity:null,invested:null,eth:null});
+    });
+    merged.sort((x,y)=>x.date.localeCompare(y.date));
+    write(HIST,merged.slice(-3650));
   }
   function flows(){return read(CF,[]).filter(x=>Number.isFinite(Number(x.amount))&&x.amount!==0);}
   function addFlow(amount,date,type='Aportación',note=''){

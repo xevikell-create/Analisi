@@ -1,6 +1,6 @@
 {
   "provider": "yahoo",
-  "updatedAt": "2026-09-29T21:26:27.087344+00:00",
+  "updatedAt": "2026-09-30T00:42:50.420278+00:00",
   "quotes": {
     "First Solar": {
       "symbol": "FSLR",
@@ -8,7 +8,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-29T21:26:27.240736+00:00",
+      "timestamp": "2026-09-30T00:42:50.569667+00:00",
       "source": "Yahoo Finance"
     },
     "BYD": {
@@ -17,7 +17,7 @@
       "currency": "HKD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-29T21:26:27.324605+00:00",
+      "timestamp": "2026-09-30T00:42:50.655923+00:00",
       "source": "Yahoo Finance"
     },
     "Netflix": {
@@ -26,7 +26,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-29T21:26:27.417605+00:00",
+      "timestamp": "2026-09-30T00:42:50.762075+00:00",
       "source": "Yahoo Finance"
     },
     "Meta Platforms": {
@@ -35,7 +35,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-29T21:26:27.512829+00:00",
+      "timestamp": "2026-09-30T00:42:50.821071+00:00",
       "source": "Yahoo Finance"
     },
     "Apple": {
@@ -44,7 +44,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-29T21:26:27.556323+00:00",
+      "timestamp": "2026-09-30T00:42:50.878884+00:00",
       "source": "Yahoo Finance"
     },
     "Palantir Technologies": {
@@ -53,16 +53,16 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-29T21:26:27.652731+00:00",
+      "timestamp": "2026-09-30T00:42:50.927062+00:00",
       "source": "Yahoo Finance"
     },
     "Toyota": {
       "symbol": "7203.T",
-      "price": 2881.5,
+      "price": 2885.5,
       "currency": "JPY",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-29T21:26:27.721468+00:00",
+      "timestamp": "2026-09-30T00:42:51.002896+00:00",
       "source": "Yahoo Finance"
     },
     "AMD": {
@@ -71,7 +71,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-29T21:26:27.779873+00:00",
+      "timestamp": "2026-09-30T00:42:51.097693+00:00",
       "source": "Yahoo Finance"
     },
     "Nvidia": {
@@ -80,7 +80,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-29T21:26:27.825140+00:00",
+      "timestamp": "2026-09-30T00:42:51.185055+00:00",
       "source": "Yahoo Finance"
     },
     "CaixaBank": {
@@ -89,7 +89,7 @@
       "currency": "EUR",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-29T21:26:27.898558+00:00",
+      "timestamp": "2026-09-30T00:42:51.261994+00:00",
       "source": "Yahoo Finance"
     },
     "Vanguard S&P 500 Dist ETF": {
@@ -98,7 +98,7 @@
       "currency": "GBP",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-29T21:26:27.978056+00:00",
+      "timestamp": "2026-09-30T00:42:51.324264+00:00",
       "source": "Yahoo Finance"
     },
     "Amazon": {
@@ -107,7 +107,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-29T21:26:28.022864+00:00",
+      "timestamp": "2026-09-30T00:42:51.381705+00:00",
       "source": "Yahoo Finance"
     },
     "NextEra Energy": {
@@ -116,7 +116,7 @@
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-29T21:26:28.100796+00:00",
+      "timestamp": "2026-09-30T00:42:51.426520+00:00",
       "source": "Yahoo Finance"
     },
     "iShares Core MSCI World Acc": {
@@ -125,7 +125,7 @@
       "currency": "GBP",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-09-29T21:26:28.158504+00:00",
+      "timestamp": "2026-09-30T00:42:51.486520+00:00",
       "source": "Yahoo Finance"
     }
   },

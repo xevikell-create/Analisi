@@ -1,6 +1,6 @@
 {
   "version": 5,
-  "updatedAt": "2026-10-01T13:08:32Z",
+  "updatedAt": "2026-10-01T18:51:33Z",
   "assets": {
     "GOOGL": {
       "name": "Alphabet",
@@ -10,7 +10,7 @@
       "sector": "Communication",
       "country": "USA",
       "theme": "Tecnología/comunicación",
-      "price": 344.08,
+      "price": 338.252,
       "currency": "USD",
       "revenueGrowth": 20.05,
       "epsGrowth": 112.48,
@@ -34,7 +34,7 @@
         }
       ],
       "secError": "HTTP Error 403: Forbidden",
-      "marketUpdatedAt": "2026-10-01T13:08:26Z",
+      "marketUpdatedAt": "2026-10-01T18:51:28Z",
       "marketSource": "Yahoo Finance"
     },
     "META": {
@@ -45,7 +45,7 @@
       "sector": "Communication",
       "country": "USA",
       "theme": "Tecnología/comunicación",
-      "price": 725.18,
+      "price": 727.35,
       "currency": "USD",
       "revenueGrowth": 27.65,
       "epsGrowth": -3.75,
@@ -69,7 +69,7 @@
         }
       ],
       "secError": "HTTP Error 403: Forbidden",
-      "marketUpdatedAt": "2026-10-01T13:08:26Z",
+      "marketUpdatedAt": "2026-10-01T18:51:28Z",
       "marketSource": "Yahoo Finance"
     },
     "TSM": {
@@ -80,7 +80,7 @@
       "sector": "Semiconductors",
       "country": "Taiwan",
       "theme": "IA/semiconductores",
-      "price": 456.19,
+      "price": 458.675,
       "currency": "USD",
       "revenueGrowth": 30.6,
       "epsGrowth": 53.4,
@@ -103,7 +103,7 @@
           "name": "Yahoo Finance"
         }
       ],
-      "marketUpdatedAt": "2026-10-01T13:08:26Z",
+      "marketUpdatedAt": "2026-10-01T18:51:28Z",
       "marketSource": "Yahoo Finance"
     },
     "BRK.B": {
@@ -114,7 +114,7 @@
       "sector": "Financials",
       "country": "USA",
       "theme": "Finanzas",
-      "price": 497.95,
+      "price": 498.46,
       "currency": "USD",
       "revenueGrowth": 3.93,
       "epsGrowth": 36.32,
@@ -138,7 +138,7 @@
         }
       ],
       "secError": "HTTP Error 403: Forbidden",
-      "marketUpdatedAt": "2026-10-01T13:08:26Z",
+      "marketUpdatedAt": "2026-10-01T18:51:28Z",
       "marketSource": "Yahoo Finance"
     },
     "AMZN": {
@@ -149,7 +149,7 @@
       "sector": "Consumer",
       "country": "USA",
       "theme": "Consumo",
-      "price": 249.15,
+      "price": 249.13,
       "currency": "USD",
       "revenueGrowth": 12.0,
       "epsGrowth": 20.0,
@@ -172,7 +172,7 @@
         }
       ],
       "secError": "HTTP Error 403: Forbidden",
-      "marketUpdatedAt": "2026-10-01T13:08:26Z",
+      "marketUpdatedAt": "2026-10-01T18:51:28Z",
       "marketSource": "Yahoo Finance"
     },
     "AAPL": {
@@ -184,7 +184,7 @@
       "country": "USA",
       "theme": "Tecnología/comunicación",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 333.02,
+      "price": 329.63,
       "currency": "USD",
       "updatedAt": "2026-09-08T19:23:10Z",
       "sources": [
@@ -193,7 +193,7 @@
           "name": "Yahoo Finance"
         }
       ],
-      "marketUpdatedAt": "2026-10-01T13:08:26Z",
+      "marketUpdatedAt": "2026-10-01T18:51:29Z",
       "marketSource": "Yahoo Finance"
     },
     "MSFT": {
@@ -205,7 +205,7 @@
       "country": "USA",
       "theme": "Tecnología/comunicación",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 512.9,
+      "price": 516.15,
       "currency": "USD",
       "updatedAt": "2026-09-08T19:23:10Z",
       "sources": [
@@ -214,7 +214,7 @@
           "name": "Yahoo Finance"
         }
       ],
-      "marketUpdatedAt": "2026-10-01T13:08:26Z",
+      "marketUpdatedAt": "2026-10-01T18:51:29Z",
       "marketSource": "Yahoo Finance"
     },
     "NVDA": {
@@ -226,7 +226,7 @@
       "country": "USA",
       "theme": "IA/semiconductores",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 228.38,
+      "price": 232.11,
       "currency": "USD",
       "updatedAt": "2026-09-08T19:23:10Z",
       "sources": [
@@ -235,7 +235,7 @@
           "name": "Yahoo Finance"
         }
       ],
-      "marketUpdatedAt": "2026-10-01T13:08:27Z",
+      "marketUpdatedAt": "2026-10-01T18:51:29Z",
       "marketSource": "Yahoo Finance"
     },
     "AMD": {
@@ -247,7 +247,7 @@
       "country": "USA",
       "theme": "IA/semiconductores",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 611.76,
+      "price": 616.853,
       "currency": "USD",
       "updatedAt": "2026-09-08T19:23:10Z",
       "sources": [
@@ -256,7 +256,7 @@
           "name": "Yahoo Finance"
         }
       ],
-      "marketUpdatedAt": "2026-10-01T13:08:27Z",
+      "marketUpdatedAt": "2026-10-01T18:51:29Z",
       "marketSource": "Yahoo Finance"
     },
     "AVGO": {
@@ -268,7 +268,7 @@
       "country": "USA",
       "theme": "IA/semiconductores",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 351.19,
+      "price": 347.74,
       "currency": "USD",
       "updatedAt": "2026-09-08T19:23:10Z",
       "sources": [
@@ -277,7 +277,7 @@
           "name": "Yahoo Finance"
         }
       ],
-      "marketUpdatedAt": "2026-10-01T13:08:27Z",
+      "marketUpdatedAt": "2026-10-01T18:51:29Z",
       "marketSource": "Yahoo Finance"
     },
     "JPM": {
@@ -289,7 +289,7 @@
       "country": "USA",
       "theme": "Bancos",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 330.83,
+      "price": 331.715,
       "currency": "USD",
       "updatedAt": "2026-09-08T19:23:10Z",
       "sources": [
@@ -298,7 +298,7 @@
           "name": "Yahoo Finance"
         }
       ],
-      "marketUpdatedAt": "2026-10-01T13:08:27Z",
+      "marketUpdatedAt": "2026-10-01T18:51:29Z",
       "marketSource": "Yahoo Finance"
     },
     "V": {
@@ -310,7 +310,7 @@
       "country": "USA",
       "theme": "Finanzas",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 359.33,
+      "price": 359.67,
       "currency": "USD",
       "updatedAt": "2026-09-08T19:23:11Z",
       "sources": [
@@ -319,7 +319,7 @@
           "name": "Yahoo Finance"
         }
       ],
-      "marketUpdatedAt": "2026-10-01T13:08:27Z",
+      "marketUpdatedAt": "2026-10-01T18:51:29Z",
       "marketSource": "Yahoo Finance"
     },
     "KO": {
@@ -331,7 +331,7 @@
       "country": "USA",
       "theme": "Consumo",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 86.08,
+      "price": 85.91,
       "currency": "USD",
       "updatedAt": "2026-09-08T19:23:11Z",
       "sources": [
@@ -340,7 +340,7 @@
           "name": "Yahoo Finance"
         }
       ],
-      "marketUpdatedAt": "2026-10-01T13:08:27Z",
+      "marketUpdatedAt": "2026-10-01T18:51:29Z",
       "marketSource": "Yahoo Finance"
     },
     "JNJ": {
@@ -352,7 +352,7 @@
       "country": "USA",
       "theme": "Salud",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 264.74,
+      "price": 259.69,
       "currency": "USD",
       "updatedAt": "2026-09-08T19:23:11Z",
       "sources": [
@@ -361,7 +361,7 @@
           "name": "Yahoo Finance"
         }
       ],
-      "marketUpdatedAt": "2026-10-01T13:08:27Z",
+      "marketUpdatedAt": "2026-10-01T18:51:29Z",
       "marketSource": "Yahoo Finance"
     },
     "NEE": {
@@ -373,7 +373,7 @@
       "country": "USA",
       "theme": "Energía",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 75.74,
+      "price": 76.13,
       "currency": "USD",
       "updatedAt": "2026-09-08T19:23:11Z",
       "sources": [
@@ -382,7 +382,7 @@
           "name": "Yahoo Finance"
         }
       ],
-      "marketUpdatedAt": "2026-10-01T13:08:27Z",
+      "marketUpdatedAt": "2026-10-01T18:51:29Z",
       "marketSource": "Yahoo Finance"
     },
     "FSLR": {
@@ -394,7 +394,7 @@
       "country": "USA",
       "theme": "Energía",
       "secError": "HTTP Error 403: Forbidden",
-      "price": 175.16,
+      "price": 173.51,
       "currency": "USD",
       "updatedAt": "2026-09-08T19:23:11Z",
       "sources": [
@@ -403,7 +403,7 @@
           "name": "Yahoo Finance"
         }
       ],
-      "marketUpdatedAt": "2026-10-01T13:08:27Z",
+      "marketUpdatedAt": "2026-10-01T18:51:29Z",
       "marketSource": "Yahoo Finance"
     },
     "SWDA": {
@@ -414,9 +414,9 @@
       "sector": "Core Global",
       "country": "Global",
       "theme": "Core global",
-      "price": 11030.0,
+      "price": 10969.0,
       "currency": "GBp",
-      "marketUpdatedAt": "2026-10-01T13:08:27Z",
+      "marketUpdatedAt": "2026-10-01T18:51:29Z",
       "marketSource": "Yahoo Finance"
     },
     "VUSA": {
@@ -427,9 +427,9 @@
       "sector": "Core USA",
       "country": "USA",
       "theme": "USA/core",
-      "price": 109.975,
+      "price": 109.503,
       "currency": "GBP",
-      "marketUpdatedAt": "2026-10-01T13:08:27Z",
+      "marketUpdatedAt": "2026-10-01T18:51:29Z",
       "marketSource": "Yahoo Finance"
     },
     "1211.HK": {
@@ -442,7 +442,7 @@
       "theme": "Industriales",
       "price": 75.6,
       "currency": "HKD",
-      "marketUpdatedAt": "2026-10-01T13:08:28Z",
+      "marketUpdatedAt": "2026-10-01T18:51:29Z",
       "marketSource": "Yahoo Finance"
     },
     "PLTR": {
@@ -453,9 +453,9 @@
       "sector": "Technology",
       "country": "USA",
       "theme": "Palantir",
-      "price": 187.05,
+      "price": 190.075,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:28Z",
+      "marketUpdatedAt": "2026-10-01T18:51:29Z",
       "marketSource": "Yahoo Finance"
     },
     "NFLX": {
@@ -466,9 +466,9 @@
       "sector": "Consumer",
       "country": "USA",
       "theme": "Consumo",
-      "price": 69.58,
+      "price": 68.42,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:28Z",
+      "marketUpdatedAt": "2026-10-01T18:51:30Z",
       "marketSource": "Yahoo Finance"
     },
     "TM": {
@@ -479,9 +479,9 @@
       "sector": "Industrials",
       "country": "Japan",
       "theme": "Industriales",
-      "price": 183.1,
+      "price": 182.84,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:28Z",
+      "marketUpdatedAt": "2026-10-01T18:51:30Z",
       "marketSource": "Yahoo Finance"
     },
     "CABK": {
@@ -492,9 +492,9 @@
       "sector": "Financials",
       "country": "Spain",
       "theme": "Bancos",
-      "price": 12.3,
+      "price": 12.03,
       "currency": "EUR",
-      "marketUpdatedAt": "2026-10-01T13:08:28Z",
+      "marketUpdatedAt": "2026-10-01T18:51:30Z",
       "marketSource": "Yahoo Finance"
     },
     "ETH-USD": {
@@ -505,9 +505,9 @@
       "sector": "Crypto",
       "country": "Global",
       "theme": "Otros",
-      "price": 2689.23,
+      "price": 2698.47,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:28Z",
+      "marketUpdatedAt": "2026-10-01T18:51:30Z",
       "marketSource": "Yahoo Finance"
     },
     "ASML": {
@@ -518,9 +518,9 @@
       "sector": "Semiconductors",
       "country": "Netherlands",
       "theme": "IA/semiconductores",
-      "price": 1811.67,
+      "price": 1811.72,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:28Z",
+      "marketUpdatedAt": "2026-10-01T18:51:30Z",
       "marketSource": "Yahoo Finance"
     },
     "MA": {
@@ -531,9 +531,9 @@
       "sector": "Financials",
       "country": "USA",
       "theme": "Finanzas",
-      "price": 551.47,
+      "price": 550.67,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:28Z",
+      "marketUpdatedAt": "2026-10-01T18:51:30Z",
       "marketSource": "Yahoo Finance"
     },
     "PEP": {
@@ -544,9 +544,9 @@
       "sector": "Consumer Defensive",
       "country": "USA",
       "theme": "Consumo",
-      "price": 126.72,
+      "price": 125.81,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:28Z",
+      "marketUpdatedAt": "2026-10-01T18:51:30Z",
       "marketSource": "Yahoo Finance"
     },
     "COST": {
@@ -557,9 +557,9 @@
       "sector": "Consumer",
       "country": "USA",
       "theme": "Consumo",
-      "price": 910.34,
+      "price": 914.73,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:28Z",
+      "marketUpdatedAt": "2026-10-01T18:51:30Z",
       "marketSource": "Yahoo Finance"
     },
     "PG": {
@@ -570,9 +570,9 @@
       "sector": "Consumer Defensive",
       "country": "USA",
       "theme": "Consumo",
-      "price": 145.28,
+      "price": 144.45,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:28Z",
+      "marketUpdatedAt": "2026-10-01T18:51:30Z",
       "marketSource": "Yahoo Finance"
     },
     "LLY": {
@@ -583,9 +583,9 @@
       "sector": "Health Care",
       "country": "USA",
       "theme": "Salud",
-      "price": 1157.08,
+      "price": 1149.325,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:29Z",
+      "marketUpdatedAt": "2026-10-01T18:51:30Z",
       "marketSource": "Yahoo Finance"
     },
     "UNH": {
@@ -596,9 +596,9 @@
       "sector": "Health Care",
       "country": "USA",
       "theme": "Salud",
-      "price": 367.08,
+      "price": 363.9,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:29Z",
+      "marketUpdatedAt": "2026-10-01T18:51:30Z",
       "marketSource": "Yahoo Finance"
     },
     "NVO": {
@@ -609,9 +609,9 @@
       "sector": "Health Care",
       "country": "Denmark",
       "theme": "Salud",
-      "price": 37.91,
+      "price": 37.74,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:29Z",
+      "marketUpdatedAt": "2026-10-01T18:51:30Z",
       "marketSource": "Yahoo Finance"
     },
     "XOM": {
@@ -622,9 +622,9 @@
       "sector": "Energy",
       "country": "USA",
       "theme": "Energía",
-      "price": 162.75,
+      "price": 163.485,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:29Z",
+      "marketUpdatedAt": "2026-10-01T18:51:30Z",
       "marketSource": "Yahoo Finance"
     },
     "CVX": {
@@ -635,9 +635,9 @@
       "sector": "Energy",
       "country": "USA",
       "theme": "Energía",
-      "price": 204.21,
+      "price": 206.938,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:29Z",
+      "marketUpdatedAt": "2026-10-01T18:51:31Z",
       "marketSource": "Yahoo Finance"
     },
     "LIN": {
@@ -648,9 +648,9 @@
       "sector": "Materials",
       "country": "USA",
       "theme": "Materiales",
-      "price": 474.65,
+      "price": 469.612,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:29Z",
+      "marketUpdatedAt": "2026-10-01T18:51:31Z",
       "marketSource": "Yahoo Finance"
     },
     "FCX": {
@@ -661,9 +661,9 @@
       "sector": "Materials",
       "country": "USA",
       "theme": "Materiales",
-      "price": 70.0,
+      "price": 68.99,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:29Z",
+      "marketUpdatedAt": "2026-10-01T18:51:31Z",
       "marketSource": "Yahoo Finance"
     },
     "NEM": {
@@ -674,9 +674,9 @@
       "sector": "Materials",
       "country": "USA",
       "theme": "Materiales",
-      "price": 115.34,
+      "price": 114.89,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:29Z",
+      "marketUpdatedAt": "2026-10-01T18:51:31Z",
       "marketSource": "Yahoo Finance"
     },
     "BHP": {
@@ -687,9 +687,9 @@
       "sector": "Materials",
       "country": "Australia",
       "theme": "Materiales",
-      "price": 84.84,
+      "price": 84.21,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:29Z",
+      "marketUpdatedAt": "2026-10-01T18:51:31Z",
       "marketSource": "Yahoo Finance"
     },
     "RIO": {
@@ -700,9 +700,9 @@
       "sector": "Materials",
       "country": "UK",
       "theme": "Materiales",
-      "price": 94.17,
+      "price": 92.53,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:29Z",
+      "marketUpdatedAt": "2026-10-01T18:51:31Z",
       "marketSource": "Yahoo Finance"
     },
     "SHW": {
@@ -713,9 +713,9 @@
       "sector": "Materials",
       "country": "USA",
       "theme": "Materiales",
-      "price": 323.27,
+      "price": 319.39,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:30Z",
+      "marketUpdatedAt": "2026-10-01T18:51:31Z",
       "marketSource": "Yahoo Finance"
     },
     "CAT": {
@@ -726,9 +726,9 @@
       "sector": "Industrials",
       "country": "USA",
       "theme": "Industriales",
-      "price": 810.79,
+      "price": 822.57,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:30Z",
+      "marketUpdatedAt": "2026-10-01T18:51:31Z",
       "marketSource": "Yahoo Finance"
     },
     "SIE.DE": {
@@ -739,9 +739,9 @@
       "sector": "Industrials",
       "country": "Germany",
       "theme": "Industriales",
-      "price": 276.4,
+      "price": 271.9,
       "currency": "EUR",
-      "marketUpdatedAt": "2026-10-01T13:08:30Z",
+      "marketUpdatedAt": "2026-10-01T18:51:31Z",
       "marketSource": "Yahoo Finance"
     },
     "SU.PA": {
@@ -752,9 +752,9 @@
       "sector": "Industrials",
       "country": "France",
       "theme": "Industriales",
-      "price": 293.4,
+      "price": 292.6,
       "currency": "EUR",
-      "marketUpdatedAt": "2026-10-01T13:08:30Z",
+      "marketUpdatedAt": "2026-10-01T18:51:31Z",
       "marketSource": "Yahoo Finance"
     },
     "HON": {
@@ -765,9 +765,9 @@
       "sector": "Industrials",
       "country": "USA",
       "theme": "Industriales",
-      "price": 210.94,
+      "price": 214.09,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:30Z",
+      "marketUpdatedAt": "2026-10-01T18:51:31Z",
       "marketSource": "Yahoo Finance"
     },
     "MCD": {
@@ -778,9 +778,9 @@
       "sector": "Consumer",
       "country": "USA",
       "theme": "Consumo",
-      "price": 230.94,
+      "price": 231.749,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:30Z",
+      "marketUpdatedAt": "2026-10-01T18:51:32Z",
       "marketSource": "Yahoo Finance"
     },
     "NKE": {
@@ -791,9 +791,9 @@
       "sector": "Consumer",
       "country": "USA",
       "theme": "Consumo",
-      "price": 35.4,
+      "price": 36.07,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:30Z",
+      "marketUpdatedAt": "2026-10-01T18:51:32Z",
       "marketSource": "Yahoo Finance"
     },
     "ADBE": {
@@ -804,9 +804,9 @@
       "sector": "Technology",
       "country": "USA",
       "theme": "Tecnología/comunicación",
-      "price": 239.94,
+      "price": 242.787,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:30Z",
+      "marketUpdatedAt": "2026-10-01T18:51:32Z",
       "marketSource": "Yahoo Finance"
     },
     "CRM": {
@@ -817,9 +817,9 @@
       "sector": "Technology",
       "country": "USA",
       "theme": "Tecnología/comunicación",
-      "price": 229.57,
+      "price": 235.75,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:30Z",
+      "marketUpdatedAt": "2026-10-01T18:51:32Z",
       "marketSource": "Yahoo Finance"
     },
     "ORCL": {
@@ -830,9 +830,9 @@
       "sector": "Technology",
       "country": "USA",
       "theme": "Tecnología/comunicación",
-      "price": 137.3,
+      "price": 137.955,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:30Z",
+      "marketUpdatedAt": "2026-10-01T18:51:32Z",
       "marketSource": "Yahoo Finance"
     },
     "NOW": {
@@ -843,9 +843,9 @@
       "sector": "Technology",
       "country": "USA",
       "theme": "Tecnología/comunicación",
-      "price": 134.01,
+      "price": 138.38,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:30Z",
+      "marketUpdatedAt": "2026-10-01T18:51:32Z",
       "marketSource": "Yahoo Finance"
     },
     "BAS.DE": {
@@ -856,9 +856,9 @@
       "sector": "Materials",
       "country": "Germany",
       "theme": "Materiales",
-      "price": 49.81,
+      "price": 49.4,
       "currency": "EUR",
-      "marketUpdatedAt": "2026-10-01T13:08:31Z",
+      "marketUpdatedAt": "2026-10-01T18:51:32Z",
       "marketSource": "Yahoo Finance"
     },
     "AI.PA": {
@@ -869,9 +869,9 @@
       "sector": "Materials",
       "country": "France",
       "theme": "Materiales",
-      "price": 169.44,
+      "price": 166.44,
       "currency": "EUR",
-      "marketUpdatedAt": "2026-10-01T13:08:31Z",
+      "marketUpdatedAt": "2026-10-01T18:51:32Z",
       "marketSource": "Yahoo Finance"
     },
     "WMIN": {
@@ -882,9 +882,9 @@
       "sector": "Materials",
       "country": "Global",
       "theme": "Materiales",
-      "price": 55.81,
+      "price": 55.0,
       "currency": "EUR",
-      "marketUpdatedAt": "2026-10-01T13:08:31Z",
+      "marketUpdatedAt": "2026-10-01T18:51:32Z",
       "marketSource": "Yahoo Finance"
     },
     "WMTS": {
@@ -905,9 +905,9 @@
       "sector": "Small Cap",
       "country": "Global",
       "theme": "Otros",
-      "price": 143.69,
+      "price": 142.23,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:31Z",
+      "marketUpdatedAt": "2026-10-01T18:51:32Z",
       "marketSource": "Yahoo Finance"
     },
     "WQDV": {
@@ -918,9 +918,9 @@
       "sector": "Global",
       "country": "Global",
       "theme": "Otros",
-      "price": 9.6,
+      "price": 9.525,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:31Z",
+      "marketUpdatedAt": "2026-10-01T18:51:32Z",
       "marketSource": "Yahoo Finance"
     },
     "INRG": {
@@ -931,9 +931,9 @@
       "sector": "Energy",
       "country": "Global",
       "theme": "Energía",
-      "price": 739.25,
+      "price": 728.75,
       "currency": "GBp",
-      "marketUpdatedAt": "2026-10-01T13:08:31Z",
+      "marketUpdatedAt": "2026-10-01T18:51:32Z",
       "marketSource": "Yahoo Finance"
     },
     "WHEA": {
@@ -944,9 +944,9 @@
       "sector": "Health Care",
       "country": "Global",
       "theme": "Salud",
-      "price": 71.16,
+      "price": 70.36,
       "currency": "USD",
-      "marketUpdatedAt": "2026-10-01T13:08:31Z",
+      "marketUpdatedAt": "2026-10-01T18:51:32Z",
       "marketSource": "Yahoo Finance"
     },
     "WOSC": {
@@ -957,9 +957,9 @@
       "sector": "Consumer Defensive",
       "country": "Global",
       "theme": "Consumo",
-      "price": 108.38,
+      "price": 107.75,
       "currency": "GBP",
-      "marketUpdatedAt": "2026-10-01T13:08:31Z",
+      "marketUpdatedAt": "2026-10-01T18:51:32Z",
       "marketSource": "Yahoo Finance"
     },
     "WIND": {

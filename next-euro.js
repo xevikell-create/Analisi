@@ -8,7 +8,7 @@
       const ps=typeof positions==='function'?positions():[];
       const rs=typeof rows==='function'?rows():[];
       const quotes={};
-      rs.forEach(r=>{if(r.name&&r.quote!=null)quotes[r.name]={price:r.quote,currency:r.currency||'EUR'}});
+      rs.forEach(r=>{if(r.name&&r.quote!=null)quotes[r.name]={price:r.quote,currency:r.currency||'EUR',timestamp:r.quoteTimestamp||null,status:r.status||'pending'}});
       const ethQty=Number(data?.crypto?.eth)||1.1;
       const ethPrice=Number(I?.eth?.price)||Number(data?.crypto?.ethPrice)||0;
       return window.DecisionEngineV4.rank({
@@ -16,8 +16,9 @@
         crypto:[{ticker:'ETH',quantity:ethQty,cost:2000,price:ethPrice}],
         quotes,
         cash:typeof liq==='function'?liq():0,
-        weeklyContribution:Number(data?.weekly)||300,
-        usdPerEur:Number(window.MarketV4?.usdEur)||0.85
+        weeklyContribution:Number(data?.weekly)||400,
+        usdPerEur:Number(window.MarketV4?.usdEur)||0.85,
+        fxRates:{USD_EUR:Number(window.MarketV4?.usdEur)||0.85,HKD_EUR:Number(window.MarketV4?.hkdEur)||0.108,JPY_EUR:Number(window.MarketV4?.jpyEur)||0.0058,GBP_EUR:Number(window.MarketV4?.gbpEur)||0.856}
       });
     }catch(e){console.error('Próximo euro:',e);return null}
   }

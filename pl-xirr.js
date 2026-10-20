@@ -14,22 +14,22 @@
     return (lo+hi)/2;
   }
   function getMetrics(){
-    const d=read(), rows=window.I?.rows||[], eth=Number(window.I?.eth?.valueEUR||0), value=rows.reduce((s,r)=>s+Number(r.valueEUR||0),0)+eth, cost=rows.reduce((s,r)=>s+Number(r.costEUR||0),0), gain=value-cost;
+    const d=read(), rows=window.I?.rows||[], eth=Number(window.I?.eth?.valueEUR||0), value=rows.reduce((s,r)=>s+Number(r.valueEUR||0),0)+eth, ethCost=Number(d.crypto?.ethCostEUR??2000), cost=rows.reduce((s,r)=>s+Number(r.costEUR||0),0)+ethCost, gain=value-cost;
     const flows=(d.contributions||[]).map(c=>({date:new Date(c.date),amount:-Math.abs(Number(c.amount||0))})).filter(x=>Number.isFinite(x.date.getTime())&&x.amount<0);
     if(value>0)flows.push({date:new Date(),amount:value});
-    const xr=xirr(flows);
+    const recordedContributions=(d.contributions||[]).reduce((sum,c)=>sum+Math.max(0,Number(c.amount)||0),0),flowCoverage=cost>0?recordedContributions/cost:0,hasXirr=flows.length>=2&&flowCoverage>=0.9,xr=hasXirr?xirr(flows):null;
     const now=new Date(),year=now.getFullYear(),start=new Date(year,0,1),snapKey='pl_year_start_'+year;
     let snap=Number(localStorage.getItem(snapKey));
-    if(!Number.isFinite(snap)){localStorage.setItem(snapKey,String(value));snap=value}
-    const ytd=value-snap;
-    return {value,cost,gain,totalPct:cost?gain/cost:0,xirr:xr,ytd,ytdPct:snap?ytd/snap:0,hasXirr:flows.length>=2};
+    if(!Number.isFinite(snap)&&now.getMonth()===0&&now.getDate()===1&&value>0){snap=value;localStorage.setItem(snapKey,String(value))}
+    const hasYtd=Number.isFinite(snap)&&snap>0,contributionsYtd=(d.contributions||[]).filter(c=>{const t=Date.parse(c.date||'');return Number.isFinite(t)&&t>=start.getTime()}).reduce((sum,c)=>sum+Math.max(0,Number(c.amount)||0),0),ytd=hasYtd?value-snap-contributionsYtd:null;
+    return {value,cost,gain,totalPct:cost?gain/cost:0,xirr:xr,ytd,ytdPct:hasYtd?ytd/snap:null,hasXirr,flowCoverage,hasYtd};
   }
   function render(){
     const app=document.getElementById('app');if(!app)return;
     if(!document.querySelector('h2')||(!document.querySelector('h2').textContent.includes('Cartera')&&!document.querySelector('h2').textContent.includes('Patrimonio total')))return;
     const old=app.querySelector('[data-pl-metrics]');if(old)old.remove();
     const z=getMetrics(), card=document.createElement('div');card.className='card section';card.dataset.plMetrics='1';
-    card.innerHTML=`<h3>📈 Rentabilidad</h3><div class="grid"><div><span class="muted">P/L total</span><div class="kpi ${z.gain>=0?'positive':'negative'}">${fmt(z.gain)}</div><span>${pct(z.totalPct)}</span></div><div><span class="muted">P/L anual (YTD)</span><div class="kpi ${z.ytd>=0?'positive':'negative'}">${fmt(z.ytd)}</div><span>${pct(z.ytdPct)} desde 1 de enero</span></div><div><span class="muted">XIRR anualizada</span><div class="kpi">${z.hasXirr&&z.xirr!=null?pct(z.xirr):'—'}</div><span class="muted">según aportaciones registradas</span></div></div>`;
+    card.innerHTML=`<h3>📈 Rentabilidad</h3><div class="grid"><div><span class="muted">P/L total</span><div class="kpi ${z.gain>=0?'positive':'negative'}">${fmt(z.gain)}</div><span>${pct(z.totalPct)}</span></div><div><span class="muted">P/L anual (YTD)</span><div class="kpi ${z.hasYtd?(z.ytd>=0?'positive':'negative'):''}">${z.hasYtd?fmt(z.ytd):'—'}</div><span>${z.hasYtd?pct(z.ytdPct)+' · ajustado por aportaciones':'Sin cierre fiable a 1 de enero'}</span></div><div><span class="muted">XIRR anualizada</span><div class="kpi">${z.hasXirr&&z.xirr!=null?pct(z.xirr):'—'}</div><span class="muted">${z.hasXirr?'cobertura de flujos '+pct(z.flowCoverage):'requiere ≥90% del coste en flujos registrados'}</span></div></div>`;
     app.appendChild(card);
   }
   window.PLXIRR={xirr,getMetrics,render};

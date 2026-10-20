@@ -17,7 +17,7 @@
     const d=read(), rows=window.I?.rows||[], eth=Number(window.I?.eth?.valueEUR||0), value=rows.reduce((s,r)=>s+Number(r.valueEUR||0),0)+eth, ethCost=Number(d.crypto?.ethCostEUR??2000), cost=rows.reduce((s,r)=>s+Number(r.costEUR||0),0)+ethCost, gain=value-cost;
     const flows=(d.contributions||[]).map(c=>({date:new Date(c.date),amount:-Math.abs(Number(c.amount||0))})).filter(x=>Number.isFinite(x.date.getTime())&&x.amount<0);
     if(value>0)flows.push({date:new Date(),amount:value});
-    const recordedContributions=(d.contributions||[]).reduce((sum,c)=>sum+Math.max(0,Number(c.amount)||0),0),flowCoverage=cost>0?recordedContributions/cost:0,hasXirr=flows.length>=2&&flowCoverage>=0.9,xr=hasXirr?xirr(flows):null;
+    const recordedContributions=(d.contributions||[]).reduce((sum,c)=>sum+Math.max(0,Number(c.amount)||0),0),flowCoverage=cost>0?recordedContributions/cost:0,hasXirr=flows.length>=2&&flowCoverage>=0.9&&flowCoverage<=1.25,xr=hasXirr?xirr(flows):null;
     const now=new Date(),year=now.getFullYear(),start=new Date(year,0,1),snapKey='pl_year_start_'+year;
     let snap=Number(localStorage.getItem(snapKey));
     if(!Number.isFinite(snap)&&now.getMonth()===0&&now.getDate()===1&&value>0){snap=value;localStorage.setItem(snapKey,String(value))}

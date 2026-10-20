@@ -8,8 +8,9 @@ const themeByName={'MSCI World Acc':'Core global','Vanguard S&P 500 Dist ETF':'U
 const themeBySector={'Semiconductors':'IA/semiconductores','Communication':'Tecnología/comunicación','Technology':'Tecnología/comunicación','Consumer':'Consumo','Consumer Defensive':'Consumo','Financials':'Finanzas','Industrials':'Industriales','Energy':'Energía','Utilities':'Energía','Health Care':'Salud','Healthcare':'Salud','Materials':'Materiales'};
 const target={'IA/semiconductores':.12,'Tecnología/comunicación':.18,'Palantir':.02,'Bancos':.10,'Finanzas':.08,'Consumo':.12,'Industriales':.12,'Energía':.08,'Salud':.08,'Materiales':.04,'Core global':.55,'USA/core':.15,'Otros':.12};
 function classify(a){return a.theme||themeByName[a.name]||themeByName[a.ticker]||themeBySector[a.sector]||'Otros'}
+function aliasesMatch(a,b){const aa=String(a||'').toLowerCase(),bb=String(b||'').toLowerCase();return aa===bb||({'meta':'meta platforms','palantir':'palantir technologies','msci world acc':'ishares core msci world acc','s&p 500 etf':'vanguard s&p 500 dist etf'}[aa]===bb)||({'meta':'meta platforms','palantir':'palantir technologies','msci world acc':'ishares core msci world acc','s&p 500 etf':'vanguard s&p 500 dist etf'}[bb]===aa)}
 function portfolioRows(){
- if(typeof I!=='undefined'&&Array.isArray(I?.rows)&&I.rows.length)return I.rows.filter(r=>Number(r.valueEUR)>0).map(r=>({...r,theme:classify(r)}));
+ if(typeof I!=='undefined'&&Array.isArray(I?.rows)&&I.rows.length){const base=window.V4Portfolio?.positions||[];return I.rows.filter(r=>Number(r.valueEUR)>0).map(r=>{const p=base.find(x=>x.name===r.name||aliasesMatch(x.name,r.name));const merged={...p,...r,ticker:r.ticker||p?.ticker,sector:r.sector||p?.sector,country:r.country||p?.country};return{...merged,theme:classify(merged)}})}
  let ov={};try{ov=JSON.parse(localStorage.getItem('patrimonio_positions_overrides')||'{}')}catch{}
  const ps=window.V4Portfolio?.positions||[];return ps.map(p=>({...p,...(ov[p.name]||{}),valueEUR:n(p.valueEUR)||0,theme:classify(p)})).filter(p=>p.valueEUR>0)
 }

@@ -69,20 +69,44 @@
     return {version:VERSION,winner,candidates:candidates.slice(0,10),weeklyContribution:Number(data?.weekly)||400,structuralAsset:'MSCI World Acc'};
   }
 
+  function stateFrom(current){
+    const rs=typeof rows==='function'?rows():[],rem=Math.max(0,n(data?.accounts?.remunerada)),cash=Math.max(0,n(data?.accounts?.efectivo));
+    let portfolio=rs.reduce((sum,r)=>sum+Math.max(0,n(r.valueEUR)),0)+Math.max(0,n(typeof I!=='undefined'?I?.eth?.valueEUR:0));
+    if(portfolio<=0)portfolio=Math.max(0,n(current)-rem-cash);
+    const observed=portfolio+rem+cash,desired=Math.max(0,n(current,observed));
+    if(Math.abs(observed-desired)>1&&portfolio>0)portfolio=Math.max(0,portfolio+desired-observed);
+    return {portfolio,rem,cash,contributed:0};
+  }
+  function stepState(state,weekly,rate){
+    const monthlySavings=Math.max(0,n(data?.monthlyNetSavings,1000)),cashRate=Math.max(0,n(data?.cashYieldRate,2.25))/100;
+    state.portfolio*=1+annualToWeekly(rate);
+    state.rem*=1+annualToWeekly(cashRate);
+    state.cash+=monthlySavings*12/52;
+    const transfer=Math.min(weekly,state.rem+state.cash),fromRem=Math.min(state.rem,transfer);
+    state.rem-=fromRem;state.cash-=transfer-fromRem;state.portfolio+=transfer;state.contributed+=monthlySavings*12/52;
+    return state;
+  }
+  const stateValue=s=>s.portfolio+s.rem+s.cash;
+  function projectSeries(years=20,weekly=400,rate=.07,current=typeof total==='function'?total():0){
+    years=Math.max(0,Math.min(100,Math.floor(n(years,20))));weekly=Math.max(0,n(weekly,400));rate=n(rate,.07);
+    const state=stateFrom(current),out=[];out.push({year:0,value:stateValue(state),contributions:0,invested:state.portfolio,liquidity:state.rem+state.cash});
+    for(let y=1;y<=years;y++){for(let w=0;w<52;w++)stepState(state,weekly,rate);out.push({year:y,value:stateValue(state),contributions:state.contributed,invested:state.portfolio,liquidity:state.rem+state.cash})}
+    return {out,weeklyContribution:weekly,monthlyNetSavings:Math.max(0,n(data?.monthlyNetSavings,1000)),annualNetSavings:Math.max(0,n(data?.monthlyNetSavings,1000))*12,cashYieldRate:Math.max(0,n(data?.cashYieldRate,2.25))};
+  }
   function project(target,current,weekly,rate){
-    target=Math.max(0,n(target));current=Math.max(0,n(current));weekly=Math.max(0,n(weekly));rate=n(rate,0.07);
-    if(current>=target)return {years:0,date:new Date(),contributed:0,growth:current-target,final:current};
-    const rw=annualToWeekly(rate), months=[]; let v=current, contributed=0, weeks=0;
-    while(v<target&&weeks<52*100){v=v*(1+rw)+weekly;contributed+=weekly;weeks++;if(weeks%52===0)months.push(v)}
-    const years=weeks/52; const d=new Date();d.setDate(d.getDate()+weeks*7);
-    return {years,date:d,contributed,growth:Math.max(0,v-current-contributed),final:v};
+    target=Math.max(0,n(target));current=Math.max(0,n(current));weekly=Math.max(0,n(weekly,400));rate=n(rate,.07);
+    if(current>=target)return {years:0,date:new Date(),contributed:0,growth:0,final:current};
+    const state=stateFrom(current);let weeks=0;
+    while(stateValue(state)<target&&weeks<52*100){stepState(state,weekly,rate);weeks++}
+    const final=stateValue(state),years=weeks/52,d=new Date();d.setDate(d.getDate()+weeks*7);
+    return {years,date:d,contributed:state.contributed,growth:final-current-state.contributed,final,weeklyContribution:weekly,monthlyNetSavings:Math.max(0,n(data?.monthlyNetSavings,1000)),cashYieldRate:Math.max(0,n(data?.cashYieldRate,2.25))};
   }
   function goal(target,current,weekly){
-    return {target:n(target,1000000),current:n(current),weekly:n(weekly,400),scenarios:[4,7,10].map(rate=>({rate, ...project(target,current,weekly,rate/100)}))};
+    return {target:n(target,1000000),current:n(current),weekly:n(weekly,400),monthlyNetSavings:Math.max(0,n(data?.monthlyNetSavings,1000)),cashYieldRate:Math.max(0,n(data?.cashYieldRate,2.25)),scenarios:[4,7,10].map(rate=>({rate,...project(target,current,weekly,rate/100)}))};
   }
 
   async function refreshRadarSnapshot(){try{const [ar,mr]=await Promise.all([fetch('./radar-data.json?pi='+Date.now(),{cache:'no-store'}),fetch('./market-data.json?pi='+Date.now(),{cache:'no-store'})]);if(!ar.ok)throw new Error('Radar data unavailable');const raw=await ar.json(),market=mr.ok?await mr.json():{quotes:{}},quotes=market.quotes||{},bySymbol={};Object.entries(quotes).forEach(([name,q])=>{if(q?.symbol)bySymbol[String(q.symbol).toUpperCase()]=q;bySymbol[String(name).toUpperCase()]=q});const assets={};Object.entries(raw.assets||{}).forEach(([key,a])=>{const q=bySymbol[String(a.marketTicker||a.ticker||key).toUpperCase()]||bySymbol[String(a.name||'').toUpperCase()],ts=Date.parse(q?.timestamp||''),qFresh=!!q&&present(q.price)&&Number.isFinite(ts)&&Date.now()-ts>=-300000&&Date.now()-ts<=86400000,rts=Date.parse(a.marketUpdatedAt||''),radarFresh=present(a.price)&&Number.isFinite(rts)&&Date.now()-rts>=-300000&&Date.now()-rts<=86400000,fresh=qFresh||radarFresh,fts=Date.parse(a.fundamentalsUpdatedAt||a.updatedAt||''),fundamentalsFresh=Number.isFinite(fts)&&Date.now()-fts>=-300000&&Date.now()-fts<=45*86400000;assets[key]={...a,price:qFresh?Number(q.price):a.price,currency:qFresh?(q.currency||a.currency):a.currency,quoteTimestamp:qFresh?q.timestamp:(a.marketUpdatedAt||null),marketQuoteFresh:fresh,fundamentalsFresh,dataQuality:n(a.completeness,0)}});window.RadarDataV1={...raw,assets};if(typeof current!=='undefined'&&current==='decision'&&typeof pages!=='undefined'&&pages.decision)pages.decision()}catch(e){console.warn('Patrimonial intelligence: Radar snapshot unavailable',e)}}
-  window.PatrimonialIntelligence={VERSION,portfolioContext,scoreAsset,nextEuro,project,goal,refreshRadarSnapshot};
+  window.PatrimonialIntelligence={VERSION,portfolioContext,scoreAsset,nextEuro,project,projectSeries,goal,refreshRadarSnapshot};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(refreshRadarSnapshot,0));else setTimeout(refreshRadarSnapshot,0);
   window.recommendation=function(){
     const r=nextEuro(),w=r.winner;

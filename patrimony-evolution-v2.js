@@ -11,7 +11,7 @@
   const pct=n=>((Number(n)||0)*100).toFixed(1)+'%';
   const read=(k,f=[])=>{try{return JSON.parse(localStorage.getItem(k)||JSON.stringify(f))}catch{return f}};
   const write=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
-  const today=()=>new Date().toISOString().slice(0,10);
+  const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
   function snapshot(){
     if(typeof total!=='function') return;
     const t=Number(total())||0;
@@ -36,9 +36,22 @@
     merged.sort((x,y)=>x.date.localeCompare(y.date));
     write(HIST,merged.slice(-3650));
   }
-  function flows(){return read(CF,[]).filter(x=>Number.isFinite(Number(x.amount))&&x.amount!==0);}
+  function flows(){
+    const appFlows=(typeof data!=='undefined'&&Array.isArray(data.contributions)?data.contributions:[])
+      .filter(x=>Number.isFinite(Number(x.amount))&&Number(x.amount)>0&&x.date)
+      .map(x=>({date:String(x.date).slice(0,10),amount:Math.abs(Number(x.amount)),type:'Aportación',source:'app'}));
+    const manual=read(CF,[])
+      .filter(x=>Number.isFinite(Number(x.amount))&&Number(x.amount)!==0&&x.type!=='Transferencia'&&x.date)
+      .map(x=>({date:String(x.date).slice(0,10),amount:x.type==='Retirada'?-Math.abs(Number(x.amount)):Math.abs(Number(x.amount)),type:x.type||'Aportación',note:x.note||'',source:'manual'}))
+      .filter(x=>!(x.type==='Aportación'&&appFlows.some(a=>a.date===x.date&&Math.abs(a.amount-x.amount)<0.01)));
+    return [...appFlows,...manual].sort((a,b)=>a.date.localeCompare(b.date));
+  }
   function addFlow(amount,date,type='Aportación',note=''){
-    const a=flows();a.push({date:date||today(),amount:Number(amount),type,note});a.sort((x,y)=>x.date.localeCompare(y.date));write(CF,a);}
+    const a=read(CF,[]).filter(x=>Number.isFinite(Number(x.amount))&&Number(x.amount)!==0);
+    a.push({date:date||today(),amount:Number(amount),type,note});
+    a.sort((x,y)=>String(x.date).localeCompare(String(y.date)));
+    write(CF,a);
+  }
   function xirr(cfs){
     if(cfs.length<2)return null;
     const base=new Date(cfs[0].date).getTime();
@@ -54,13 +67,13 @@
     a.forEach(x=>{byMonth[x.date.slice(0,7)]=x;byYear[x.date.slice(0,4)]=x});
     return {a,monthly:Object.values(byMonth),annual:Object.values(byYear)};
   }
-  function contributionBetween(start,end){return flows().filter(f=>f.date>=start&&f.date<=end).reduce((s,f)=>s+Number(f.amount),0);}
+  function contributionBetween(start,end){return flows().filter(f=>f.date>start&&f.date<=end).reduce((s,f)=>s+Number(f.amount),0);}
   function periodStats(list){
     if(!list.length)return [];
     return list.map((x,i)=>{const prev=i?list[i-1]:null;const contrib=prev?contributionBetween(prev.date,x.date):0;const change=prev?x.value-prev.value:0;const gain=prev?change-contrib:0;return {...x,contrib,gain,change,returnPct:prev&&prev.value?gain/prev.value:null}});
   }
   function projection(){
-    const t=Number(total())||0, weekly=Number(data?.weekly||400)||400, monthly=weekly*52/12, annual=monthly*12, r=(Number(data?.returnRate)||7)/100;
+    const t=Number(total())||0, weekly=Number(data?.weekly??400), monthly=weekly*52/12, annual=monthly*12, r=Number(data?.returnRate??7)/100;
     const out=[];let v=t;
     for(let y=0;y<=20;y++){out.push({year:y,value:v,contributions:annual*y});v=v*(1+r)+annual;}
     return {out,monthly,annual};
@@ -95,7 +108,7 @@
     const totalContrib=fs.reduce((s,f)=>s+Number(f.amount),0);
     const current=last?.value||Number(total())||0;
     const gainSinceFirst=first?current-first.value:0;
-    const xr=xirr([...fs.map(f=>({date:f.date,amount:-Math.abs(Number(f.amount))})),{date:today(),amount:current}].sort((a,b)=>a.date.localeCompare(b.date)));
+    const xr=xirr([...fs.map(f=>({date:f.date,amount:-Number(f.amount)})),{date:today(),amount:current}].sort((a,b)=>a.date.localeCompare(b.date)));
     const pr=projection();
     box.innerHTML=`
       <div class="card section">
@@ -109,6 +122,7 @@
         <div class="pill" style="margin:12px 0"><button class="secondary action" onclick="window.__evoMode='monthly';window.__evoRender()">Mensual</button><button class="secondary action" onclick="window.__evoMode='annual';window.__evoRender()">Anual</button><button class="secondary action" onclick="window.__evoMode='daily';window.__evoRender()">Diario</button></div>
         <div id="evoChart">${chartSVG(window.__evoMode==='annual'?p.annual:window.__evoMode==='daily'?p.a:p.monthly)}</div>
         <p class="muted"><b>${historyCount} cierres diarios · ${monthCount} meses · ${yearCount} años</b>. El histórico se registra automáticamente y se resume por mes y año. No se inventan valores que la app no haya registrado.</p>
+        ${historyCount<2?'<p class="badge amber">Aún no hay suficientes cierres históricos para calcular una evolución real. Se muestra el dato disponible sin inventar fechas ni rentabilidades pasadas.</p>':''}
       </div>
       <div class="two">
         <div class="card"><h3>📅 Resultado por año</h3><div class="scroll"><table><thead><tr><th>Año</th><th>Patrimonio</th><th>Aportado</th><th>Ganancia</th><th>Rent.</th></tr></thead><tbody>${ys.map(r=>`<tr><td>${r.date.slice(0,4)}</td><td>${fmt(r.value)}</td><td>${r.contrib?fmt(r.contrib):'—'}</td><td class="${r.gain>=0?'positive':'negative'}">${r.contrib?fmt(r.gain):'—'}</td><td>${r.returnPct==null?'—':pct(r.returnPct)}</td></tr>`).join('')}</tbody></table></div></div>

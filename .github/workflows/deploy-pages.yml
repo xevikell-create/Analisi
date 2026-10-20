@@ -28,13 +28,17 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
-      - name: Include runtime data files
+      - name: Include runtime assets in Pages artifact
         run: |
           set -euo pipefail
-          test -f radar-data.json
-          cp radar-data.json dist/radar-data.json
+          test -d dist
+          cp -f ./*.js ./*.json ./*.webmanifest ./*.svg dist/
+          test -f dist/index.html
+          test -f dist/app.js
+          test -f dist/market.js
+          test -f dist/patrimony-evolution-v2.js
           test -f dist/radar-data.json
-          echo "Radar runtime data copied to Pages artifact."
+          echo "Runtime JS, JSON, manifests and icons copied into Pages artifact."
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact

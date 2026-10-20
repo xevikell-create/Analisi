@@ -1,15 +1,16 @@
 window.DecisionEngineV4={
-  rank({positions=[],crypto=[],quotes={},cash=0,weeklyContribution=300,usdPerEur=1}={}){
-    const fx=Math.max(Number(usdPerEur)||1,0.000001);
+  rank({positions=[],crypto=[],quotes={},cash=0,weeklyContribution=400,usdPerEur=0.85,fxRates={}}={}){
+    const rates={EUR:1,USD:Number(fxRates.USD_EUR)||Number(usdPerEur)||0.85,HKD:Number(fxRates.HKD_EUR)||0.108,JPY:Number(fxRates.JPY_EUR)||0.0058,GBP:Number(fxRates.GBP_EUR)||0.856};
     const rows=positions.map(p=>{
       const symbol=p.ticker||p.name;
       const raw=quotes[symbol]??quotes[p.name];
       const q=typeof raw==='object'?Number(raw?.price):Number(raw);
       const currency=String(raw?.currency||p.currency||'EUR').toUpperCase();
-      const priceEUR=Number.isFinite(q)?(currency==='USD'?q/fx:currency==='HKD'?q*0.108:q):null;
+      const priceEUR=Number.isFinite(q)?q*(rates[currency]??1):null;
       const quantity=Number(p.quantity)||0;
       const avg=Number(p.averageCost)||0;
-      const cost=quantity*avg*(currency==='USD'?1/fx:currency==='HKD'?0.108:1);
+      const costCurrency=String(p.costCurrency||p.currency||'EUR').toUpperCase();
+      const cost=quantity*avg*(rates[costCurrency]??1);
       const value=Number.isFinite(priceEUR)?quantity*priceEUR:null;
       const gain=value==null?null:value-cost;
       const ret=cost>0&&gain!=null?gain/cost:0;

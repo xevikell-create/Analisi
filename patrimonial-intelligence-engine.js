@@ -4,27 +4,29 @@
 (function(){
   const VERSION='1.0.0';
   const clamp=(n,a=0,b=100)=>Math.max(a,Math.min(b,Number(n)||0));
-  const n=(v,d=0)=>Number.isFinite(Number(v))?Number(v):d;
+  const n=(v,d=0)=>v===null||v===undefined||v===''?d:(Number.isFinite(Number(v))?Number(v):d);
+  const present=v=>v!==null&&v!==undefined&&v!==''&&Number.isFinite(Number(v));
   const avg=a=>{const x=a.filter(v=>v!==null&&Number.isFinite(Number(v)));return x.length?x.reduce((s,v)=>s+Number(v),0)/x.length:null};
   const norm=(v,min,max)=>v==null?null:clamp((n(v)-min)/(max-min)*100);
   const annualToWeekly=r=>Math.pow(1+r,1/52)-1;
 
   function portfolioContext(){
     const rs=(typeof rows==='function'?rows():[]).filter(r=>n(r.valueEUR)>0);
-    const t=Math.max(1,typeof total==='function'?n(total()):0);
+    const radarAssets=window.RadarDataV1?.assets||{},metaFor=r=>Object.values(radarAssets).find(a=>String(a.name||'').toLowerCase()===String(r.name||'').toLowerCase()||String(a.ticker||'').toUpperCase()===String(r.ticker||'').toUpperCase()||String(a.marketTicker||'').toUpperCase()===String(r.ticker||'').toUpperCase())||{};
+    const invested=rs.reduce((s,r)=>s+n(r.valueEUR),0)+n(typeof I!=='undefined'?I?.eth?.valueEUR:0),t=Math.max(1,invested);
     const assetWeights={},sectorWeights={},countryWeights={};
     rs.forEach(r=>{
-      const w=n(r.valueEUR)/t;
-      assetWeights[r.name]=w; assetWeights[r.ticker||r.name]=w;
-      if(r.sector)sectorWeights[r.sector]=(sectorWeights[r.sector]||0)+w;
-      if(r.country)countryWeights[r.country]=(countryWeights[r.country]||0)+w;
+      const w=n(r.valueEUR)/t,meta=metaFor(r),sector=r.sector||meta.sector,country=r.country||meta.country;
+      assetWeights[r.name]=w; assetWeights[r.ticker||r.name]=w; if(meta.name)assetWeights[meta.name]=w; if(meta.ticker)assetWeights[meta.ticker]=w;
+      if(sector)sectorWeights[sector]=(sectorWeights[sector]||0)+w;
+      if(country)countryWeights[country]=(countryWeights[country]||0)+w;
     });
     return {rs,t,assetWeights,sectorWeights,countryWeights};
   }
 
   function scoreAsset(a,ctx){
     const w=n(ctx.assetWeights[a.name||a.ticker]);
-    const valuation=avg([norm(a.marginOfSafety,-30,50),Number.isFinite(Number(a.pe))?clamp(100-(n(a.pe)-8)*2.2):null,Number.isFinite(Number(a.evEbitda))?clamp(100-(n(a.evEbitda)-6)*4):null]);
+    const valuation=avg([norm(a.marginOfSafety,-30,50),present(a.pe)?clamp(100-(n(a.pe)-8)*2.2):null,present(a.evEbitda)?clamp(100-(n(a.evEbitda)-6)*4):null]);
     const quality=avg([norm(a.roe,0,35),norm(a.roic,0,30),norm(a.operatingMargin,0,35),norm(a.fcfMargin,0,30),norm(a.earningsStability,-30,30)]);
     const growth=avg([norm(a.revenueGrowth,-20,40),norm(a.epsGrowth,-30,50),norm(a.fcfGrowth,-30,50)]);
     const financial=avg([norm(a.debtToEbitda,4,0),norm(a.currentRatio,.5,3),norm(a.interestCoverage,0,20)]);
@@ -55,17 +57,15 @@
   function nextEuro(){
     const {ctx,assets}=universe();
     const candidates=assets.map(a=>{
-      const s=scoreAsset(a,ctx);
-      const held=n(ctx.assetWeights[a.name||a.ticker]);
-      const structural=/msci world/i.test(String(a.name||''));
-      // Structural MSCI World contribution is NOT part of this tactical ranking.
+      const s=scoreAsset(a,ctx),held=n(ctx.assetWeights[a.name||a.ticker]),structural=/msci world/i.test(String(a.name||''));
       if(structural)return {...a,...s,excludedFromTactical:true,reason:'Aportación estructural separada del capital táctico.'};
-      const dataConfidence=n(a.dataQuality,70);
-      const final=Math.round(clamp(s.score-(dataConfidence<55?20:0)));
-      return {...a,...s,score:final,confidence:Math.round(clamp(dataConfidence*.45+s.score*.55)),heldWeight:held,reason:held>.20?'Concentración elevada; limita nuevas compras.':held<.03?'Posición pequeña o inexistente; mejora la diversificación.':'Buena combinación de valoración, calidad y encaje en cartera.'};
-    }).filter(a=>!a.excludedFromTactical).sort((a,b)=>b.score-a.score);
+      const metricKeys=['pe','evEbitda','roe','roic','operatingMargin','revenueGrowth','epsGrowth','debtToEbitda','fcfMargin','fcfGrowth','marginOfSafety'],metricCount=metricKeys.filter(k=>present(a[k])).length,fresh=a.marketQuoteFresh===true;
+      if(!fresh||metricCount<4)return {...a,...s,excludedFromTactical:true,score:null,confidence:0,heldWeight:held,reason:!fresh?'Precio no validado con marca temporal reciente.':'Fundamentales insuficientes para comparar con rigor.'};
+      const dataConfidence=n(a.dataQuality,50),final=Math.round(clamp(s.score-(dataConfidence<55?20:0)));
+      return {...a,...s,score:final,confidence:Math.round(clamp(dataConfidence*.45+s.score*.55)),heldWeight:held,excludedFromTactical:false,reason:held>.20?'Concentración elevada; limita nuevas compras.':held<.03?'Posición pequeña o inexistente; mejora la diversificación.':'Combinación de valoración, calidad y encaje en cartera; revisar riesgos antes de comprar.'};
+    }).filter(a=>!a.excludedFromTactical&&Number.isFinite(a.score)).sort((a,b)=>b.score-a.score);
     const winner=candidates[0]||null;
-    return {version:VERSION,winner,candidates:candidates.slice(0,10),weeklyContribution:300,structuralAsset:'MSCI World Acc'};
+    return {version:VERSION,winner,candidates:candidates.slice(0,10),weeklyContribution:Number(data?.weekly)||400,structuralAsset:'MSCI World Acc'};
   }
 
   function project(target,current,weekly,rate){
@@ -77,10 +77,12 @@
     return {years,date:d,contributed,growth:Math.max(0,v-current-contributed),final:v};
   }
   function goal(target,current,weekly){
-    return {target:n(target,1000000),current:n(current),weekly:n(weekly,300),scenarios:[4,7,10].map(rate=>({rate, ...project(target,current,weekly,rate/100)}))};
+    return {target:n(target,1000000),current:n(current),weekly:n(weekly,400),scenarios:[4,7,10].map(rate=>({rate, ...project(target,current,weekly,rate/100)}))};
   }
 
-  window.PatrimonialIntelligence={VERSION,portfolioContext,scoreAsset,nextEuro,project,goal};
+  async function refreshRadarSnapshot(){try{const [ar,mr]=await Promise.all([fetch('./radar-data.json?pi='+Date.now(),{cache:'no-store'}),fetch('./market-data.json?pi='+Date.now(),{cache:'no-store'})]);if(!ar.ok)throw new Error('Radar data unavailable');const raw=await ar.json(),market=mr.ok?await mr.json():{quotes:{}},quotes=market.quotes||{},bySymbol={};Object.entries(quotes).forEach(([name,q])=>{if(q?.symbol)bySymbol[String(q.symbol).toUpperCase()]=q;bySymbol[String(name).toUpperCase()]=q});const assets={};Object.entries(raw.assets||{}).forEach(([key,a])=>{const q=bySymbol[String(a.marketTicker||a.ticker||key).toUpperCase()]||bySymbol[String(a.name||'').toUpperCase()],ts=Date.parse(q?.timestamp||''),fresh=!!q&&present(q.price)&&Number.isFinite(ts)&&Date.now()-ts>=-300000&&Date.now()-ts<=86400000;assets[key]={...a,price:fresh?Number(q.price):a.price,currency:fresh?(q.currency||a.currency):a.currency,quoteTimestamp:q?.timestamp||null,marketQuoteFresh:fresh,dataQuality:n(a.completeness,0)}});window.RadarDataV1={...raw,assets};if(typeof current!=='undefined'&&current==='decision'&&typeof pages!=='undefined'&&pages.decision)pages.decision()}catch(e){console.warn('Patrimonial intelligence: Radar snapshot unavailable',e)}}
+  window.PatrimonialIntelligence={VERSION,portfolioContext,scoreAsset,nextEuro,project,goal,refreshRadarSnapshot};
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(refreshRadarSnapshot,0));else setTimeout(refreshRadarSnapshot,0);
   window.recommendation=function(){
     const r=nextEuro(),w=r.winner;
     if(!w)return {label:'ESPERAR',text:'No hay suficientes datos para una decisión táctica fiable.'};
@@ -89,7 +91,7 @@
   };
   const originalObjective=pages.objetivo;
   pages.objetivo=function(){
-    const g=goal(data.target,total(),data.weekly||300);
+    const g=goal(data.target,total(),data.weekly||400);
     const f=e=>e.toLocaleDateString('es-ES',{month:'long',year:'numeric'});
     document.getElementById('app').innerHTML=`<h2>🎯 Objetivo patrimonial</h2><div class="card hero"><span class="badge">MOTOR DE OBJETIVO V1</span><div class="kpi sensitive">${money(g.current)}</div><p>Objetivo ${money(g.target)} · aportación estructural <b>${money(g.weekly)}/semana</b></p><div class="progress"><div style="width:${Math.min(100,g.current/g.target*100)}%"></div></div><p class="small">La proyección incluye las aportaciones semanales y el interés compuesto.</p></div><div class="grid section">${g.scenarios.map((s,i)=>`<div class="card"><b>${['Conservador','Base','Optimista'][i]}</b><div class="kpi">${s.rate}%</div><p>Objetivo estimado: <b>${f(s.date)}</b></p><p class="small">Aportaciones futuras: ${money(s.contributed)}<br>Rentabilidad proyectada: ${money(s.growth)}</p></div>`).join('')}</div><div class="card section"><h3>Separación estratégica</h3><p>Los ${money(g.weekly)} semanales al MSCI World se consideran <b>aportación estructural</b>. No compiten con la decisión de capital adicional de “¿Dónde pongo el próximo euro?”.</p></div>`;
   };

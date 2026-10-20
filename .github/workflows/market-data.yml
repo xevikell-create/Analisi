@@ -105,10 +105,13 @@ jobs:
                   pass
 
           try:
-              payload = get_json('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=eur')
-              price = payload.get('ethereum', {}).get('eur')
+              payload = get_json('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=eur&include_last_updated_at=true')
+              eth = payload.get('ethereum', {})
+              price = eth.get('eur')
               if price is not None:
                   out['crypto']['ETH_EUR'] = float(price)
+                  if isinstance(eth.get('last_updated_at'), (int, float)):
+                      out['crypto']['ETH_EUR_timestamp'] = datetime.fromtimestamp(eth['last_updated_at'], timezone.utc).isoformat()
           except Exception:
               pass
 

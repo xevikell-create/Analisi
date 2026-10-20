@@ -20,25 +20,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
-      - name: Setup Node
-        uses: actions/setup-node@v5
-        with:
-          node-version: 24
-      - name: Install dependencies
-        run: npm install
-      - name: Build
-        run: npm run build
-      - name: Include runtime assets in Pages artifact
+      - name: Prepare static Pages artifact
         run: |
           set -euo pipefail
-          test -d dist
-          cp -f ./*.js ./*.json ./*.webmanifest ./*.svg dist/
+          rm -rf dist
+          mkdir -p dist
+          cp -f index.html ./*.js ./*.json ./*.webmanifest ./*.svg dist/
           test -f dist/index.html
           test -f dist/app.js
           test -f dist/market.js
           test -f dist/patrimony-evolution-v2.js
           test -f dist/radar-data.json
-          echo "Runtime JS, JSON, manifests and icons copied into Pages artifact."
+          test -f dist/manifest.json
+          test -f dist/sw.js
+          echo "Static app and all runtime assets are ready for Pages."
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact

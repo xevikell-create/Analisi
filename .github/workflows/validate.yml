@@ -31,7 +31,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for f in app.js market.js decision-engine.js next-euro.js security.js security-settings.js security-settings-fix.js security-nav.js pl-fix.js pl-chart.js final-audit.js toyota-fix.js radar-portfolio-advisor-v6.js patrimonial-intelligence-engine.js radar-data-policy.js radar-data-pipeline.js radar-data-adapter.js; do node --check "$f"; done
+          for f in app.js market.js decision-engine.js next-euro.js security.js security-settings.js security-settings-fix.js security-nav.js pl-fix.js pl-chart.js pl-xirr.js final-audit.js toyota-fix.js radar-portfolio-advisor-v6.js patrimonial-intelligence-engine.js radar-data-policy.js radar-data-pipeline.js radar-data-adapter.js patrimony-history.js patrimony-evolution-v2.js; do node --check "$f"; done
       - name: Validate JSON data
         run: |
           set -euo pipefail
@@ -81,4 +81,8 @@ jobs:
           grep -q "quoteFresh" decision-engine.js
           grep -q "regularMarketTime" .github/workflows/radar-data-refresh.yml
           grep -q "ETH_EUR_timestamp" .github/workflows/market-data.yml
-          echo "Portfolio engine, source-timestamp gating, FX and cost-basis checks passed."
+          grep -q "ethCostEUR" final-audit.js
+          grep -q "priceEUR:price\*quoteRate" app.js
+          grep -q "flowCoverage>=0.9" pl-xirr.js
+          grep -q "xflows=first&&last" patrimony-evolution-v2.js
+          echo "Portfolio engine, source-timestamp gating, FX, cost basis and performance checks passed."

@@ -1,4 +1,4 @@
-const CACHE='patrimonio-v2-v4';
+const CACHE='patrimonio-v2-v5';
 const SHELL=['./','./index.html','./manifest.json','./manifest.webmanifest','./icon.svg'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(SHELL)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('patrimonio-v2-')&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));

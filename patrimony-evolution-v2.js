@@ -7,6 +7,7 @@
   const CF='patrimony_cashflows_v2';
   const oldHistKey='patrimonio_history_v1';
   const fmt=n=>new Intl.NumberFormat('es-ES',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(Number(n)||0);
+  const money=fmt;
   const pct=n=>((Number(n)||0)*100).toFixed(1)+'%';
   const read=(k,f=[])=>{try{return JSON.parse(localStorage.getItem(k)||JSON.stringify(f))}catch{return f}};
   const write=(k,v)=>localStorage.setItem(k,JSON.stringify(v));

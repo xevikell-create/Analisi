@@ -11,10 +11,11 @@ window.DecisionEngineV4={
       const avg=Number(p.averageCost)||0;
       const costCurrency=String(p.costCurrency||p.currency||'EUR').toUpperCase();
       const cost=quantity*avg*(rates[costCurrency]??1);
+      const quoteTimestamp=Date.parse(raw?.timestamp||''),quoteFresh=raw?.status==='live-price'&&Number.isFinite(quoteTimestamp)&&Date.now()-quoteTimestamp>=-300000&&Date.now()-quoteTimestamp<=86400000;
       const value=Number.isFinite(priceEUR)?quantity*priceEUR:null;
       const gain=value==null?null:value-cost;
       const ret=cost>0&&gain!=null?gain/cost:0;
-      return {...p,symbol,value,cost,gain,returnPct:ret,price:priceEUR,currency};
+      return {...p,symbol,value,cost,gain,returnPct:ret,price:priceEUR,currency,quoteFresh,quoteTimestamp};
     });
     const eth=Array.isArray(crypto)?crypto.find(c=>(c.ticker||c.name||'').toUpperCase()==='ETH'):null;
     const ethQty=Number(eth?.quantity)||0;
@@ -24,7 +25,7 @@ window.DecisionEngineV4={
     const priced=rows.filter(r=>r.value!=null);
     const totalMarketValue=priced.reduce((s,r)=>s+r.value,0)+ethValue;
     const investable=priced.map(r=>({...r,weight:totalMarketValue?r.value/totalMarketValue:0}));
-    const candidates=investable.map(r=>{
+    const candidates=investable.filter(r=>r.quoteFresh).map(r=>{
       const weight=r.weight;
       let valuation=50;
       if(r.valuationScore!=null) valuation=Math.max(0,Math.min(100,Number(r.valuationScore)));

@@ -1,7 +1,7 @@
 /* Patrimonio V2 — application core */
 const KEY='patrimonio_v4';
 const PRIVATE_KEY='patrimonio_private_mode';
-const initial={accounts:{remunerada:64480,efectivo:27000},crypto:{eth:1.1,ethPrice:0},weekly:400,target:1000000,returnRate:7,assets:[],decisions:[],contributions:[],radar:[],alerts:[],market:{lastSync:null,source:null}};
+const initial={accounts:{remunerada:64480,efectivo:27000},crypto:{eth:1.1,ethPrice:0,ethCostEUR:2000},weekly:400,target:1000000,returnRate:7,assets:[],decisions:[],contributions:[],radar:[],alerts:[],market:{lastSync:null,source:null}};
 let data=loadData();
 let I=null;
 let current='dashboard';

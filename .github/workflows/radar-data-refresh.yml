@@ -21,6 +21,7 @@ jobs:
         run: |
           python - <<'PY'
           import json, time, urllib.request, urllib.parse
+          from datetime import datetime, timezone
           from pathlib import Path
           data_path=Path('radar-data.json')
           universe_path=Path('radar-universe-v2.json')
@@ -48,7 +49,7 @@ jobs:
                   if price is not None:
                       a['price']=price; ok+=1
                   a['currency']=meta.get('currency') or a.get('currency')
-                  a['marketUpdatedAt']=time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime())
+                  a['marketUpdatedAt']=datetime.fromtimestamp(meta['regularMarketTime'],timezone.utc).isoformat() if isinstance(meta.get('regularMarketTime'),(int,float)) else None
                   a['marketSource']='Yahoo Finance'
                   a.pop('refreshError',None)
               except Exception as e:

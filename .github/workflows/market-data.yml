@@ -78,7 +78,7 @@ jobs:
                           price = vals[-1] if vals else None
                       if price is not None:
                           price, currency = normalize_quote(price, meta.get('currency'))
-                          out['quotes'][name] = {'symbol': symbol, 'price': price, 'currency': currency, 'change': 0, 'percentChange': 0, 'timestamp': datetime.now(timezone.utc).isoformat(), 'source': 'Yahoo Finance'}
+                          out['quotes'][name] = {'symbol': symbol, 'price': price, 'currency': currency, 'change': 0, 'percentChange': 0, 'timestamp': (datetime.fromtimestamp(meta['regularMarketTime'], timezone.utc).isoformat() if isinstance(meta.get('regularMarketTime'), (int, float)) else None), 'source': 'Yahoo Finance'}
                   except Exception:
                       pass
 
@@ -91,7 +91,7 @@ jobs:
                   if name not in out['quotes']:
                       a = next((x for x in radar.values() if x.get('ticker') == symbol and x.get('price') is not None), None)
                       if a:
-                          out['quotes'][name] = {'symbol': symbol, 'price': float(a['price']), 'currency': a.get('currency','USD'), 'change': 0, 'percentChange': 0, 'timestamp': a.get('updatedAt') or datetime.now(timezone.utc).isoformat(), 'source': 'Radar market snapshot'}
+                          out['quotes'][name] = {'symbol': symbol, 'price': float(a['price']), 'currency': a.get('currency','USD'), 'change': 0, 'percentChange': 0, 'timestamp': a.get('updatedAt'), 'source': 'Radar market snapshot'}
           except Exception as e:
               out['fallbackError'] = str(e)
 

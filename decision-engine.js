@@ -4,7 +4,7 @@ window.DecisionEngineV4={
     const rows=positions.map(p=>{
       const symbol=p.ticker||p.name;
       const raw=quotes[symbol]??quotes[p.name];
-      const q=typeof raw==='object'?Number(raw?.price):Number(raw);
+      const q=typeof raw==='object'?(raw?.price===null||raw?.price===undefined||raw?.price===''?NaN:Number(raw.price)):(raw===null||raw===undefined||raw===''?NaN:Number(raw));
       const currency=String(raw?.currency||p.currency||'EUR').toUpperCase();
       const priceEUR=Number.isFinite(q)?q*(rates[currency]??1):null;
       const quantity=Number(p.quantity)||0;

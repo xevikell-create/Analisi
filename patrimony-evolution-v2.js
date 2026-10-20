@@ -53,7 +53,7 @@
     a.forEach(x=>{byMonth[x.date.slice(0,7)]=x;byYear[x.date.slice(0,4)]=x});
     return {a,monthly:Object.values(byMonth),annual:Object.values(byYear)};
   }
-  function contributionBetween(start,end){return flows().filter(f=>f.date>=start&&f.date<=end).reduce((s,f)=>s+Number(f.amount),0);}
+  function contributionBetween(start,end){return flows().filter(f=>f.type!=='Transferencia'&&f.date>=start&&f.date<=end).reduce((s,f)=>s+Number(f.amount),0);}
   function periodStats(list){
     if(!list.length)return [];
     return list.map((x,i)=>{const prev=i?list[i-1]:null;const contrib=prev?contributionBetween(prev.date,x.date):0;const change=prev?x.value-prev.value:0;const gain=prev?change-contrib:0;return {...x,contrib,gain,change,returnPct:prev&&prev.value?gain/prev.value:null}});
@@ -76,10 +76,11 @@
     snapshot();
     const p=periods(), ms=periodStats(p.monthly), ys=periodStats(p.annual), fs=flows(), last=p.a[p.a.length-1], first=p.a[0];
     const historyCount=p.a.length, monthCount=p.monthly.length, yearCount=p.annual.length;
-    const totalContrib=fs.reduce((s,f)=>s+Number(f.amount),0);
+    const totalContrib=fs.filter(f=>f.type!=='Transferencia').reduce((s,f)=>s+Number(f.amount),0);
     const current=last?.value||Number(total())||0;
     const gainSinceFirst=first?current-first.value:0;
-    const xr=xirr([...fs.map(f=>({date:f.date,amount:-Math.abs(Number(f.amount))})),{date:today(),amount:current}].sort((a,b)=>a.date.localeCompare(b.date)));
+    const xflows=first&&last&&first.date!==last.date?[{date:first.date,amount:-Math.abs(Number(first.value))},...fs.filter(f=>f.date>=first.date&&f.type!=='Transferencia').map(f=>({date:f.date,amount:-Number(f.amount)})),{date:today(),amount:current}].sort((a,b)=>a.date.localeCompare(b.date)):[];
+    const xr=xflows.length>=2?xirr(xflows):null;
     const pr=projection();
     box.innerHTML=`
       <div class="card section">
@@ -90,6 +91,7 @@
           <div><span class="muted">Aportaciones registradas</span><div class="kpi sensitive">${money(totalContrib)}</div></div>
           <div><span class="muted">XIRR</span><div class="kpi">${xr==null?'—':pct(xr)}</div></div>
         </div>
+        <p class="small muted">XIRR desde el primer cierre registrado; solo es fiable si registras todos los flujos externos. Las transferencias entre tus propias cuentas no cuentan como aportación.</p>
         <div class="pill" style="margin:12px 0"><button class="secondary action" onclick="window.__evoMode='monthly';window.__evoRender()">Mensual</button><button class="secondary action" onclick="window.__evoMode='annual';window.__evoRender()">Anual</button><button class="secondary action" onclick="window.__evoMode='daily';window.__evoRender()">Diario</button></div>
         <div id="evoChart">${chartSVG(window.__evoMode==='annual'?p.annual:window.__evoMode==='daily'?p.a:p.monthly)}</div>
         <p class="muted"><b>${historyCount} cierres diarios · ${monthCount} meses · ${yearCount} años</b>. El histórico se registra automáticamente y se resume por mes y año. No se inventan valores que la app no haya registrado.</p>

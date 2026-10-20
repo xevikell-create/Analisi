@@ -67,10 +67,25 @@
   }
   function chartSVG(points,key='value'){
     if(!points.length)return '<div class="empty">Aún no hay histórico registrado. El primer cierre se crea automáticamente al abrir la app.</div>';
-    const w=920,h=270,p=38,vals=points.map(x=>Number(x[key])||0),min=Math.min(...vals),max=Math.max(...vals),range=Math.max(1,max-min);
-    const xy=points.map((x,i)=>[p+i*(w-2*p)/Math.max(1,points.length-1),h-p-((Number(x[key])||0)-min)/range*(h-2*p)]);
-    const d=xy.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' ');
-    return `<svg viewBox="0 0 ${w} ${h}" width="100%" height="270" aria-label="Evolución patrimonial"><path d="${d}" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><line x1="${p}" y1="${h-p}" x2="${w-p}" y2="${h-p}" stroke="currentColor" opacity=".15"/>${xy.map((q,i)=>`<circle cx="${q[0]}" cy="${q[1]}" r="3.5" fill="currentColor"><title>${points[i].date} · ${fmt(points[i][key])}</title></circle>`).join('')}</svg>`;
+    const w=920,h=300,left=88,right=24,top=20,bottom=46,plotW=w-left-right,plotH=h-top-bottom;
+    const vals=points.map(x=>Number(x[key])||0),min0=Math.min(...vals),max0=Math.max(...vals);
+    const spread=max0-min0, pad=spread>0?spread*.12:Math.max(Math.abs(max0)*.02,100);
+    const min=min0-pad,max=max0+pad,range=max-min||1;
+    const xy=points.map((x,i)=>({
+      x:left+i*plotW/Math.max(1,points.length-1),
+      y:top+plotH-((Number(x[key])||0)-min)/range*plotH,
+      point:x
+    }));
+    const d=xy.map((q,i)=>(i?'L':'M')+q.x.toFixed(1)+' '+q.y.toFixed(1)).join(' ');
+    const moneyAxis=n=>new Intl.NumberFormat('es-ES',{notation:'compact',maximumFractionDigits:1}).format(n)+' €';
+    const ticks=[0,1,2,3,4].map(i=>{
+      const value=min+range*i/4,y=top+plotH-plotH*i/4;
+      return '<line x1="'+left+'" y1="'+y.toFixed(1)+'" x2="'+(w-right)+'" y2="'+y.toFixed(1)+'" stroke="currentColor" opacity=".12"/><text x="'+(left-10)+'" y="'+(y+4).toFixed(1)+'" text-anchor="end" font-size="12" fill="currentColor">'+moneyAxis(value)+'</text>';
+    }).join('');
+    const label=(point)=>new Date(point.date+'T12:00:00').toLocaleDateString('es-ES',{day:'2-digit',month:'short',year:'2-digit'});
+    const dates=xy.length===1?'<text x="'+left+'" y="'+(h-12)+'" font-size="12" fill="currentColor">'+label(points[0])+'</text>':
+      '<text x="'+left+'" y="'+(h-12)+'" font-size="12" fill="currentColor">'+label(points[0])+'</text><text x="'+(w-right)+'" y="'+(h-12)+'" text-anchor="end" font-size="12" fill="currentColor">'+label(points[points.length-1])+'</text>';
+    return '<div style="overflow-x:auto"><svg viewBox="0 0 '+w+' '+h+'" width="100%" style="min-width:320px" role="img" aria-label="Gráfica de evolución del patrimonio">'+ticks+'<path d="'+d+'" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>'+xy.map(q=>'<circle cx="'+q.x.toFixed(1)+'" cy="'+q.y.toFixed(1)+'" r="4" fill="#2563eb"><title>'+label(q.point)+' · '+fmt(q.point[key])+'</title></circle>').join('')+dates+'</svg></div>';
   }
   function render(){
     const box=document.getElementById('evolutionV2');if(!box)return;

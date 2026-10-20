@@ -101,8 +101,9 @@
     const final=stateValue(state),years=weeks/52,d=new Date();d.setDate(d.getDate()+weeks*7);
     return {years,date:d,contributed:state.contributed,growth:final-current-state.contributed,final,weeklyContribution:weekly,monthlyNetSavings:Math.max(0,n(data?.monthlyNetSavings,1000)),cashYieldRate:Math.max(0,n(data?.cashYieldRate,2.25))};
   }
-  function goal(target,current,weekly){
-    return {target:n(target,1000000),current:n(current),weekly:n(weekly,400),monthlyNetSavings:Math.max(0,n(data?.monthlyNetSavings,1000)),cashYieldRate:Math.max(0,n(data?.cashYieldRate,2.25)),scenarios:[4,7,10].map(rate=>({rate,...project(target,current,weekly,rate/100)}))};
+  function goal(target,current,weekly,baseRate=n(data?.returnRate,7)/100){
+    const basePct=Number.isFinite(Number(baseRate))?Number(baseRate)*100:n(data?.returnRate,7),rates=[...new Set([4,basePct,10])].sort((a,b)=>a-b);
+    return {target:n(target,1000000),current:n(current),weekly:n(weekly,400),monthlyNetSavings:Math.max(0,n(data?.monthlyNetSavings,1000)),cashYieldRate:Math.max(0,n(data?.cashYieldRate,2.25)),scenarios:rates.map(rate=>({rate,...project(target,current,weekly,rate/100)}))};
   }
 
   async function refreshRadarSnapshot(){try{const [ar,mr]=await Promise.all([fetch('./radar-data.json?pi='+Date.now(),{cache:'no-store'}),fetch('./market-data.json?pi='+Date.now(),{cache:'no-store'})]);if(!ar.ok)throw new Error('Radar data unavailable');const raw=await ar.json(),market=mr.ok?await mr.json():{quotes:{}},quotes=market.quotes||{},bySymbol={};Object.entries(quotes).forEach(([name,q])=>{if(q?.symbol)bySymbol[String(q.symbol).toUpperCase()]=q;bySymbol[String(name).toUpperCase()]=q});const assets={};Object.entries(raw.assets||{}).forEach(([key,a])=>{const q=bySymbol[String(a.marketTicker||a.ticker||key).toUpperCase()]||bySymbol[String(a.name||'').toUpperCase()],ts=Date.parse(q?.timestamp||''),qFresh=!!q&&present(q.price)&&Number.isFinite(ts)&&Date.now()-ts>=-300000&&Date.now()-ts<=86400000,rts=Date.parse(a.marketUpdatedAt||''),radarFresh=present(a.price)&&Number.isFinite(rts)&&Date.now()-rts>=-300000&&Date.now()-rts<=86400000,fresh=qFresh||radarFresh,fts=Date.parse(a.fundamentalsUpdatedAt||a.updatedAt||''),fundamentalsFresh=Number.isFinite(fts)&&Date.now()-fts>=-300000&&Date.now()-fts<=45*86400000;assets[key]={...a,price:qFresh?Number(q.price):a.price,currency:qFresh?(q.currency||a.currency):a.currency,quoteTimestamp:qFresh?q.timestamp:(a.marketUpdatedAt||null),marketQuoteFresh:fresh,fundamentalsFresh,dataQuality:n(a.completeness,0)}});window.RadarDataV1={...raw,assets};if(typeof current!=='undefined'&&current==='decision'&&typeof pages!=='undefined'&&pages.decision)pages.decision()}catch(e){console.warn('Patrimonial intelligence: Radar snapshot unavailable',e)}}
@@ -116,7 +117,7 @@
   };
   const originalObjective=pages.objetivo;
   pages.objetivo=function(){
-    const g=goal(data.target,total(),data.weekly||400);
+    const g=goal(data.target,total(),data.weekly||400,(Number(data.returnRate)||7)/100);
     const f=e=>e.toLocaleDateString('es-ES',{month:'long',year:'numeric'});
     document.getElementById('app').innerHTML=`<h2>🎯 Objetivo patrimonial</h2><div class="card hero"><span class="badge">MOTOR DE OBJETIVO V1</span><div class="kpi sensitive">${money(g.current)}</div><p>Objetivo ${money(g.target)} · aportación estructural <b>${money(g.weekly)}/semana</b></p><div class="progress"><div style="width:${Math.min(100,g.current/g.target*100)}%"></div></div><p class="small">La proyección incluye las aportaciones semanales y el interés compuesto.</p></div><div class="grid section">${g.scenarios.map((s,i)=>`<div class="card"><b>${['Conservador','Base','Optimista'][i]}</b><div class="kpi">${s.rate}%</div><p>Objetivo estimado: <b>${f(s.date)}</b></p><p class="small">Aportaciones futuras: ${money(s.contributed)}<br>Rentabilidad proyectada: ${money(s.growth)}</p></div>`).join('')}</div><div class="card section"><h3>Separación estratégica</h3><p>Los ${money(g.weekly)} semanales al MSCI World se consideran <b>aportación estructural</b>. No compiten con la decisión de capital adicional de “¿Dónde pongo el próximo euro?”.</p></div>`;
   };

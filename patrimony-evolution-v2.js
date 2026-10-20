@@ -107,7 +107,7 @@
     const historyCount=p.a.length, monthCount=p.monthly.length, yearCount=p.annual.length;
     const totalContrib=fs.reduce((s,f)=>s+Number(f.amount),0);
     const current=last?.value||Number(total())||0;
-    const gainSinceFirst=first?current-first.value:0;
+    const gainSinceFirst=first?current-first.value-contributionBetween(first.date,today()):0;
     const xr=xirr([...fs.map(f=>({date:f.date,amount:-Number(f.amount)})),{date:today(),amount:current}].sort((a,b)=>a.date.localeCompare(b.date)));
     const pr=projection();
     box.innerHTML=`

@@ -142,7 +142,10 @@
     let box=document.getElementById('evolutionV2');if(!box){box=document.createElement('div');box.id='evolutionV2';app.appendChild(box)}
     render();
   }
+  // Ensure the dedicated Análisis page always mounts after its page renderer replaces #app.
+  const originalAnalisis=window.pages?.analisis;
+  if(originalAnalisis){window.pages.analisis=function(){originalAnalisis();setTimeout(()=>{mount();render()},0)}}
   const oldSet=window.setPage;
-  if(oldSet){window.setPage=function(p){oldSet(p);if(p==='historial'||p==='dashboard'||p==='objetivo')setTimeout(mount,0)}}
+  if(oldSet){window.setPage=function(p){oldSet(p);if(p==='historial'||p==='dashboard'||p==='objetivo'||p==='analisis')setTimeout(()=>{mount();render()},0)}}
   setTimeout(mount,0);setInterval(snapshot,60000);
 })();

@@ -1,6 +1,6 @@
 {
   "provider": "yahoo",
-  "updatedAt": "2026-10-20T22:12:40.779801+00:00",
+  "updatedAt": "2026-10-21T00:40:03.043743+00:00",
   "quotes": {
     "First Solar": {
       "symbol": "FSLR",
@@ -58,11 +58,11 @@
     },
     "Toyota": {
       "symbol": "7203.T",
-      "price": 3102.0,
+      "price": 3067.0,
       "currency": "JPY",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-10-20T06:30:00+00:00",
+      "timestamp": "2026-10-21T00:25:03+00:00",
       "source": "Yahoo Finance"
     },
     "AMD": {
@@ -136,7 +136,7 @@
     "GBP_EUR": 1.1901
   },
   "crypto": {
-    "ETH_EUR": 2189.33
+    "ETH_EUR": 2184.49
   },
   "primaryError": "HTTP Error 429: Too Many Requests"
 }

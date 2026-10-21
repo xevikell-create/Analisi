@@ -4,6 +4,9 @@ on:
     branches: [main]
 permissions:
   contents: write
+concurrency:
+  group: fix-price-refresh
+  cancel-in-progress: true
 jobs:
   patch:
     runs-on: ubuntu-latest
@@ -30,5 +33,10 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add index.html
-          git diff --cached --quiet || git commit -m 'Fix live prices and add refresh button'
+          if git diff --cached --quiet; then
+            echo 'No patch needed; skipping commit and push.'
+            exit 0
+          fi
+          git commit -m 'Fix live prices and add refresh button'
+          git pull --rebase origin main
           git push

@@ -20,7 +20,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for f in index.html app.js market.js market-data.json manifest.json market-symbols.json security.js final-audit.js security-settings.js pl-chart.js pl-fix.js; do test -f "$f"; done
+          for f in index.html app.js market.js market-data.json manifest.json market-symbols.json security.js final-audit.js security-settings.js pl-chart.js pl-fix.js analysis-standalone.js patrimony-evolution-v2.js patrimony-history.js; do test -f "$f"; done
           grep -q "Patrimonio V2" index.html
           grep -q "MarketV4" market.js
           grep -q "Ethereum" market.js
@@ -31,7 +31,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for f in app.js market.js security.js security-settings.js security-settings-fix.js security-nav.js pl-fix.js pl-chart.js final-audit.js toyota-fix.js; do node --check "$f"; done
+          for f in app.js market.js security.js security-settings.js security-settings-fix.js security-nav.js pl-fix.js pl-chart.js final-audit.js toyota-fix.js analysis-standalone.js patrimony-evolution-v2.js patrimony-history.js; do node --check "$f"; done
       - name: Validate JSON data
         run: |
           set -euo pipefail

@@ -1,6 +1,6 @@
 {
   "provider": "yahoo",
-  "updatedAt": "2026-10-30T02:59:20.259155+00:00",
+  "updatedAt": "2026-10-30T09:53:27.098847+00:00",
   "quotes": {
     "First Solar": {
       "symbol": "FSLR",
@@ -17,7 +17,7 @@
       "currency": "HKD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-10-30T02:44:11+00:00",
+      "timestamp": "2026-10-30T08:08:06+00:00",
       "source": "Yahoo Finance"
     },
     "Netflix": {
@@ -58,11 +58,11 @@
     },
     "Toyota": {
       "symbol": "7203.T",
-      "price": 3053.0,
+      "price": 3070.0,
       "currency": "JPY",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-10-30T02:30:00+00:00",
+      "timestamp": "2026-10-30T06:30:00+00:00",
       "source": "Yahoo Finance"
     },
     "AMD": {
@@ -85,20 +85,20 @@
     },
     "CaixaBank": {
       "symbol": "CABK.MC",
-      "price": 11.165,
+      "price": 11.12,
       "currency": "EUR",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-10-29T16:40:28+00:00",
+      "timestamp": "2026-10-30T09:36:51+00:00",
       "source": "Yahoo Finance"
     },
     "Vanguard S&P 500 Dist ETF": {
       "symbol": "VUSA.L",
-      "price": 109.405,
+      "price": 108.038,
       "currency": "GBP",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-10-29T16:35:10+00:00",
+      "timestamp": "2026-10-30T09:36:43+00:00",
       "source": "Yahoo Finance"
     },
     "Amazon": {
@@ -121,11 +121,11 @@
     },
     "iShares Core MSCI World Acc": {
       "symbol": "SWDA.L",
-      "price": 109.79,
+      "price": 108.56,
       "currency": "GBP",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-10-29T16:35:18+00:00",
+      "timestamp": "2026-10-30T09:36:49+00:00",
       "source": "Yahoo Finance"
     }
   },
@@ -136,7 +136,7 @@
     "GBP_EUR": 1.1965
   },
   "crypto": {
-    "ETH_EUR": 1969.75
+    "ETH_EUR": 1988.96
   },
   "primaryError": "HTTP Error 429: Too Many Requests"
 }

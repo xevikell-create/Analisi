@@ -1,6 +1,6 @@
 {
   "provider": "yahoo",
-  "updatedAt": "2026-11-04T02:39:26.199242+00:00",
+  "updatedAt": "2026-11-04T09:54:49.928088+00:00",
   "quotes": {
     "First Solar": {
       "symbol": "FSLR",
@@ -13,11 +13,11 @@
     },
     "BYD": {
       "symbol": "1211.HK",
-      "price": 70.2,
+      "price": 72.3,
       "currency": "HKD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-04T02:24:25+00:00",
+      "timestamp": "2026-11-04T08:08:08+00:00",
       "source": "Yahoo Finance"
     },
     "Netflix": {
@@ -58,11 +58,11 @@
     },
     "Toyota": {
       "symbol": "7203.T",
-      "price": 2983.5,
+      "price": 3028.0,
       "currency": "JPY",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-04T02:24:24+00:00",
+      "timestamp": "2026-11-04T06:30:00+00:00",
       "source": "Yahoo Finance"
     },
     "AMD": {
@@ -85,20 +85,20 @@
     },
     "CaixaBank": {
       "symbol": "CABK.MC",
-      "price": 11.37,
+      "price": 11.755,
       "currency": "EUR",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-03T16:37:00+00:00",
+      "timestamp": "2026-11-04T09:39:42+00:00",
       "source": "Yahoo Finance"
     },
     "Vanguard S&P 500 Dist ETF": {
       "symbol": "VUSA.L",
-      "price": 106.945,
+      "price": 106.982,
       "currency": "GBP",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-03T16:35:19+00:00",
+      "timestamp": "2026-11-04T09:39:47+00:00",
       "source": "Yahoo Finance"
     },
     "Amazon": {
@@ -121,22 +121,20 @@
     },
     "iShares Core MSCI World Acc": {
       "symbol": "SWDA.L",
-      "price": 107.57,
+      "price": 107.76,
       "currency": "GBP",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-03T16:35:12+00:00",
+      "timestamp": "2026-11-04T09:37:25+00:00",
       "source": "Yahoo Finance"
     }
   },
   "fxRates": {
     "USD_EUR": 0.89453,
-    "HKD_EUR": 0.11401,
-    "JPY_EUR": 0.0056513,
-    "GBP_EUR": 1.1996
+    "JPY_EUR": 0.0056513
   },
   "crypto": {
-    "ETH_EUR": 2002.82
+    "ETH_EUR": 2061.01
   },
   "primaryError": "HTTP Error 429: Too Many Requests"
 }

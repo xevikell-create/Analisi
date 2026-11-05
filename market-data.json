@@ -1,6 +1,6 @@
 {
   "provider": "yahoo",
-  "updatedAt": "2026-11-04T23:30:21.584359+00:00",
+  "updatedAt": "2026-11-05T03:45:09.092155+00:00",
   "quotes": {
     "First Solar": {
       "symbol": "FSLR",
@@ -13,11 +13,11 @@
     },
     "BYD": {
       "symbol": "1211.HK",
-      "price": 72.3,
+      "price": 76.1,
       "currency": "HKD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-04T08:08:08+00:00",
+      "timestamp": "2026-11-05T03:30:07+00:00",
       "source": "Yahoo Finance"
     },
     "Netflix": {
@@ -58,11 +58,11 @@
     },
     "Toyota": {
       "symbol": "7203.T",
-      "price": 3028.0,
+      "price": 3227.0,
       "currency": "JPY",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-04T06:30:00+00:00",
+      "timestamp": "2026-11-05T03:30:08+00:00",
       "source": "Yahoo Finance"
     },
     "AMD": {
@@ -136,7 +136,7 @@
     "GBP_EUR": 1.1982
   },
   "crypto": {
-    "ETH_EUR": 2157.85
+    "ETH_EUR": 2158.64
   },
   "primaryError": "HTTP Error 429: Too Many Requests"
 }

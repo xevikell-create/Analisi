@@ -1,6 +1,6 @@
 {
   "provider": "yahoo",
-  "updatedAt": "2026-11-11T01:29:34.207588+00:00",
+  "updatedAt": "2026-11-11T08:19:44.929445+00:00",
   "quotes": {
     "First Solar": {
       "symbol": "FSLR",
@@ -13,11 +13,11 @@
     },
     "BYD": {
       "symbol": "1211.HK",
-      "price": 71.15,
+      "price": 69.2,
       "currency": "HKD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-11T01:29:08+00:00",
+      "timestamp": "2026-11-11T07:59:57+00:00",
       "source": "Yahoo Finance"
     },
     "Netflix": {
@@ -58,11 +58,11 @@
     },
     "Toyota": {
       "symbol": "7203.T",
-      "price": 3388.0,
+      "price": 3435.0,
       "currency": "JPY",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-11T01:14:32+00:00",
+      "timestamp": "2026-11-11T06:30:00+00:00",
       "source": "Yahoo Finance"
     },
     "AMD": {
@@ -85,20 +85,20 @@
     },
     "CaixaBank": {
       "symbol": "CABK.MC",
-      "price": 12.515,
+      "price": 12.58,
       "currency": "EUR",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-10T16:35:25+00:00",
+      "timestamp": "2026-11-11T08:04:31+00:00",
       "source": "Yahoo Finance"
     },
     "Vanguard S&P 500 Dist ETF": {
       "symbol": "VUSA.L",
-      "price": 106.7325,
+      "price": 107.6675,
       "currency": "GBP",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-10T16:35:02+00:00",
+      "timestamp": "2026-11-11T08:04:43+00:00",
       "source": "Yahoo Finance"
     },
     "Amazon": {
@@ -121,11 +121,11 @@
     },
     "iShares Core MSCI World Acc": {
       "symbol": "SWDA.L",
-      "price": 107.73,
+      "price": 108.6735,
       "currency": "GBP",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-10T16:35:04+00:00",
+      "timestamp": "2026-11-11T08:04:13+00:00",
       "source": "Yahoo Finance"
     }
   },
@@ -136,7 +136,7 @@
     "GBP_EUR": 1.197
   },
   "crypto": {
-    "ETH_EUR": 1833.74
+    "ETH_EUR": 1852.21
   },
   "primaryError": "HTTP Error 429: Too Many Requests"
 }

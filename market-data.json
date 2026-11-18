@@ -1,14 +1,14 @@
 {
   "provider": "yahoo",
-  "updatedAt": "2026-11-17T17:54:38.435541+00:00",
+  "updatedAt": "2026-11-18T00:52:07.483008+00:00",
   "quotes": {
     "First Solar": {
       "symbol": "FSLR",
-      "price": 153.86,
+      "price": 152.97,
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-17T17:54:27+00:00",
+      "timestamp": "2026-11-17T21:00:01+00:00",
       "source": "Yahoo Finance"
     },
     "BYD": {
@@ -22,65 +22,65 @@
     },
     "Netflix": {
       "symbol": "NFLX",
-      "price": 59.65,
+      "price": 59.68,
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-17T17:54:35+00:00",
+      "timestamp": "2026-11-17T21:00:00+00:00",
       "source": "Yahoo Finance"
     },
     "Meta Platforms": {
       "symbol": "META",
-      "price": 619.075,
+      "price": 618.87,
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-17T17:54:32+00:00",
+      "timestamp": "2026-11-17T21:00:01+00:00",
       "source": "Yahoo Finance"
     },
     "Apple": {
       "symbol": "AAPL",
-      "price": 350.74,
+      "price": 351.91,
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-17T17:54:37+00:00",
+      "timestamp": "2026-11-17T21:00:01+00:00",
       "source": "Yahoo Finance"
     },
     "Palantir Technologies": {
       "symbol": "PLTR",
-      "price": 155.49,
+      "price": 156.56,
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-17T17:54:32+00:00",
+      "timestamp": "2026-11-17T21:00:00+00:00",
       "source": "Yahoo Finance"
     },
     "Toyota": {
       "symbol": "7203.T",
-      "price": 3414.0,
+      "price": 3405.0,
       "currency": "JPY",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-17T06:30:00+00:00",
+      "timestamp": "2026-11-18T00:37:04+00:00",
       "source": "Yahoo Finance"
     },
     "AMD": {
       "symbol": "AMD",
-      "price": 489.57,
+      "price": 503.41,
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-17T17:54:33+00:00",
+      "timestamp": "2026-11-17T21:00:00+00:00",
       "source": "Yahoo Finance"
     },
     "Nvidia": {
       "symbol": "NVDA",
-      "price": 153.58,
+      "price": 155.46,
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-17T17:54:38+00:00",
+      "timestamp": "2026-11-17T21:00:00+00:00",
       "source": "Yahoo Finance"
     },
     "CaixaBank": {
@@ -103,20 +103,20 @@
     },
     "Amazon": {
       "symbol": "AMZN",
-      "price": 257.085,
+      "price": 257.89,
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-17T17:54:39+00:00",
+      "timestamp": "2026-11-17T21:00:01+00:00",
       "source": "Yahoo Finance"
     },
     "NextEra Energy": {
       "symbol": "NEE",
-      "price": 85.06,
+      "price": 84.42,
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-17T17:54:38+00:00",
+      "timestamp": "2026-11-17T21:00:03+00:00",
       "source": "Yahoo Finance"
     },
     "iShares Core MSCI World Acc": {
@@ -136,7 +136,7 @@
     "GBP_EUR": 1.2004
   },
   "crypto": {
-    "ETH_EUR": 1621.85
+    "ETH_EUR": 1655.95
   },
   "primaryError": "HTTP Error 429: Too Many Requests"
 }

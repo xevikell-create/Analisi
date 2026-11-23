@@ -1,6 +1,6 @@
 {
   "provider": "yahoo",
-  "updatedAt": "2026-11-22T22:50:42.637568+00:00",
+  "updatedAt": "2026-11-23T03:38:51.123158+00:00",
   "quotes": {
     "First Solar": {
       "symbol": "FSLR",
@@ -13,11 +13,11 @@
     },
     "BYD": {
       "symbol": "1211.HK",
-      "price": 62.35,
+      "price": 61.45,
       "currency": "HKD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-20T08:08:27+00:00",
+      "timestamp": "2026-11-23T03:23:48+00:00",
       "source": "Yahoo Finance"
     },
     "Netflix": {
@@ -136,7 +136,7 @@
     "GBP_EUR": 1.1942
   },
   "crypto": {
-    "ETH_EUR": 1560.72
+    "ETH_EUR": 1580.83
   },
   "primaryError": "HTTP Error 429: Too Many Requests"
 }

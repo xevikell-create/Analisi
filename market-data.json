@@ -1,6 +1,6 @@
 {
   "provider": "yahoo",
-  "updatedAt": "2026-11-23T03:38:51.123158+00:00",
+  "updatedAt": "2026-11-23T13:42:07.233697+00:00",
   "quotes": {
     "First Solar": {
       "symbol": "FSLR",
@@ -13,11 +13,11 @@
     },
     "BYD": {
       "symbol": "1211.HK",
-      "price": 61.45,
+      "price": 61.2,
       "currency": "HKD",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-23T03:23:48+00:00",
+      "timestamp": "2026-11-23T08:08:20+00:00",
       "source": "Yahoo Finance"
     },
     "Netflix": {
@@ -85,20 +85,20 @@
     },
     "CaixaBank": {
       "symbol": "CABK.MC",
-      "price": 11.45,
+      "price": 11.545,
       "currency": "EUR",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-20T16:35:29+00:00",
+      "timestamp": "2026-11-23T13:26:39+00:00",
       "source": "Yahoo Finance"
     },
     "Vanguard S&P 500 Dist ETF": {
       "symbol": "VUSA.L",
-      "price": 102.232,
+      "price": 102.91,
       "currency": "GBP",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-20T16:35:17+00:00",
+      "timestamp": "2026-11-23T13:27:05+00:00",
       "source": "Yahoo Finance"
     },
     "Amazon": {
@@ -121,11 +121,11 @@
     },
     "iShares Core MSCI World Acc": {
       "symbol": "SWDA.L",
-      "price": 102.88,
+      "price": 103.62781999999999,
       "currency": "GBP",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-20T16:35:11+00:00",
+      "timestamp": "2026-11-23T13:27:08+00:00",
       "source": "Yahoo Finance"
     }
   },
@@ -136,7 +136,7 @@
     "GBP_EUR": 1.1942
   },
   "crypto": {
-    "ETH_EUR": 1580.83
+    "ETH_EUR": 1575.41
   },
   "primaryError": "HTTP Error 429: Too Many Requests"
 }

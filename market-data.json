@@ -1,6 +1,6 @@
 {
   "provider": "yahoo",
-  "updatedAt": "2026-11-26T15:41:43.841036+00:00",
+  "updatedAt": "2026-11-27T00:03:34.971967+00:00",
   "quotes": {
     "First Solar": {
       "symbol": "FSLR",
@@ -85,20 +85,20 @@
     },
     "CaixaBank": {
       "symbol": "CABK.MC",
-      "price": 11.36,
+      "price": 11.29,
       "currency": "EUR",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-26T15:25:45+00:00",
+      "timestamp": "2026-11-26T16:39:23+00:00",
       "source": "Yahoo Finance"
     },
     "Vanguard S&P 500 Dist ETF": {
       "symbol": "VUSA.L",
-      "price": 104.8493,
+      "price": 104.665,
       "currency": "GBP",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-26T15:26:04+00:00",
+      "timestamp": "2026-11-26T16:35:08+00:00",
       "source": "Yahoo Finance"
     },
     "Amazon": {
@@ -121,11 +121,11 @@
     },
     "iShares Core MSCI World Acc": {
       "symbol": "SWDA.L",
-      "price": 105.49,
+      "price": 105.27,
       "currency": "GBP",
       "change": 0,
       "percentChange": 0,
-      "timestamp": "2026-11-26T15:26:40+00:00",
+      "timestamp": "2026-11-26T16:35:23+00:00",
       "source": "Yahoo Finance"
     }
   },
@@ -136,7 +136,7 @@
     "GBP_EUR": 1.194
   },
   "crypto": {
-    "ETH_EUR": 1535.7
+    "ETH_EUR": 1540.85
   },
   "primaryError": "HTTP Error 429: Too Many Requests"
 }

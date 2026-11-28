@@ -1,6 +1,6 @@
 {
   "provider": "yahoo",
-  "updatedAt": "2026-11-27T18:29:10.153219+00:00",
+  "updatedAt": "2026-11-28T01:37:58.784777+00:00",
   "quotes": {
     "First Solar": {
       "symbol": "FSLR",
@@ -112,7 +112,7 @@
     },
     "NextEra Energy": {
       "symbol": "NEE",
-      "price": 85.055,
+      "price": 84.95,
       "currency": "USD",
       "change": 0,
       "percentChange": 0,
@@ -136,7 +136,7 @@
     "GBP_EUR": 1.1975
   },
   "crypto": {
-    "ETH_EUR": 1523.63
+    "ETH_EUR": 1524.1
   },
   "primaryError": "HTTP Error 429: Too Many Requests"
 }

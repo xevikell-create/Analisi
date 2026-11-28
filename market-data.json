@@ -1,6 +1,6 @@
 {
   "provider": "yahoo",
-  "updatedAt": "2026-11-28T01:37:58.784777+00:00",
+  "updatedAt": "2026-11-28T09:28:32.708917+00:00",
   "quotes": {
     "First Solar": {
       "symbol": "FSLR",
@@ -136,7 +136,7 @@
     "GBP_EUR": 1.1975
   },
   "crypto": {
-    "ETH_EUR": 1524.1
+    "ETH_EUR": 1506.94
   },
   "primaryError": "HTTP Error 429: Too Many Requests"
 }
